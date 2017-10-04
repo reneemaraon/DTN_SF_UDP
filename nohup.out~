@@ -1,0 +1,133 @@
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[659/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (4.242s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.308s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.327s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.312s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.310s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (4.545s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.330s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.341s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.611s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.402s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[  3/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (3.429s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.309s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.310s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.312s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.322s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[659/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (4.360s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.387s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.442s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.429s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.405s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.320s)
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=8', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.374s)
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345673', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=8', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.327s)
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345675', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=8', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.572s)
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345677', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=8', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.702s)
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:6 Does not have a mobility model. Use SetConstantPosition if it is stationary
+AnimationInterface WARNING:Node:7 Does not have a mobility model. Use SetConstantPosition if it is stationary
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345679', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=8', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }

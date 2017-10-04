@@ -1,0 +1,35 @@
+Creating 3 nodes.
+node 0 is not stationary 0 = stationary valuenode 1 is not stationary 0 = stationary valuenode 2 is not stationary 0 = stationary valueStarting simulation for 10 s, seed value 12345677
+0.5 0 0 0 0 1 30 400
+0.50001 0 0 0 0 0 230 400
+0.50002 0 0 0 0 1 30 300
+At time 1 send bundle with sequence number 27 from 10.0.0.2 to 10.0.0.3
+1.5 0 0 0 0 1 30 400
+1.5 0 0 1 90028 0 230 400
+1.5 0 0 0 0 1 55.001 300
+2.5 0 0 0 0 1 30 400
+2.5 0 0 1 90028 0 230 400
+2.5 0 0 0 0 1 105 300
+3.5 0 0 0 0 0 30 400
+3.5 0 0 1 90028 1 230 400
+3.5 0 0 0 0 1 155 300
+At time 3.5424 received 90000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 2.5424 bundle hop count: 1 sequence number: 27 bundle queue occupancy: 0
+At time 3.5424 send antipacket with sequence number 27 original ts 1 new ts 0 from 10.0.0.3 to 10.0.0.2
+4.5 0 0 0 0 0 30 400
+4.5 0 1 0 0 1 230 400
+4.5 0 1 0 0 1 205 300
+5.5 0 0 0 0 0 30 400
+5.5 0 1 0 0 1 230 400
+5.5 0 1 0 0 1 230 300
+6.5 0 0 0 0 0 30 400
+6.5 0 1 0 0 1 230 400
+6.5 0 1 0 0 1 230 300
+7.5 0 0 0 0 0 30 400
+7.5 0 1 0 0 1 230 400
+7.5 0 1 0 0 1 230 300
+8.5 0 0 0 0 0 30 400
+8.5 0 1 0 0 1 230 400
+8.5 0 1 0 0 1 230 300
+9.5 0 0 0 0 0 30 400
+9.5 0 1 0 0 1 230 400
+9.5 0 1 0 0 1 230 300
