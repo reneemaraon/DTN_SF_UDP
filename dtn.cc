@@ -63,7 +63,7 @@ public:
   void SendBundle (uint32_t dstnode, uint32_t packetSize);
   void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp);
   void PrintBuffers (void);
-  void CheckBuffers (uint32_t bundletype);
+  void CheckQueues (uint32_t bundletype);
   int IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue);
   int AntipacketExists (Ptr<Packet> pkt);
   void RemoveBundle (Ptr<Packet> pkt);
@@ -203,7 +203,7 @@ DtnApp::StartApplication (void)
   mac_queue = edcaqueue->GetEdcaQueue ();    
   NS_ASSERT (mac_queue != NULL);
   mac_queue->SetAttribute ("MaxPacketNumber", UintegerValue (1000));
-  CheckBuffers (2);
+  CheckQueues (2);
   PrintBuffers ();
 }
 
@@ -325,7 +325,7 @@ DtnApp::PrintBuffers (void)
 }
 
 void
-DtnApp::CheckBuffers (uint32_t bundletype)
+DtnApp::CheckQueues (uint32_t bundletype)
 {
   Ptr<Packet> packet;
   uint32_t i = 0, n = 0, pkts = 0, send_bundle = 0;
@@ -593,21 +593,21 @@ DtnApp::CheckBuffers (uint32_t bundletype)
   }
   if (bundletype == 2) {
     if (send_bundle == 0)
-      CheckBuffers(1);
+      CheckQueues(1);
     else
-      Simulator::Schedule (Seconds (0.001), &DtnApp::CheckBuffers, this, 2);
+      Simulator::Schedule (Seconds (0.001), &DtnApp::CheckQueues, this, 2);
   }
   if (bundletype == 1) {
     if (send_bundle == 0)
-      CheckBuffers(0);
+      CheckQueues(0);
     else
-      Simulator::Schedule (Seconds (0.001), &DtnApp::CheckBuffers, this, 2);
+      Simulator::Schedule (Seconds (0.001), &DtnApp::CheckQueues, this, 2);
   }
   if (bundletype == 0) {
     if (send_bundle == 0)
-      Simulator::Schedule (Seconds (0.01), &DtnApp::CheckBuffers, this, 2);
+      Simulator::Schedule (Seconds (0.01), &DtnApp::CheckQueues, this, 2);
     else
-      Simulator::Schedule (Seconds (0.001), &DtnApp::CheckBuffers, this, 2);
+      Simulator::Schedule (Seconds (0.001), &DtnApp::CheckQueues, this, 2);
   }
 }
 
@@ -1281,12 +1281,15 @@ public:
   void StationarySetup(Ptr<Node> node);
   void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
   void GenerateData(uint32_t first);
+  void CheckBuffer();
 
   char **buffer;
   int bufferCount;
   int entryLength;
   int bufferLength;
   uint32_t secondsInterval;
+
+  uint32_t  bundleSize;
 };
 
 // Stationary::Stationary():
@@ -1333,12 +1336,12 @@ void Stationary::GenerateData(uint32_t first){
   if (first==0){
     if (bufferCount<bufferLength){
       const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+      // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
       for (int i=0; i<(entryLength); i++){
         buffer[bufferCount][i] = alphanum[random()%36];
-        std::cout<<buffer[bufferCount][i];
+        // std::cout<<buffer[bufferCount][i];
       }
-      std::cout<<"\n";
+      // std::cout<<"\n";
       bufferCount=bufferCount+1;
       Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
     }
@@ -1347,6 +1350,10 @@ void Stationary::GenerateData(uint32_t first){
     Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
   }
 
+}
+
+void Stationary::CheckBuffer(){
+  //check if may # of bundles = bundleSize, gawa ng bundle 
 }
 
 class Mobile: public DtnApp {

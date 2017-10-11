@@ -1,32 +1,22 @@
-node 0 getnode 0x1172e40 dst-> 0x118c0a0 10.0.0.1 source-> 0x118c4c0
-node 1 getnode 0x11733b0 dst-> 0x118e3a0 10.0.0.2 source-> 0x118e810
-node 2 getnode 0x1173140 dst-> 0x11907f0 10.0.0.3 source-> 0x1190c10
+node 0 getnode 0x157ee40 dst-> 0x15980a0 10.0.0.1 source-> 0x1598530
+node 1 getnode 0x157f3b0 dst-> 0x159a720 10.0.0.2 source-> 0x159a910
+node 2 getnode 0x157f140 dst-> 0x159c5b0 10.0.0.3 source-> 0x159cc30
 node 2 is not stationary 0 = stationary value
 0.5 0 0 0 0 1 30 200
 0.50001 0 0 0 0 0 230 200
 0.50002 0 0 0 0 0 50.001 100
-Generated Data for node 0 at time :+1000000000.0ns with data TjJHFHKM
-Generated Data for node 1 at time :+1000000000.0ns with data iBOgOHYX
 1.5 0 0 0 0 1 30 200
 1.5 0 0 1 60028 0 230 200
 1.5 0 0 0 0 0 100 100
-Generated Data for node 0 at time :+2000000000.0ns with data ZSQdkIPi
-Generated Data for node 1 at time :+2000000000.0ns with data bbbgTTFS
 2.5 0 0 0 0 0 30 200
 2.5 0 0 1 60028 0 230 200
 2.5 0 0 0 0 0 150 100
-Generated Data for node 0 at time :+3000000000.0ns with data SfFDBQgj
-Generated Data for node 1 at time :+3000000000.0ns with data iJJLhNOU
 3.5 0 0 0 0 0 30 200
 3.5 0 0 1 60028 1 230 200
 3.5 0 1 0 0 0 200 100
-Generated Data for node 0 at time :+4000000000.0ns with data LfeKTIIJ
-Generated Data for node 1 at time :+4000000000.0ns with data OOENiJhP
 4.5 0 0 0 0 0 30 200
 4.5 0 0 1 60028 1 230 200
 4.5 0 1 0 0 0 230 100
-Generated Data for node 0 at time :+5000000000.0ns with data URjVNeAc
-Generated Data for node 1 at time :+5000000000.0ns with data SJCPChPO
 5.5 0 0 0 0 0 30 200
 5.5 0 0 1 60028 1 230 200
 5.5 0 1 0 0 0 230 100
