@@ -1,27 +1,37 @@
 Creating 3 nodes.
-node 0 getnode 0xfc0e40 dst-> 0xfda0a0 10.0.0.1 source-> 0xfda4c0
-node 1 getnode 0xfc13b0 dst-> 0xfdc350 10.0.0.2 source-> 0xfdc770
-node 2 getnode 0xfc1140 dst-> 0xfde6c0 10.0.0.3 source-> 0xfdeae0
+node 0 getnode 0x100be40 dst-> 0x10250a0 10.0.0.1 source-> 0x10254c0
+node 1 getnode 0x100c3b0 dst-> 0x10273a0 10.0.0.2 source-> 0x1027810
+node 2 getnode 0x100c140 dst-> 0x10297f0 10.0.0.3 source-> 0x1029c10
 node 2 is not stationary 0 = stationary value
 Starting simulation for 10 s, seed value 12345679
 0.5 0 0 0 0 1 30 200
 0.50001 0 0 0 0 0 230 200
 0.50002 0 0 0 0 0 50.001 100
+Generated Data for node 0 at time :+1000000000.0ns with data TjJHFHKM
+Generated Data for node 1 at time :+1000000000.0ns with data iBOgOHYX
 At time 1 send bundle with sequence number 9 from 10.0.0.2 to 10.0.0.3
 1.5 0 0 0 0 1 30 200
 1.5 0 0 1 60028 0 230 200
 1.5 0 0 0 0 0 100 100
+Generated Data for node 0 at time :+2000000000.0ns with data ZSQdkIPi
+Generated Data for node 1 at time :+2000000000.0ns with data bbbgTTFS
 2.5 0 0 0 0 0 30 200
 2.5 0 0 1 60028 0 230 200
 2.5 0 0 0 0 0 150 100
 At time 2.5962 received 60000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 1.5962 bundle hop count: 1 sequence number: 9 bundle queue occupancy: 0
 At time 2.5962 send antipacket with sequence number 9 original ts 1 new ts 0 from 10.0.0.3 to 10.0.0.2
+Generated Data for node 0 at time :+3000000000.0ns with data SfFDBQgj
+Generated Data for node 1 at time :+3000000000.0ns with data iJJLhNOU
 3.5 0 0 0 0 0 30 200
 3.5 0 0 1 60028 1 230 200
 3.5 0 1 0 0 0 200 100
+Generated Data for node 0 at time :+4000000000.0ns with data LfeKTIIJ
+Generated Data for node 1 at time :+4000000000.0ns with data OOENiJhP
 4.5 0 0 0 0 0 30 200
 4.5 0 0 1 60028 1 230 200
 4.5 0 1 0 0 0 230 100
+Generated Data for node 0 at time :+5000000000.0ns with data URjVNeAc
+Generated Data for node 1 at time :+5000000000.0ns with data SJCPChPO
 5.5 0 0 0 0 0 30 200
 5.5 0 0 1 60028 1 230 200
 5.5 0 1 0 0 0 230 100

@@ -1279,8 +1279,14 @@ class Stationary: public DtnApp {
 
 public:
   void StationarySetup(Ptr<Node> node);
-  void BufferSetup(uint32_t numOfEntries, uint32_t entrySize);
+  void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
+  void GenerateData(uint32_t first);
 
+  char **buffer;
+  int bufferCount;
+  int entryLength;
+  int bufferLength;
+  uint32_t secondsInterval;
 };
 
 // Stationary::Stationary():
@@ -1310,11 +1316,37 @@ void Stationary::StationarySetup(Ptr<Node> node){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
-void Stationary::BufferSetup(uint32_t numOfEntries, uint32_t entrySize){
-  char** buffer = new char *[numOfEntries];
+// void Stationary::BufferSetup(uint32_t numOfEntries, uint32_t entrySize){
+void Stationary::BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput){
+  bufferCount=0;
+  entryLength = entrySize;
+  secondsInterval = secondsIntervalinput;
+  bufferLength = numOfEntries;
+  
+  buffer = new char *[numOfEntries];
   for (int i= 0; i<int(numOfEntries); i++){
     buffer[i] = new char [entrySize];
   }
+}
+
+void Stationary::GenerateData(uint32_t first){
+  if (first==0){
+    if (bufferCount<bufferLength){
+      const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+      for (int i=0; i<(entryLength); i++){
+        buffer[bufferCount][i] = alphanum[random()%36];
+        std::cout<<buffer[bufferCount][i];
+      }
+      std::cout<<"\n";
+      bufferCount=bufferCount+1;
+      Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+    }
+  }
+  else{
+    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+  }
+
 }
 
 class Mobile: public DtnApp {
@@ -1538,6 +1570,10 @@ DtnExample::InstallApplications ()
   Time sendTime;
   uint32_t packetSizeToSend;
 
+  uint32_t node_num;
+  uint32_t numOfEntries;
+  uint32_t entrySize;
+  float secondsIntervalinput;
 
 
   TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
@@ -1549,7 +1585,20 @@ DtnExample::InstallApplications ()
       app = CreateObject<Stationary> ();  
       app->setStationary(1);  
       app->StationarySetup (nodes.Get (i));
-      app->BufferSetup(5, 8);
+
+    
+      // std::cout << "Opening Stationary Buffer Details"<< " \n";
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails.txt");
+      if (bufferInput.is_open()){
+        while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
+          app->BufferSetup(numOfEntries, entrySize, secondsIntervalinput);
+          // std::cout<<"seconds interval" <<secondsIntervalinput<<"\n";
+        }
+      }
+      else{
+        std::cout<<"Unable to open Stationary Buffer Details\n";
+      }
+      bufferInput.close();
 
       nodes.Get (i)->AddApplication (app);
       app->SetStartTime (Seconds (0.5 + 0.00001*i));
@@ -1566,11 +1615,9 @@ DtnExample::InstallApplications ()
       source->SetAllowBroadcast (true);
       source->Connect (remote);
       std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-      if (app->IsStationary()==0){
-        std::cout<<"node "<<i<<" is not stationary "<<app->IsStationary()<<" = stationary value\n";
-        app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-      }
-      
+
+      app->GenerateData(1);
+
       Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
       InetSocketAddress local (Ipv4Address::GetAny (), 80);
       recvSink->Bind (local);
@@ -1610,11 +1657,10 @@ DtnExample::InstallApplications ()
       source->SetAllowBroadcast (true);
       source->Connect (remote);
       std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-      if (app->IsStationary()==0){
-        std::cout<<"node "<<i<<" is not stationary "<<app->IsStationary()<<" = stationary value\n";
-        app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-      }
       
+      std::cout<<"node "<<i<<" is not stationary "<<app->IsStationary()<<" = stationary value\n";
+      app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+    
       Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
       InetSocketAddress local (Ipv4Address::GetAny (), 80);
       recvSink->Bind (local);
