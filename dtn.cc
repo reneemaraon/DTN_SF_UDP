@@ -1530,451 +1530,6 @@ DtnExample::InstallInternetStack ()
 void
 DtnExample::InstallApplications ()
 {
-
-  // // bibliografia **test = new bibliografia*[2];
-  // // test[0] = new sinedria();
-  // // test[1] = new sinedria();
-  // // test[0]->probolh();
-  // // test[1]->probolh();
-
-
-  // // BaseClass** base = new BaseClass*[2];
-  // // BaseClass[0] = new FirstDerivedClass;
-  // // BaseClass[1] = new SecondDerivedClass;
-  // TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-  // Ptr<DtnApp> app[nodeNum];
-  // // Ptr<DtnApp> *app = new Ptr<DtnApp>[nodeNum];
-  // // Ptr<DtnApp> **app = new Ptr<DtnApp>*[nodeNum];
-  // for (uint32_t i = 0; i < nodeNum; ++i) { 
-  //   if(i==nodeNum-1){
-  //     // app[i] = new Mobile;
-  //     app[i] = CreateObject<Mobile> ();
-  //     app[i]->setStationary(0);  
-  //     // app[i]->MobileSetup (nodes.Get (i));
-  //     // app[i]->Setup (nodes.Get (i));
-  //   }
-  //   else{
-  //     // app[i] = new Stationary;
-  //     app[i] = CreateObject<Stationary> ();
-  //     app[i]->setStationary(1);  
-  //     // app[i]->StationarySetup (nodes.Get (i));
-  //   }
-
-  //   app[i]->Setup (nodes.Get (i));
-  //   nodes.Get (i)->AddApplication (app[i]);
-  //   app[i]->SetStartTime (Seconds (0.5 + 0.00001*i));
-  //   app[i]->SetStopTime (Seconds (5000.));
-
-  //   Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  //   char dststring[1024]="";
-  //   sprintf(dststring,"10.0.0.%d",(i + 1));
-  //   InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-  //   dst->Bind(dstlocaladdr);
-  //   dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app[i]));
-    
-  //   Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  //   InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-  //   source->SetAllowBroadcast (true);
-  //   source->Connect (remote);
-
-  //   std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-  //   // app[i]->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-  //   if (app[i]->IsStationary()==0){
-  //     std::cout<<"node "<<i<<" is not stationary "<<app[i]->IsStationary()<<" = stationary value\n";
-  //     app[i]->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-  //   }
-
-  //   Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  //   InetSocketAddress local (Ipv4Address::GetAny (), 80);
-  //   recvSink->Bind (local);
-  //   recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app[i]));
-  // }
-  // Ptr<UniformRandomVariable> x = CreateObject<UniformRandomVariable> ();
-  // for (uint32_t i = 0; i < nodeNum; ++i) { 
-  //   for (uint32_t j = 0; j < 18; ++j) { 
-  //     uint32_t dstnode = i;
-  //     while (dstnode == i)
-  // dstnode = x->GetInteger(0, nodeNum-1);
-  //     app[i]->ScheduleTx (dstnode, Seconds (200.0*j + x->GetValue (0.0, 200.0)), 10000*(x->GetInteger(1, 10)));
-  //     if ((i == 1)&&(j==0)){
-  // app[1]->ScheduleTx(2, Seconds(1), 10000*(x->GetInteger(1, 10)));
-  //      }
-  //   }
-  // }
-
-
-
-
-
-
-
-
-
-
-  // TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-  // Ptr<Stationary> app[nodeNum-1];
-  // for (uint32_t i = 0; i < nodeNum-1; ++i) { 
-  //   app[i] = CreateObject<Stationary> ();    
-  //   app[i]->Setup (nodes.Get (i));
-  //   app[i]->setStationary(1);  
-  //   nodes.Get (i)->AddApplication (app[i]);
-  //   app[i]->SetStartTime (Seconds (0.5 + 0.00001*i));
-  //   app[i]->SetStopTime (Seconds (5000.));
-
-  //   Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  //   char dststring[1024]="";
-  //   sprintf(dststring,"10.0.0.%d",(i + 1));
-  //   InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-  //   dst->Bind(dstlocaladdr);
-  //   dst->SetRecvCallback (MakeCallback (&Stationary::ReceiveBundle, app[i]));
-    
-  //   Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  //   InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-  //   source->SetAllowBroadcast (true);
-  //   source->Connect (remote);
-  //   if (app[i]->IsStationary()==0){
-  //     std::cout<<"node "<<i<<" is not stationary "<<app[i]->IsStationary()<<" = stationary value\n";
-  //     app[i]->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-  //   }
-    
-  //   Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  //   InetSocketAddress local (Ipv4Address::GetAny (), 80);
-  //   recvSink->Bind (local);
-  //   recvSink->SetRecvCallback (MakeCallback (&Stationary::ReceiveHello, app[i]));
-  // }
-
-
-
-
-
-
-
-
-
-  // TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-  // Ptr<DtnApp> app2;
-  // app2 = CreateObject<DtnApp> ();    
-  // app2->Setup (nodes.Get(nodeNum-1));
-  // nodes.Get(nodeNum-1)->AddApplication (app2);
-  // app2->SetStartTime (Seconds (0.5 + (0.00001*nodeNum-1)));
-  // app2->SetStopTime (Seconds (5000.));
-
-  // Ptr<Socket> dst = Socket::CreateSocket (nodes.Get(nodeNum-1), udp_tid);
-  // char dststring[1024]="";
-  // sprintf(dststring,"10.0.0.%d",((nodeNum-1) + 1));
-  // InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-  // dst->Bind(dstlocaladdr);
-  // dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app2));
-  
-  // Ptr<Socket> source = Socket::CreateSocket (nodes.Get(nodeNum-1), udp_tid);
-  // InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-  // source->SetAllowBroadcast (true);
-  // source->Connect (remote);
-  // if (app2->IsStationary()==0){
-  //   std::cout<<"node "<<(nodeNum-1)<<" is not stationary "<<app2->IsStationary()<<" = stationary value\n";
-  //   app2->SendHello (source, duration, Seconds (0.1 + 0.00085*(nodeNum-1)), 1);
-  // }
-  
-  // Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get(nodeNum-1), udp_tid);
-  // InetSocketAddress local (Ipv4Address::GetAny (), 80);
-  // recvSink->Bind (local);
-  // recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app2));
-
-
-
-
-
-
-// // whatif
-//   TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-//   Ptr<DtnApp> app0;
-//   app0 = CreateObject<DtnApp> ();    
-//   app0->Setup (nodes.Get (0));
-//   app0->setStationary(1);  
-//   nodes.Get (0)->AddApplication (app0);
-//   app0->SetStartTime (Seconds (0.5 + 0.00001*0));
-//   app0->SetStopTime (Seconds (5000.));
-
-//   Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (0), udp_tid);
-//   char dststring[1024]="";
-//   sprintf(dststring,"10.0.0.%d",(0 + 1));
-//   InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-//   dst->Bind(dstlocaladdr);
-//   dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app0));
-  
-//   Ptr<Socket> source = Socket::CreateSocket (nodes.Get (0), udp_tid);
-//   InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-//   source->SetAllowBroadcast (true);
-//   source->Connect (remote);
-//   std::cout<< "node 0"<<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-//   if (app0->IsStationary()==0){
-//     std::cout<<"node "<<0<<" is not stationary "<<app0->IsStationary()<<" = stationary value\n";
-//     app0->SendHello (source, duration, Seconds (0.1 + 0.00085*0), 1);
-//   }
-  
-//   Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (0), udp_tid);
-//   InetSocketAddress local (Ipv4Address::GetAny (), 80);
-//   recvSink->Bind (local);
-//   recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app0));
-
-
-//   Ptr<DtnApp> app1;
-//   app1 = CreateObject<DtnApp> ();    
-//   app1->Setup (nodes.Get (1));
-//   app1->setStationary(1);  
-//   nodes.Get (1)->AddApplication (app1);
-//   app1->SetStartTime (Seconds (0.5 + 0.00001*1));
-//   app1->SetStopTime (Seconds (5000.));
-
-//   Ptr<Socket> dst1 = Socket::CreateSocket (nodes.Get (1), udp_tid);
-//   sprintf(dststring,"10.0.0.%d",(1 + 1));
-//   InetSocketAddress dstlocaladdr1 (Ipv4Address(dststring), 50000);
-//   dst1->Bind(dstlocaladdr1);
-//   dst1->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app1));
-  
-//   Ptr<Socket> source1 = Socket::CreateSocket (nodes.Get (1), udp_tid);
-//   InetSocketAddress remote1 (Ipv4Address ("255.255.255.255"), 80);
-//   source1->SetAllowBroadcast (true);
-//   source1->Connect (remote1);
-//   std::cout<< "node 1"<<" getnode "<< dst1->GetNode()<< " dst-> "<< dst1 <<" "<< dststring<< " source-> " <<source1<<"\n";
-//   if (app1->IsStationary()==0){
-//     std::cout<<"node "<<1<<" is not stationary "<<app1->IsStationary()<<" = stationary value\n";
-//     app1->SendHello (source1, duration, Seconds (0.1 + 0.00085*1), 1);
-//   }
-  
-//   Ptr<Socket> recvSink1 = Socket::CreateSocket (nodes.Get (0), udp_tid);
-//   InetSocketAddress local1 (Ipv4Address::GetAny (), 80);
-//   recvSink1->Bind (local1);
-//   recvSink1->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app1));
-
-
-
-
-//   Ptr<DtnApp> app2;
-//   app2 = CreateObject<DtnApp> ();    
-//   app2->Setup (nodes.Get (2));
-//   app2->setStationary(0);  
-//   nodes.Get (2)->AddApplication (app2);
-//   app2->SetStartTime (Seconds (0.5 + 0.00001*2));
-//   app2->SetStopTime (Seconds (5000.));
-
-//   Ptr<Socket> dst2 = Socket::CreateSocket (nodes.Get (2), udp_tid);
-//   sprintf(dststring,"10.0.0.%d",(2 + 1));
-//   InetSocketAddress dstlocaladdr2 (Ipv4Address(dststring), 50000);
-//   dst2->Bind(dstlocaladdr2);
-//   dst2->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app2));
-  
-//   Ptr<Socket> source2 = Socket::CreateSocket (nodes.Get (2), udp_tid);
-//   InetSocketAddress remote2 (Ipv4Address ("255.255.255.255"), 80);
-//   source2->SetAllowBroadcast (true);
-//   source2->Connect (remote2);
-//   std::cout<< "node 2"<<" getnode "<< dst2->GetNode()<< " dst-> "<< dst2 <<" "<< dststring<< " source-> " <<source2<<"\n";
-//   if (app2->IsStationary()==0){
-//     std::cout<<"node "<<2<<" is not stationary "<<app2->IsStationary()<<" = stationary value\n";
-//     app2->SendHello (source2, duration, Seconds (0.1 + 0.00085*2), 1);
-//   }
-  
-//   Ptr<Socket> recvSink2 = Socket::CreateSocket (nodes.Get (2), udp_tid);
-//   InetSocketAddress local2 (Ipv4Address::GetAny (), 80);
-//   recvSink2->Bind (local2);
-//   recvSink2->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app2));
-// // whatif
-
-// //w2 3 individual dtnapps
-//     TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-//   Ptr<DtnApp> app[nodeNum-1];
-//   for (uint32_t i = 0; i < nodeNum-1; ++i) { 
-//     app[i] = CreateObject<DtnApp> ();  
-//     app[i]->setStationary(1);  
-//     app[i]->Setup (nodes.Get (i));
-//     nodes.Get (i)->AddApplication (app[i]);
-//     app[i]->SetStartTime (Seconds (0.5 + 0.00001*i));
-//     app[i]->SetStopTime (Seconds (5000.));
-//     Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
-//     char dststring[1024]="";
-//     sprintf(dststring,"10.0.0.%d",(i + 1));
-//     InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-//     dst->Bind(dstlocaladdr);
-//     dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app[i]));
-    
-//     Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
-//     InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-//     source->SetAllowBroadcast (true);
-//     source->Connect (remote);
-//     std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-//     if (app[i]->IsStationary()==0){
-//       std::cout<<"node "<<i<<" is not stationary "<<app[i]->IsStationary()<<" = stationary value\n";
-//       app[i]->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-//     }
-    
-//     Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-//     InetSocketAddress local (Ipv4Address::GetAny (), 80);
-//     recvSink->Bind (local);
-//     recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app[i]));
-//   }
-
-
-
-//   Ptr<DtnApp> app2;
-
-//   app2 = CreateObject<DtnApp> ();    
-//   app2->setStationary(0);  
-//   app2->Setup (nodes.Get (nodeNum-1));
-
-//   nodes.Get (nodeNum-1)->AddApplication (app2);
-//   app2->SetStartTime (Seconds (0.5 + 0.00001*(nodeNum-1)));
-//   app2->SetStopTime (Seconds (5000.));
-
-//   Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (nodeNum-1), udp_tid);
-//   char dststring[1024]="";
-//   sprintf(dststring,"10.0.0.%d",(nodeNum));
-//   InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-//   dst->Bind(dstlocaladdr);
-//   dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app2));
-  
-//   Ptr<Socket> source = Socket::CreateSocket (nodes.Get (nodeNum-1), udp_tid);
-//   InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-//   source->SetAllowBroadcast (true);
-//   source->Connect (remote);
-//   std::cout<< "node 0" <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-//   if (app2->IsStationary()==0){
-//     std::cout<<"node "<<nodeNum-1<<" is not stationary "<<app2->IsStationary()<<" = stationary value\n";
-//     // app2->SendHello (source, duration, Seconds (0.1 + 0.00085*nodeNum-1), 1);
-//     app2->SendHello (source, duration, Seconds (0.1 + 0.00085*(nodeNum-1)), 1);
-//   }
-//   app2->SendHello (source, duration, Seconds (0.1 + 0.00085*(nodeNum-1)), 1);
-  
-//   Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (nodeNum-1), udp_tid);
-//   InetSocketAddress local (Ipv4Address::GetAny (), 80);
-//   recvSink->Bind (local);
-//   recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app2));
-
-// //w2
-
-
-
-
-
-//w3!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-  Ptr<Stationary> app0;
-  uint32_t i = 0;
-  app0 = CreateObject<Stationary> ();  
-  app0->setStationary(1);  
-  app0->StationarySetup (nodes.Get (i));
-  nodes.Get (i)->AddApplication (app0);
-  app0->SetStartTime (Seconds (0.5 + 0.00001*i));
-  app0->SetStopTime (Seconds (5000.));
-  Ptr<Socket> dst0 = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  char dststring[1024]="";
-  sprintf(dststring,"10.0.0.%d",(i + 1));
-  InetSocketAddress dstlocaladdr0 (Ipv4Address(dststring), 50000);
-  dst0->Bind(dstlocaladdr0);
-  dst0->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app0));
-  
-  Ptr<Socket> source0 = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  InetSocketAddress remote0 (Ipv4Address ("255.255.255.255"), 80);
-  source0->SetAllowBroadcast (true);
-  source0->Connect (remote0);
-  std::cout<< "node "<< i <<" getnode "<< dst0->GetNode()<< " dst-> "<< dst0 <<" "<< dststring<< " source-> " <<source0<<"\n";
-  if (app0->IsStationary()==0){
-    std::cout<<"node "<<i<<" is not stationary "<<app0->IsStationary()<<" = stationary value\n";
-    app0->SendHello (source0, duration, Seconds (0.1 + 0.00085*i), 1);
-  }
-  
-  Ptr<Socket> recvSink0 = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  InetSocketAddress local0 (Ipv4Address::GetAny (), 80);
-  recvSink0->Bind (local0);
-  recvSink0->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app0));
-
-  app0->BufferSetup(5, 8);
-
-  // uint32_t node_num;
-  // uint32_t numOfEntries;
-  // uint32_t entrySize;
-  // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails.txt");
-  // if (bufferInput.is_open()){
-  //   while (bufferInput >> node_num >> numOfEntries >> entrySize){
-  //     app2->BufferSetup(numOfEntries, entrySize);
-  //   }
-  // }
-
-    
-  Ptr<Stationary> app1;
-  i=1;
-  app1 = CreateObject<Stationary> ();  
-  app1->setStationary(1);  
-  app1->StationarySetup (nodes.Get (i));
-  nodes.Get (i)->AddApplication (app1);
-  app1->SetStartTime (Seconds (0.5 + 0.00001*i));
-  app1->SetStopTime (Seconds (5000.));
-  Ptr<Socket> dst1 = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  sprintf(dststring,"10.0.0.%d",(i + 1));
-  InetSocketAddress dstlocaladdr1 (Ipv4Address(dststring), 50000);
-  dst1->Bind(dstlocaladdr1);
-  dst1->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app1));
-  
-  Ptr<Socket> source1 = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  InetSocketAddress remote1 (Ipv4Address ("255.255.255.255"), 80);
-  source1->SetAllowBroadcast (true);
-  source1->Connect (remote1);
-  std::cout<< "node "<< i <<" getnode "<< dst1->GetNode()<< " dst-> "<< dst1 <<" "<< dststring<< " source-> " <<source1<<"\n";
-  if (app1->IsStationary()==0){
-    std::cout<<"node "<<i<<" is not stationary "<<app1->IsStationary()<<" = stationary value\n";
-    app1->SendHello (source1, duration, Seconds (0.1 + 0.00085*i), 1);
-  }
-  
-  Ptr<Socket> recvSink1 = Socket::CreateSocket (nodes.Get (i), udp_tid);
-  InetSocketAddress local1 (Ipv4Address::GetAny (), 80);
-  recvSink1->Bind (local1);
-  recvSink1->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app1));
-
-  app1->BufferSetup(4, 9);
-
-
-
-  Ptr<Mobile> app2;
-
-  app2 = CreateObject<Mobile> ();    
-  app2->setStationary(0);  
-  app2->MobileSetup (nodes.Get (nodeNum-1));
-
-  nodes.Get (nodeNum-1)->AddApplication (app2);
-  app2->SetStartTime (Seconds (0.5 + 0.00001*(nodeNum-1)));
-  app2->SetStopTime (Seconds (5000.));
-
-  Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (nodeNum-1), udp_tid);
-  sprintf(dststring,"10.0.0.%d",(nodeNum));
-  InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-  dst->Bind(dstlocaladdr);
-  dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app2));
-  
-  Ptr<Socket> source = Socket::CreateSocket (nodes.Get (nodeNum-1), udp_tid);
-  InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-  source->SetAllowBroadcast (true);
-  source->Connect (remote);
-  std::cout<< "node 2" <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-  if (app2->IsStationary()==0){
-    std::cout<<"node "<<nodeNum-1<<" is not stationary "<<app2->IsStationary()<<" = stationary value\n";
-    // app2->SendHello (source, duration, Seconds (0.1 + 0.00085*nodeNum-1), 1);
-    app2->SendHello (source, duration, Seconds (0.1 + 0.00085*(nodeNum-1)), 1);
-  }
-  app2->SendHello (source, duration, Seconds (0.1 + 0.00085*(nodeNum-1)), 1);
-  
-  Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (nodeNum-1), udp_tid);
-  InetSocketAddress local (Ipv4Address::GetAny (), 80);
-  recvSink->Bind (local);
-  recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app2));
-
-//w3!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
   std::ifstream bundleSched;
 
   std::string line;
@@ -1983,42 +1538,101 @@ DtnExample::InstallApplications ()
   Time sendTime;
   uint32_t packetSizeToSend;
 
-  // std::cout << "Opening Bundle Schedule"<< " \n";
-  bundleSched.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bundleSched");
-  if(bundleSched.is_open()){
-    while(bundleSched >> sourceNode >> destinationNode >> sendTime >> packetSizeToSend){
-      // std::cout << sourceNode << " " << destinationNode << " " << sendTime << " " << packetSizeToSend << '\n';
-      if (sourceNode==0){
-        app0->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
 
-      }
-      else if(sourceNode==1){
-        app1->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
-      }
-      else if(sourceNode==2){
-        app2->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
-      }
-      // if (sourceNode==0){
-      //   app[0]->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
 
-      // }
-      // else if(sourceNode==1){
-      //   app[1]->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
-      // }
-      // else if(sourceNode==2){
-      //   app2->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
-      // }
+  TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
+  for (uint32_t i = 0; i < nodeNum; ++i) { 
+    // std::cout << "Opening Bundle Schedule"<< " \n";
+    bundleSched.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bundleSched");
+    if(i!=nodeNum-1){
+      Ptr<Stationary> app;
+      app = CreateObject<Stationary> ();  
+      app->setStationary(1);  
+      app->StationarySetup (nodes.Get (i));
+      app->BufferSetup(5, 8);
+
+      nodes.Get (i)->AddApplication (app);
+      app->SetStartTime (Seconds (0.5 + 0.00001*i));
+      app->SetStopTime (Seconds (5000.));
+      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      char dststring[1024]="";
+      sprintf(dststring,"10.0.0.%d",(i + 1));
+      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
+      dst->Bind(dstlocaladdr);
+      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app));
+      
+      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
+      source->SetAllowBroadcast (true);
+      source->Connect (remote);
+      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
+      if (app->IsStationary()==0){
+        std::cout<<"node "<<i<<" is not stationary "<<app->IsStationary()<<" = stationary value\n";
+        app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+      }
+      
+      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress local (Ipv4Address::GetAny (), 80);
+      recvSink->Bind (local);
+      recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
+      
+      if(bundleSched.is_open()){
+        while(bundleSched >> sourceNode >> destinationNode >> sendTime >> packetSizeToSend){
+          if(sourceNode==i){
+            app->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
+          }
+        }
+      }
+      else{
+        std::cout << "Unable to open Bundle Schedule\n";
+      }
+      bundleSched.close();
+
+    }
+    else{
+      Ptr<Mobile> app;
+      app = CreateObject<Mobile> ();  
+      app->setStationary(0);  
+      app->MobileSetup (nodes.Get (i));
+
+      nodes.Get (i)->AddApplication (app);
+      app->SetStartTime (Seconds (0.5 + 0.00001*i));
+      app->SetStopTime (Seconds (5000.));
+      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      char dststring[1024]="";
+      sprintf(dststring,"10.0.0.%d",(i + 1));
+      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
+      dst->Bind(dstlocaladdr);
+      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app));
+      
+      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
+      source->SetAllowBroadcast (true);
+      source->Connect (remote);
+      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
+      if (app->IsStationary()==0){
+        std::cout<<"node "<<i<<" is not stationary "<<app->IsStationary()<<" = stationary value\n";
+        app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+      }
+      
+      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress local (Ipv4Address::GetAny (), 80);
+      recvSink->Bind (local);
+      recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
+
+      if(bundleSched.is_open()){
+        while(bundleSched >> sourceNode >> destinationNode >> sendTime >> packetSizeToSend){
+          if(sourceNode==i){
+            app->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
+          }
+        }
+      }
+      else{
+        std::cout << "Unable to open Bundle Schedule\n";
+      }
+      bundleSched.close();
     }
   }
-  else{
-    std::cout << "Unable to open Bundle Schedule\n";
-  }
-  bundleSched.close();
-
-
-
-
-  
 }
 
 void 

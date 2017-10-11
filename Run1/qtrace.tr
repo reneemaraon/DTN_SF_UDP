@@ -1,6 +1,6 @@
-node 0 getnode 0x1e9ae40 dst-> 0x1eb1de0 10.0.0.1 source-> 0x1eb2200
-node 1 getnode 0x1e9b3b0 dst-> 0x1eb37c0 10.0.0.2 source-> 0x1eb3be0
-node 2 getnode 0x1e9b140 dst-> 0x1eb5150 10.0.0.3 source-> 0x1eb5570
+node 0 getnode 0x2694e40 dst-> 0x26ae0a0 10.0.0.1 source-> 0x26ae4c0
+node 1 getnode 0x26953b0 dst-> 0x26b0350 10.0.0.2 source-> 0x26b0770
+node 2 getnode 0x2695140 dst-> 0x26b26c0 10.0.0.3 source-> 0x26b2ae0
 node 2 is not stationary 0 = stationary value
 0.5 0 0 0 0 1 30 200
 0.50001 0 0 0 0 0 230 200

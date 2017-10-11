@@ -1,21 +1,21 @@
 Creating 3 nodes.
-node 0 getnode 0xb8ae40 dst-> 0xba1de0 10.0.0.1 source-> 0xba2200
-node 1 getnode 0xb8b3b0 dst-> 0xba37c0 10.0.0.2 source-> 0xba3be0
-node 2 getnode 0xb8b140 dst-> 0xba5150 10.0.0.3 source-> 0xba5570
+node 0 getnode 0x80ee40 dst-> 0x8280a0 10.0.0.1 source-> 0x8284c0
+node 1 getnode 0x80f3b0 dst-> 0x82a350 10.0.0.2 source-> 0x82a770
+node 2 getnode 0x80f140 dst-> 0x82c6c0 10.0.0.3 source-> 0x82cae0
 node 2 is not stationary 0 = stationary value
 Starting simulation for 10 s, seed value 12345675
 0.5 0 0 0 0 1 30 200
 0.50001 0 0 0 0 0 230 200
 0.50002 0 0 0 0 0 50.001 100
-At time 1 send bundle with sequence number 18 from 10.0.0.2 to 10.0.0.3
+At time 1 send bundle with sequence number 9 from 10.0.0.2 to 10.0.0.3
 1.5 0 0 0 0 1 30 200
 1.5 0 0 1 60028 0 230 200
 1.5 0 0 0 0 0 100 100
 2.5 0 0 0 0 0 30 200
 2.5 0 0 1 60028 0 230 200
 2.5 0 0 0 0 0 150 100
-At time 2.5962 received 60000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 1.5962 bundle hop count: 1 sequence number: 18 bundle queue occupancy: 0
-At time 2.5962 send antipacket with sequence number 18 original ts 1 new ts 0 from 10.0.0.3 to 10.0.0.2
+At time 2.5962 received 60000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 1.5962 bundle hop count: 1 sequence number: 9 bundle queue occupancy: 0
+At time 2.5962 send antipacket with sequence number 9 original ts 1 new ts 0 from 10.0.0.3 to 10.0.0.2
 3.5 0 0 0 0 0 30 200
 3.5 0 0 1 60028 1 230 200
 3.5 0 1 0 0 0 200 100
