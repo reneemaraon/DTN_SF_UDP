@@ -18,6 +18,7 @@
 #include "ns3/ns2-mobility-helper.h"
 #include "ns3/qos-tag.h"
 #include "ns3/netanim-module.h"
+#include "QueueStruct.h"
 
 using namespace ns3;
 
@@ -1283,19 +1284,16 @@ public:
   void GenerateData(uint32_t first);
   void CheckBuffer();
 
-  char **buffer;
   int bufferCount;
   int entryLength;
   int bufferLength;
   uint32_t secondsInterval;
 
   uint32_t  bundleSize;
+  Ptr<Queue> bufferTest;
+  QueueStruct buffer;
 };
 
-// Stationary::Stationary():
-//   stationary(1)
-// {
-// }
 
 void Stationary::StationarySetup(Ptr<Node> node){
   m_node = node;
@@ -1319,29 +1317,19 @@ void Stationary::StationarySetup(Ptr<Node> node){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
-// void Stationary::BufferSetup(uint32_t numOfEntries, uint32_t entrySize){
-void Stationary::BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput){
-  bufferCount=0;
-  entryLength = entrySize;
-  secondsInterval = secondsIntervalinput;
-  bufferLength = numOfEntries;
-  
-  buffer = new char *[numOfEntries];
-  for (int i= 0; i<int(numOfEntries); i++){
-    buffer[i] = new char [entrySize];
-  }
-}
 
 void Stationary::GenerateData(uint32_t first){
   if (first==0){
     if (bufferCount<bufferLength){
       const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
       // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+      std::string tempor;
       for (int i=0; i<(entryLength); i++){
-        buffer[bufferCount][i] = alphanum[random()%36];
-        // std::cout<<buffer[bufferCount][i];
+        tempor += alphanum[rand() % 36];
       }
-      // std::cout<<"\n";
+      // std::cout << tempor <<"\n";
+      buffer.enqueue(tempor);
+      // buffer.listPrinter();
       bufferCount=bufferCount+1;
       Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
     }
@@ -1349,8 +1337,8 @@ void Stationary::GenerateData(uint32_t first){
   else{
     Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
   }
-
 }
+
 
 void Stationary::CheckBuffer(){
   //check if may # of bundles = bundleSize, gawa ng bundle 
@@ -1361,11 +1349,6 @@ public:
   void MobileSetup(Ptr<Node> node);
 };
 
-
-// Mobile::Mobile():
-//   stationary(0)
-// {  
-// }
 
 void
 Mobile::MobileSetup (Ptr<Node> node)
@@ -1590,22 +1573,29 @@ DtnExample::InstallApplications ()
     if(i!=nodeNum-1){
       Ptr<Stationary> app;
       app = CreateObject<Stationary> ();  
-      app->setStationary(1);  
+      // app->setStationary(1);  
       app->StationarySetup (nodes.Get (i));
 
-    
+
       // std::cout << "Opening Stationary Buffer Details"<< " \n";
       bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails.txt");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
-          app->BufferSetup(numOfEntries, entrySize, secondsIntervalinput);
+          if(node_num==i){
+            // app->BufferSetup(numOfEntries, entrySize, secondsIntervalinput);
+            app->bufferCount=0;
+            app->entryLength = entrySize;
+            app->secondsInterval = secondsIntervalinput;
+            app->bufferLength = numOfEntries;
           // std::cout<<"seconds interval" <<secondsIntervalinput<<"\n";
+          }
         }
       }
       else{
         std::cout<<"Unable to open Stationary Buffer Details\n";
       }
       bufferInput.close();
+
 
       nodes.Get (i)->AddApplication (app);
       app->SetStartTime (Seconds (0.5 + 0.00001*i));
