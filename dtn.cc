@@ -1282,16 +1282,19 @@ public:
   void StationarySetup(Ptr<Node> node);
   void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
   void GenerateData(uint32_t first);
-  void CheckBuffer();
+  void StoreInBuffer(std::string tempor);
+  void CreateBundle();
 
   int bufferCount;
   int entryLength;
   int bufferLength;
   uint32_t secondsInterval;
 
-  uint32_t  bundleSize;
+  // uint32_t  bundleSize;
   Ptr<Queue> bufferTest;
   QueueStruct buffer;
+
+  int dataSizeInBundle;
 };
 
 
@@ -1304,6 +1307,7 @@ void Stationary::StationarySetup(Ptr<Node> node){
   m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
   m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
   stationary = 1;
+  dataSizeInBundle=2;
   for(int i = 0; i < 10000; i++) {
     firstSendTime[i] = 0;
     lastSendTime[i] = 0;
@@ -1320,19 +1324,24 @@ void Stationary::StationarySetup(Ptr<Node> node){
 
 void Stationary::GenerateData(uint32_t first){
   if (first==0){
-    if (bufferCount<bufferLength){
-      const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
-      std::string tempor;
-      for (int i=0; i<(entryLength); i++){
-        tempor += alphanum[rand() % 36];
-      }
-      // std::cout << tempor <<"\n";
-      buffer.enqueue(tempor);
-      // buffer.listPrinter();
-      bufferCount=bufferCount+1;
-      Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+    // if (bufferCount<bufferLength){
+    const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+    std::string tempor;
+    for (int i=0; i<(entryLength); i++){
+      tempor += alphanum[rand() % 36];
     }
+    // std::cout<< "----------------------node is " << m_node->GetId()<<"\n" <<"BEFORE LIST";
+    // buffer.listPrinter();
+    // std::cout << "TEMPOR IS: "<< tempor <<"\n";
+    StoreInBuffer(tempor);
+
+    // std::cout<< "AFTER LIST NOW IS: ";
+    // buffer.listPrinter();
+    // std::cout<< "----------------------node is " << m_node->GetId()<<"\n";
+    // bufferCount=bufferCount+1;
+    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+    // }
   }
   else{
     Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
@@ -1340,9 +1349,100 @@ void Stationary::GenerateData(uint32_t first){
 }
 
 
-void Stationary::CheckBuffer(){
-  //check if may # of bundles = bundleSize, gawa ng bundle 
+void Stationary::StoreInBuffer(std::string tempor){
+    if(buffer.getSize() <= bufferLength ){
+      buffer.enqueue(tempor);
+      // std::cout<< "enqueue LIST NOW IS: ";
+      // buffer.listPrinter();
+      if(buffer.getSize() >= dataSizeInBundle){
+        CreateBundle();
+      }
+    }
 }
+
+void Stationary::CreateBundle(){
+  std::string payload="";
+  for(int y=0; y<dataSizeInBundle; y++){
+    payload+=buffer.get(0);
+    buffer.dequeue();
+    // buffer.listPrinter();
+  }
+  std::cout<<"payload: "<<payload<<"\n";
+
+      //   Ptr<Packet> packet = Create<Packet> (packetsize);
+      //   mypacket::BndlHeader bndlHeader;
+      //   char srcstring[1024]="";
+      //   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
+      //   char dststring[1024]="";
+      //   sprintf(dststring,"10.0.0.%d",(dstnode+1));
+      //   // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << dstnode <<" with size " << packetsize<<"\n";
+      //   bndlHeader.SetOrigin (srcstring);
+      //   bndlHeader.SetDst (dststring);
+      //   bndlHeader.SetOriginSeqno (packet->GetUid());
+      //   bndlHeader.SetHopCount (0);
+      //   bndlHeader.SetSpray (4);
+      //   bndlHeader.SetNretx (0);
+      //   bndlHeader.SetBundleSize (packetsize);
+      //   bndlHeader.SetSrcTimestamp (Simulator::Now ());
+      //   bndlHeader.SetHopTimestamp (Simulator::Now ());
+      //   packet->AddHeader (bndlHeader);
+      //   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+      //   packet->AddHeader (tHeader);
+
+
+
+
+
+
+
+
+      // void
+      // DtnApp::SendBundle (uint32_t dstnode, uint32_t packetsize)
+      // {
+      //   // std::cout<< "SendBundle pasok. " ;
+      //   Ptr<Packet> packet = Create<Packet> (packetsize);
+      //   mypacket::BndlHeader bndlHeader;
+      //   char srcstring[1024]="";
+      //   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
+      //   char dststring[1024]="";
+      //   sprintf(dststring,"10.0.0.%d",(dstnode+1));
+      //   // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << dstnode <<" with size " << packetsize<<"\n";
+      //   bndlHeader.SetOrigin (srcstring);
+      //   bndlHeader.SetDst (dststring);
+      //   bndlHeader.SetOriginSeqno (packet->GetUid());
+      //   bndlHeader.SetHopCount (0);
+      //   bndlHeader.SetSpray (4);
+      //   bndlHeader.SetNretx (0);
+      //   bndlHeader.SetBundleSize (packetsize);
+      //   bndlHeader.SetSrcTimestamp (Simulator::Now ());
+      //   bndlHeader.SetHopTimestamp (Simulator::Now ());
+      //   packet->AddHeader (bndlHeader);
+      //   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+      //   packet->AddHeader (tHeader);
+      //   if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
+      //     bool success = m_queue->Enqueue (packet);
+      //     if (success) {
+      //       std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+      //   " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+      //   " from " <<  bndlHeader.GetOrigin () <<
+      //   " to " << bndlHeader.GetDst () << "\n";
+      //     }
+      //   } else {
+      //     std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+      //       " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+      //       " from " <<  bndlHeader.GetOrigin () <<
+      //       " to " << bndlHeader.GetDst () << "\n";
+      //   }
+      // }
+
+
+
+
+
+
+}
+
+  //check if may # of bundles = bundleSize, gawa ng bundle 
 
 class Mobile: public DtnApp {
 public:

@@ -1,7 +1,7 @@
 Creating 3 nodes.
-node 0 getnode 0x25fae40 dst-> 0x26140a0 10.0.0.1 source-> 0x26144c0
-node 1 getnode 0x25fb3b0 dst-> 0x2615f90 10.0.0.2 source-> 0x2616640
-node 2 getnode 0x25fb140 dst-> 0x26182e0 10.0.0.3 source-> 0x2618960
+node 0 getnode 0x248be40 dst-> 0x24a50a0 10.0.0.1 source-> 0x24a54c0
+node 1 getnode 0x248c3b0 dst-> 0x24a6f90 10.0.0.2 source-> 0x24a7640
+node 2 getnode 0x248c140 dst-> 0x24a92e0 10.0.0.3 source-> 0x24a9960
 node 2 is not stationary 0 = stationary value
 Starting simulation for 10 s, seed value 12345679
 0.5 0 0 0 0 1 30 200
@@ -19,18 +19,21 @@ At time 2.5962 send antipacket with sequence number 9 original ts 1 new ts 0 fro
 3.5 0 0 0 0 0 30 200
 3.5 0 0 1 60028 1 230 200
 3.5 0 1 0 0 0 200 100
+payload: TjJHFHKMiSQdkIPibb
 4.5 0 0 0 0 0 30 200
 4.5 0 0 1 60028 1 230 200
 4.5 0 1 0 0 0 230 100
 5.5 0 0 0 0 0 30 200
 5.5 0 0 1 60028 1 230 200
 5.5 0 1 0 0 0 230 100
+payload: BOgOHYXZbgTTFSSf
 6.5 0 0 0 0 0 30 200
 6.5 0 0 1 60028 1 230 200
 6.5 0 1 0 0 0 230 100
 7.5 0 0 0 0 0 30 200
 7.5 0 0 1 60028 1 230 200
 7.5 0 1 0 0 0 230 100
+payload: FDBQgjiJJLhNOULfeK
 8.5 0 0 0 0 0 30 200
 8.5 0 0 1 60028 1 230 200
 8.5 0 1 0 0 0 230 100

@@ -255,7 +255,7 @@ void QueueStruct::enqueue(std::string data){
 
 
 void QueueStruct::dequeue(){
-	remove(size-1);
+	remove(0);
 }
 
 // int main(){
