@@ -19,6 +19,7 @@
 #include "ns3/qos-tag.h"
 #include "ns3/netanim-module.h"
 #include "QueueStruct.h"
+#include <sstream>
 
 using namespace ns3;
 
@@ -47,7 +48,7 @@ public:
   void Setup (Ptr<Node> node);
   void DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr);
   void ReceiveHello (Ptr<Socket> socket);
-  void ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetSize);
+  void ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize);
   void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first);
   void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx);
   void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx);
@@ -61,7 +62,7 @@ public:
   virtual void StartApplication (void);
   virtual void StopApplication (void);
   
-  void SendBundle (uint32_t dstnode, uint32_t packetSize);
+  void SendBundle (uint32_t dstnode, uint32_t packetsize);
   void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp);
   void PrintBuffers (void);
   void CheckQueues (uint32_t bundletype);
@@ -1295,6 +1296,7 @@ public:
   QueueStruct buffer;
 
   int dataSizeInBundle;
+  uint32_t destinationNode;
 };
 
 
@@ -1358,6 +1360,7 @@ void Stationary::StoreInBuffer(std::string tempor){
         CreateBundle();
       }
     }
+    //eviction policy?????????????????
 }
 
 void Stationary::CreateBundle(){
@@ -1367,79 +1370,49 @@ void Stationary::CreateBundle(){
     buffer.dequeue();
     // buffer.listPrinter();
   }
-  std::cout<<"payload: "<<payload<<"\n";
+  int bndlSize=100000;//?????????????????? how to compute hehe
+  std::stringstream bndlData;
+  bndlData << payload ;
 
-      //   Ptr<Packet> packet = Create<Packet> (packetsize);
-      //   mypacket::BndlHeader bndlHeader;
-      //   char srcstring[1024]="";
-      //   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
-      //   char dststring[1024]="";
-      //   sprintf(dststring,"10.0.0.%d",(dstnode+1));
-      //   // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << dstnode <<" with size " << packetsize<<"\n";
-      //   bndlHeader.SetOrigin (srcstring);
-      //   bndlHeader.SetDst (dststring);
-      //   bndlHeader.SetOriginSeqno (packet->GetUid());
-      //   bndlHeader.SetHopCount (0);
-      //   bndlHeader.SetSpray (4);
-      //   bndlHeader.SetNretx (0);
-      //   bndlHeader.SetBundleSize (packetsize);
-      //   bndlHeader.SetSrcTimestamp (Simulator::Now ());
-      //   bndlHeader.SetHopTimestamp (Simulator::Now ());
-      //   packet->AddHeader (bndlHeader);
-      //   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-      //   packet->AddHeader (tHeader);
-
-
-
-
-
-
-
-
-      // void
-      // DtnApp::SendBundle (uint32_t dstnode, uint32_t packetsize)
-      // {
-      //   // std::cout<< "SendBundle pasok. " ;
-      //   Ptr<Packet> packet = Create<Packet> (packetsize);
-      //   mypacket::BndlHeader bndlHeader;
-      //   char srcstring[1024]="";
-      //   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
-      //   char dststring[1024]="";
-      //   sprintf(dststring,"10.0.0.%d",(dstnode+1));
-      //   // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << dstnode <<" with size " << packetsize<<"\n";
-      //   bndlHeader.SetOrigin (srcstring);
-      //   bndlHeader.SetDst (dststring);
-      //   bndlHeader.SetOriginSeqno (packet->GetUid());
-      //   bndlHeader.SetHopCount (0);
-      //   bndlHeader.SetSpray (4);
-      //   bndlHeader.SetNretx (0);
-      //   bndlHeader.SetBundleSize (packetsize);
-      //   bndlHeader.SetSrcTimestamp (Simulator::Now ());
-      //   bndlHeader.SetHopTimestamp (Simulator::Now ());
-      //   packet->AddHeader (bndlHeader);
-      //   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-      //   packet->AddHeader (tHeader);
-      //   if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
-      //     bool success = m_queue->Enqueue (packet);
-      //     if (success) {
-      //       std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-      //   " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-      //   " from " <<  bndlHeader.GetOrigin () <<
-      //   " to " << bndlHeader.GetDst () << "\n";
-      //     }
-      //   } else {
-      //     std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-      //       " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-      //       " from " <<  bndlHeader.GetOrigin () <<
-      //       " to " << bndlHeader.GetDst () << "\n";
-      //   }
-      // }
+  // std::cout<<"payload: "<<payload <<" bndlData " <<bndlData<< " bndlData str ekek "<< (uint8_t*) bndlData.str().c_str()<<"\n";
+  
+  Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
+  mypacket::BndlHeader bndlHeader;
+  char srcstring[1024]="";
+  sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
+  char dststring[1024]="";
+  sprintf(dststring,"10.0.0.%d",(destinationNode+1));
+  // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << destinationNode <<" with size " << bndlSize<<"\n";
+  bndlHeader.SetOrigin (srcstring);
+  bndlHeader.SetDst (dststring);
+  bndlHeader.SetOriginSeqno (packet->GetUid());
+  bndlHeader.SetHopCount (0);
+  bndlHeader.SetSpray (4);
+  bndlHeader.SetNretx (0);
+  bndlHeader.SetBundleSize (bndlSize);
+  bndlHeader.SetSrcTimestamp (Simulator::Now ());
+  bndlHeader.SetHopTimestamp (Simulator::Now ());
+  packet->AddHeader (bndlHeader);
+  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+  packet->AddHeader (tHeader);
 
 
 
 
-
-
+  // if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
+  //   bool success = m_queue->Enqueue (packet);
+  //   if (success) {
+  //     std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+  // " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+  // " from " <<  bndlHeader.GetOrigin () <<
+  // " to " << bndlHeader.GetDst () << "\n";
+  //   }
+  // } else {
+  //   std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+  //     " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+  //     " from " <<  bndlHeader.GetOrigin () <<
+  //     " to " << bndlHeader.GetDst () << "\n";
+  // }
 }
 
   //check if may # of bundles = bundleSize, gawa ng bundle 
@@ -1669,16 +1642,15 @@ DtnExample::InstallApplications ()
   TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
   for (uint32_t i = 0; i < nodeNum; ++i) { 
     // std::cout << "Opening Bundle Schedule"<< " \n";
-    bundleSched.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bundleSched");
     if(i!=nodeNum-1){
       Ptr<Stationary> app;
       app = CreateObject<Stationary> ();  
       // app->setStationary(1);  
       app->StationarySetup (nodes.Get (i));
-
+      app->destinationNode=2;
 
       // std::cout << "Opening Stationary Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails.txt");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -1720,6 +1692,7 @@ DtnExample::InstallApplications ()
       recvSink->Bind (local);
       recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
       
+      bundleSched.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bundleSched");
       if(bundleSched.is_open()){
         while(bundleSched >> sourceNode >> destinationNode >> sendTime >> packetSizeToSend){
           if(sourceNode==i){

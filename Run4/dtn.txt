@@ -1,8 +1,9 @@
 Creating 3 nodes.
-node 0 getnode 0x2380e40 dst-> 0x239a0a0 10.0.0.1 source-> 0x239a4c0
-node 1 getnode 0x23813b0 dst-> 0x239bf90 10.0.0.2 source-> 0x239c640
-node 2 getnode 0x2381140 dst-> 0x239e2e0 10.0.0.3 source-> 0x239e960
+node 0 getnode 0x21d5e40 dst-> 0x21ece10 10.0.0.1 source-> 0x21ed230
+node 1 getnode 0x21d63b0 dst-> 0x21ee470 10.0.0.2 source-> 0x21eeb20
+node 2 getnode 0x21d6140 dst-> 0x21f1020 10.0.0.3 source-> 0x21f1490
 node 2 is not stationary 0 = stationary value
+Unable to open Bundle Schedule
 Starting simulation for 10 s, seed value 12345677
 0.5 0 0 0 0 1 30 200
 0.50001 0 0 0 0 0 230 200
@@ -19,21 +20,18 @@ At time 2.5973 send antipacket with sequence number 9 original ts 1 new ts 0 fro
 3.5 0 0 0 0 0 30 200
 3.5 0 0 1 60028 1 230 200
 3.5 0 1 0 0 0 200 100
-payload: TjJHFHKMiSQdkIPibb
 4.5 0 0 0 0 0 30 200
 4.5 0 0 1 60028 1 230 200
 4.5 0 1 0 0 0 230 100
 5.5 0 0 0 0 0 30 200
 5.5 0 0 1 60028 1 230 200
 5.5 0 1 0 0 0 230 100
-payload: BOgOHYXZbgTTFSSf
 6.5 0 0 0 0 0 30 200
 6.5 0 0 1 60028 1 230 200
 6.5 0 1 0 0 0 230 100
 7.5 0 0 0 0 0 30 200
 7.5 0 0 1 60028 1 230 200
 7.5 0 1 0 0 0 230 100
-payload: FDBQgjiJJLhNOULfeK
 8.5 0 0 0 0 0 30 200
 8.5 0 0 1 60028 1 230 200
 8.5 0 1 0 0 0 230 100
