@@ -1,0 +1,1 @@
+./waf --run dtn_sf_udp --command-template="gdb --args %s --seed=12345 --traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/newdst1.tcl --logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log --nodeNum=3 --duration=50.0"

@@ -313,6 +313,8 @@ void DtnApp::PrintBuffers (void) {
 
 void DtnApp::CheckQueues (uint32_t bundletype) {
   Ptr<Packet> packet;
+  Ptr<Packet> firstpacket;
+
   uint32_t i = 0, n = 0, pkts = 0, send_bundle = 0;
   mypacket::APHeader apHeader;
   mypacket::BndlHeader bndlHeader;
@@ -445,8 +447,11 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
               
               while ((neighbor_has_bundle == 0) && (neighbor_hello_bundles[i][j] != 0) && (j < 1000)) {
                 //check if neighbor has the antipacket
-                if (neighbor_hello_bundles[i][j] == -(int32_t)apHeader.GetOriginSeqno ())
+                std::cout <<neighbor_hello_bundles[i][j]<<" "<<-(int32_t)apHeader.GetOriginSeqno()<<"\n";
+                if (neighbor_hello_bundles[i][j] == -(int32_t)apHeader.GetOriginSeqno ()){
+                  std::cout<<"Neighbor has bundle\n";
                   neighbor_has_bundle = 1;
+                }
                 else
                   j++;
               }
@@ -458,6 +463,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
                 else
                   j++;
               }
+              // if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
               if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
                 //sending antipacket to this person
                 send_bundle = 1;
@@ -481,71 +487,80 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
     else { //if not bundle type ==2
       pkts = m_queue->GetNPackets();
       n = 0;
-      while ((n < pkts) && (send_bundle == 0)) {
+      while (n < pkts) {
         n++;
         packet = m_queue->Dequeue ();
+        // packet = m_queue->Dequeue ();
         mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
         packet->RemoveHeader(tHeader);
         packet->RemoveHeader(bndlHeader);
         //if not old ang bundle
         if ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0) {
           // ano lang basta di pa bago ang bundle narating sa node na itu
-          if ((Simulator::Now ().GetSeconds () - bndlHeader.GetHopTimestamp ().GetSeconds ()) > 0.2) {
-            Ipv4Address dst = bndlHeader.GetDst ();
-            uint8_t spray = bndlHeader.GetSpray ();
-            i = 0;
-            //iterating through neighbors
-            while ((i < neighbors) && (send_bundle == 0)) {
-              // if dest of bundle is neighboraddress, tas bago lang nakita ang neighbor
-              if (( ((bundletype == 0) && (spray > 0) && ((cc == 0)||(b_a[i] > packet->GetSize()))) || (dst == neighbor_address[i].GetIpv4())) && \
-                ((Simulator::Now ().GetSeconds () - neighbor_last_seen[i]) < 0.1) && (neighbor_address[i].GetIpv4() != bndlHeader.GetOrigin())) {
-                int neighbor_has_bundle = 0, bundle_sent = 0, j=0;
-                //check kung meron ba siya nung bundle
-                while ((neighbor_has_bundle == 0) && (neighbor_hello_bundles[i][j] != 0) && (j < 1000)) {
-                  if ((unsigned)neighbor_hello_bundles[i][j] == bndlHeader.GetOriginSeqno ())
-                    neighbor_has_bundle = 1;
-                  else
-                    j++;
-                }
-                j = 0;
-                //check if nasend na ba yung bundle sa kanya
-                while ((neighbor_has_bundle == 0) && (bundle_sent == 0) && (neighbor_sent_bundles[i][j] != 0) && (j < 1000)) {
-                  if (neighbor_sent_bundles[i][j] == (int32_t)bndlHeader.GetOriginSeqno ())
-                    bundle_sent = 1;
-                  else
-                    j++;
-                }
-                if ((neighbor_has_bundle == 0) && (bundle_sent == 0)) {
-                  if (bundletype == 0) {
-                    if (rp == 1)
-                      bndlHeader.SetSpray (spray/2);
-                    if (cc > 0) {
-                      if (packet->GetSize() >= b_a[i])
-                        b_a[i] = 0;
-                      else
-                        b_a[i] -= packet->GetSize();
-                    }
-                  } 
-                  else {
-                    // Wait 5.0 seconds before forwarding to other (than dst) nodes
-                    bndlHeader.SetHopTimestamp (Simulator::Now () + Seconds (5.0));
+          if (n==1){
+            if ((Simulator::Now ().GetSeconds () - bndlHeader.GetHopTimestamp ().GetSeconds ()) > 0.2) {
+
+              Ipv4Address dst = bndlHeader.GetDst ();
+              uint8_t spray = bndlHeader.GetSpray ();
+              i = 0;
+              //iterating through neighbors
+              while ((i < neighbors) && (send_bundle == 0)) {
+                // if dest of bundle is neighboraddress, tas bago lang nakita ang neighbor
+                if (( ((bundletype == 0) && (spray > 0) && ((cc == 0)||(b_a[i] > packet->GetSize()))) || (dst == neighbor_address[i].GetIpv4())) && \
+                  ((Simulator::Now ().GetSeconds () - neighbor_last_seen[i]) < 0.1) && (neighbor_address[i].GetIpv4() != bndlHeader.GetOrigin())) {
+                  int neighbor_has_bundle = 0, bundle_sent = 0, j=0;
+                  //check kung meron ba siya nung bundle
+                  while ((neighbor_has_bundle == 0) && (neighbor_hello_bundles[i][j] != 0) && (j < 1000)) {
+                    if ((unsigned)neighbor_hello_bundles[i][j] == bndlHeader.GetOriginSeqno ())
+                      neighbor_has_bundle = 1;
+                    else
+                      j++;
                   }
-                  send_bundle = 1;
                   j = 0;
-                  while ((neighbor_sent_bundles[i][j] != 0) && (j < 999))
-                    j++;
-                  neighbor_sent_bundles[i][j] = (int32_t)bndlHeader.GetOriginSeqno ();
+                  //check if nasend na ba yung bundle sa kanya
+                  while ((neighbor_has_bundle == 0) && (bundle_sent == 0) && (neighbor_sent_bundles[i][j] != 0) && (j < 1000)) {
+                    if (neighbor_sent_bundles[i][j] == (int32_t)bndlHeader.GetOriginSeqno ())
+                      bundle_sent = 1;
+                    else
+                      j++;
+                  }
+                  if ((neighbor_has_bundle == 0) && (bundle_sent == 0)) {
+                    if (bundletype == 0) {
+                      if (rp == 1)
+                        bndlHeader.SetSpray (spray/2);
+                      if (cc > 0) {
+                        if (packet->GetSize() >= b_a[i])
+                          b_a[i] = 0;
+                        else
+                          b_a[i] -= packet->GetSize();
+                      }
+                    } 
+                    else {
+                      // Wait 5.0 seconds before forwarding to other (than dst) nodes
+                      bndlHeader.SetHopTimestamp (Simulator::Now () + Seconds (5.0));
+                    }
+                    std::cout<<"Here\n";
+
+                    send_bundle = 1;
+                    j = 0;
+                    while ((neighbor_sent_bundles[i][j] != 0) && (j < 999))
+                      j++;
+                    neighbor_sent_bundles[i][j] = (int32_t)bndlHeader.GetOriginSeqno ();
+                  } 
+                  else
+                    i++;
                 } 
                 else
                   i++;
-              } 
-              else
-                i++;
+              }
             }
           }
           packet->AddHeader (bndlHeader);
           packet->AddHeader (tHeader);
           Ptr<Packet> qp = packet->Copy();
+          if (n==1){
+            firstpacket= packet->Copy();
+          }
           bool success = m_queue->Enqueue (qp);
           if (success) {
           }
@@ -584,6 +599,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
           }
         }
       }
+      packet = firstpacket;
     }
   } 
   else {
