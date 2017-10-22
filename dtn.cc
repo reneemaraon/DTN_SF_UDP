@@ -225,12 +225,14 @@ void DtnApp::ConnectionFails (Ptr<Socket> localSocket){
 
 void DtnApp::Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx){
   // Check that this is last call for retransmit, otherwise return
+
   int index = 0, found = 0;
   while ((found == 0) && (index < NumFlows)) {
     if ((sendTos[index] == sendTo) && (ids[index] == id) && (retxs[index] == retx) && ((Simulator::Now ().GetSeconds () - firstSendTime[index]) < 750.0)) {
       found = 1;
-      if ((Simulator::Now ().GetSeconds () - lastSendTime[index] < 1.0))
+      if ((Simulator::Now ().GetSeconds () - lastSendTime[index] < 1.0)){
         return;
+      }
     } 
     else
       index++;
@@ -466,7 +468,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
               // if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
               if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
                 //sending antipacket to this person
-                std::cout <<"Hello fam ~ ~ ~ ~ "<<neighbor_address[i].GetIpv4()<< "\n";
+                std::cout <<"Sending antipacket with sequence number "<<apHeader.GetOriginSeqno()<<" to " <<neighbor_address[i].GetIpv4()<< "\n";
                 if (stationary ==0)
                   send_bundle = 1;
                 j = 0;
@@ -601,6 +603,8 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
         }
       }
       packet = firstpacket;
+
+
     }
   } 
   else {
@@ -617,6 +621,8 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
 
     InetSocketAddress dstremoteaddr (neighbor_address[i].GetIpv4(), 50000);    
     if (bundletype < 2) {
+
+      std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
@@ -820,13 +826,14 @@ void DtnApp::RemoveBundle (Ptr<Packet> pkt){
       p->RemoveHeader(tHeader);
       p->RemoveHeader(bndlHeader);
       if (bndlHeader.GetOriginSeqno () != seqno) {
-      p->AddHeader(bndlHeader);
-      p->AddHeader(tHeader);
-      bool success = m_queue->Enqueue (p);
-      if (success) {
-      }  
+        p->AddHeader(bndlHeader);
+        p->AddHeader(tHeader);
+        bool success = m_queue->Enqueue (p);
+        if (success) {
+        }  
       } 
       else{
+        std::cout<<"Removing bundle of sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
         found = 1;
         uint32_t n=0;
         while (n < neighbors) {
@@ -1038,6 +1045,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
     } 
     else {
       if (currentServerRxBytes[i] > bundle_size[i]) {
+        std::cout<<"Current server bytes: "<<currentServerRxBytes[i]<<" Bundle size: "<<bundle_size[i]<<"\n";
         std::cout << "WTF at time " << Simulator::Now ().GetSeconds () <<
           " received " << p->GetSize() <<
           " bytes at " << owniaddress.GetIpv4 () <<
