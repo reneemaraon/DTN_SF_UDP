@@ -162,6 +162,7 @@ void DtnApp::Setup (Ptr<Node> node){
   m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
   m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
   m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  stationary =0;
   for(int i = 0; i < 10000; i++) {
     firstSendTime[i] = 0;
     lastSendTime[i] = 0;
@@ -440,9 +441,8 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
           i = 0;
           while ((i < neighbors) && (send_bundle == 0)) {
             //if bago lang nakita si neighbor, and aneighbor is not origin of antipacket
-            if (((Simulator::Now ().GetSeconds () - neighbor_last_seen[i]) < 0.1) && (neighbor_address[i].GetIpv4() != apHeader.GetOrigin())) {
-              
-
+            if (((Simulator::Now ().GetSeconds () - neighbor_last_seen[i]) < 0.5) && (neighbor_address[i].GetIpv4() != apHeader.GetOrigin())) {
+              // if (stationary == 0)
               int neighbor_has_bundle = 0, ap_sent = 0, j=0;
               
               while ((neighbor_has_bundle == 0) && (neighbor_hello_bundles[i][j] != 0) && (j < 1000)) {
@@ -466,7 +466,9 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
               // if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
               if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
                 //sending antipacket to this person
-                send_bundle = 1;
+                std::cout <<"Hello fam ~ ~ ~ ~ "<<neighbor_address[i].GetIpv4()<< "\n";
+                if (stationary ==0)
+                  send_bundle = 1;
                 j = 0;
                 while ((neighbor_sent_aps[i][j] != 0) && (neighbor_sent_aps[i][j] != -(int32_t)apHeader.GetOriginSeqno ()) && (j < 999))
                   j++; //positioning i and j
@@ -539,7 +541,6 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
                       // Wait 5.0 seconds before forwarding to other (than dst) nodes
                       bndlHeader.SetHopTimestamp (Simulator::Now () + Seconds (5.0));
                     }
-                    std::cout<<"Here\n";
 
                     send_bundle = 1;
                     j = 0;
@@ -873,6 +874,43 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
     Ptr<Packet> p = socket->RecvFrom (from);
     InetSocketAddress address = InetSocketAddress::ConvertFrom (from); //sender address
 
+    // hello here
+    uint32_t i = 0;
+    uint32_t found = 0;
+    while ((i < neighbors) && (found == 0)) {
+      if (address.GetIpv4() == neighbor_address[i].GetIpv4()) {
+        found = 1;
+      } 
+      else
+        i++;
+    }
+    if (found == 0) {
+      ++neighbors;
+      neighbor_address=(InetSocketAddress*)realloc(neighbor_address,neighbors*sizeof(InetSocketAddress));
+      neighbor_address[i]=address.GetIpv4();
+      neighbor_last_seen=(double*)realloc(neighbor_last_seen,neighbors*sizeof(double));
+      b_a=(uint32_t*)realloc(b_a,neighbors*sizeof(uint32_t));
+      neighbor_hello_bundles=(int32_t**)realloc(neighbor_hello_bundles,neighbors*sizeof(int32_t*));
+      neighbor_hello_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_bundles=(int32_t**)realloc(neighbor_sent_bundles,neighbors*sizeof(int32_t*));
+      neighbor_sent_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_aps=(int32_t**)realloc(neighbor_sent_aps,neighbors*sizeof(int32_t*));
+      neighbor_sent_aps[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_ap_when=(double**)realloc(neighbor_sent_ap_when,neighbors*sizeof(double*));
+      neighbor_sent_ap_when[i]=(double*)calloc(1000,sizeof(double));
+      for(uint32_t j=0; j < 1000; j++) {
+        neighbor_sent_bundles[i][j]=0;
+        neighbor_sent_aps[i][j]=0;
+        neighbor_sent_ap_when[i][j]=0;
+      }
+    }
+    neighbor_last_seen[i] = Simulator::Now ().GetSeconds ();
+
+
+
+
+
+
     // std::cout<< "RcvBundle: rcvrNode "<< GetNode() <<"  rcvrSocket: "<<socket <<"  rcvrIP: "<<owniaddress.GetIpv4() <<"  sndrIP: "<<address.GetIpv4() <<"\n";
     int src_seqno = 0;
     QosTag tag;
@@ -931,8 +969,8 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
     p->RemoveAllByteTags ();
     p->RemoveAllPacketTags ();
 
-    uint32_t i = 0;
-    uint32_t found = 0;
+    i = 0;
+    found = 0;
     while ((i < bundles) && (found == 0)) {
       if ((address.GetIpv4() == bundle_address[i].GetIpv4()) && (src_seqno == bundle_seqno[i]) && (packet_type == bundle_retx[i])) {
         found = 1;
@@ -1090,6 +1128,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
     }
   }
 }
+
 
 void DtnApp::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first) {
   // std::cout<<"SendHello. SSocket "<< socket <<"\n";
