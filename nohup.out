@@ -1,38 +1,130 @@
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
-[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (4.588s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.409s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-[  3/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
-[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (5.635s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.456s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.530s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.728s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
 [657/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
 [682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (7.682s)
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (3.426s)
 awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.815s)
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.303s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.333s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.303s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.334s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.292s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+[658/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (3.432s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.299s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.306s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.303s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.298s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.300s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+[659/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (3.411s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.329s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.485s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.304s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.299s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.299s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+[659/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (3.869s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.299s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.332s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.301s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.332s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.293s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (5.144s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.360s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.291s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.380s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.323s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn2/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.288s)
 awk: line 1: syntax error at or near }

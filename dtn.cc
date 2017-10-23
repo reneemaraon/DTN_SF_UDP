@@ -1407,6 +1407,9 @@ public:
   QueueStruct buffer;
 
   int dataSizeInBundle;
+  int dataIDSize;
+  int nextID;
+  int maxID;
   uint32_t destinationNode;
 };
 
@@ -1421,6 +1424,10 @@ void Stationary::StationarySetup(Ptr<Node> node){
   m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
   stationary = 1;
   dataSizeInBundle=5;
+  dataIDSize=dataSizeInBundle-2;
+  nextID=000;
+  maxID=pow(10,dataIDSize)-1;
+  // std::cout<< "nextID|||maxID "<<nextID<<"|||"<<maxID<<"\n";
   for(int i = 0; i < 10000; i++) {
     firstSendTime[i] = 0;
     lastSendTime[i] = 0;
@@ -1439,14 +1446,23 @@ void Stationary::GenerateData(uint32_t first){
   if (first==0){
     // if (bufferCount<bufferLength){
     const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
-    std::string tempor;
-    for (int i=0; i<(entryLength); i++){
+    std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+    std::stringstream holder;
+    holder << nextID;
+    std::string tempor=std::string(dataIDSize - holder.str().length(), '0') + holder.str();
+    if(nextID==maxID){
+      nextID=000;
+    }
+    else{
+      nextID++;
+    }
+    for (int i=0; i<(entryLength-dataIDSize); i++){
       tempor += alphanum[rand() % 36];
     }
     // std::cout<< "----------------------node is " << m_node->GetId()<<"\n" <<"BEFORE LIST";
     // buffer.listPrinter();
     // std::cout << "TEMPOR IS: "<< tempor <<"\n";
+    std::cout << tempor <<"\n";
     StoreInBuffer(tempor);
 
     // std::cout<< "AFTER LIST NOW IS: ";
@@ -1583,7 +1599,6 @@ public:
   std::string traceFile;
   std::string logFile;
   std::ofstream myos;
-  // std::ifstream bundleSched;
   std::ifstream bufferInput;
 
 private:
@@ -1733,14 +1748,6 @@ void DtnExample::InstallInternetStack () {
 }
 
 void DtnExample::InstallApplications () {
-  std::ifstream bundleSched;
-
-  std::string line;
-  uint32_t sourceNode;
-  uint32_t destinationNode;
-  Time sendTime;
-  uint32_t packetSizeToSend;
-
   uint32_t node_num;
   uint32_t numOfEntries;
   uint32_t entrySize;
@@ -1749,7 +1756,6 @@ void DtnExample::InstallApplications () {
 
   TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
   for (uint32_t i = 0; i < nodeNum; ++i) { 
-    // std::cout << "Opening Bundle Schedule"<< " \n";
     if(i!=nodeNum-1){
       Ptr<Stationary> app;
       app = CreateObject<Stationary> ();  
@@ -1758,8 +1764,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Stationary Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -1800,21 +1806,6 @@ void DtnExample::InstallApplications () {
       InetSocketAddress local (Ipv4Address::GetAny (), 80);
       recvSink->Bind (local);
       recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
-      
-      bundleSched.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bundleSched");
-      // bundleSched.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bundleSched");
-      if(bundleSched.is_open()){
-        while(bundleSched >> sourceNode >> destinationNode >> sendTime >> packetSizeToSend){
-          if(sourceNode==i){
-            app->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
-          }
-        }
-      }
-      else{
-        std::cout << "Unable to open Bundle Schedule\n";
-      }
-      bundleSched.close();
-
     }
     else{
       Ptr<Mobile> app;
@@ -1846,17 +1837,6 @@ void DtnExample::InstallApplications () {
       recvSink->Bind (local);
       recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
 
-      if(bundleSched.is_open()){
-        while(bundleSched >> sourceNode >> destinationNode >> sendTime >> packetSizeToSend){
-          if(sourceNode==i){
-            app->ScheduleTx(destinationNode, sendTime, packetSizeToSend);
-          }
-        }
-      }
-      else{
-        std::cout << "Unable to open Bundle Schedule\n";
-      }
-      bundleSched.close();
     }
   }
 }
