@@ -432,9 +432,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
         packet->AddHeader (apHeader);
         packet->AddHeader (tHeader);
         Ptr<Packet> qp = packet->Copy();
-        bool success = m_antipacket_queue->Enqueue (qp);
-        if (success) {
-        }  
+
         //////////////////////////////////////////////////////////////////
         
 
@@ -482,6 +480,11 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
             } 
             else
               i++;
+          }
+        }
+        if (send_bundle ==0){
+          bool success = m_antipacket_queue->Enqueue (qp);
+          if (success) {
           }
         }
       }
@@ -621,7 +624,14 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
 
     InetSocketAddress dstremoteaddr (neighbor_address[i].GetIpv4(), 50000);    
     if (bundletype < 2) {
+      packet = firstpacket->Copy();
+      mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+      Ptr<Packet> anotherp = packet->Copy();
 
+      anotherp->RemoveHeader(tHeader);
+      anotherp->RemoveHeader(bndlHeader);
+      anotherp->AddHeader(bndlHeader);
+      anotherp->AddHeader(tHeader);
       std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
