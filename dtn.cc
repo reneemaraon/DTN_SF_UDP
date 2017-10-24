@@ -42,25 +42,26 @@ public:
   
   DtnApp ();
   virtual ~DtnApp();
-  
-  void Setup (Ptr<Node> node);
-  void ReceiveHello (Ptr<Socket> socket);
-  void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first);
+   
+  void ReceiveBundle (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
+
   void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG SEND HELLO AND CHECK QUEUES
-  void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx); // CALLED NG RETRANSMIT AND RECEIVE BUNDLE
-  void ReceiveBundle (Ptr<Socket> socket);
+  
+  void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG RETRANSMIT AND RECEIVE BUNDLE
 
 protected:
   virtual void StartApplication (void);
   virtual void StopApplication (void);
   
-  void SendBundle (uint32_t dstnode, uint32_t packetsize);
-  void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp); //CALLED NG RECEIVE BUNDLE
   void PrintBuffers (void); //CALLED NG START APPLICATION
-  void CheckQueues (uint32_t bundletype); //CALLED NG CHECK QUEUES AND START APPLICATION
+  void CheckQueues (uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
+
+  void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp); //CALLED NG RECEIVE BUNDLE
   int IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue); //CALLED NG RECEIVE BUNDLE
   int AntipacketExists (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
   void RemoveBundle (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
+  
+  // void SendBundle (uint32_t dstnode, uint32_t packetsize); //di talaga send more of enqueue, wala nagccall, dati pag nagbbundleSched
   
   Ptr<Node>         m_node;
   Ptr<Socket>       m_socket;
@@ -146,28 +147,6 @@ DtnApp::DtnApp ()
 
 DtnApp::~DtnApp(){
   m_socket = 0;
-}
-
-void DtnApp::Setup (Ptr<Node> node){
-  m_node = node;
-  m_antipacket_queue = CreateObject<DropTailQueue> ();
-  m_queue = CreateObject<DropTailQueue> ();
-  m_helper_queue = CreateObject<DropTailQueue> ();
-  m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  stationary =0;
-  for(int i = 0; i < 10000; i++) {
-    firstSendTime[i] = 0;
-    lastSendTime[i] = 0;
-    lastTxBytes[i] = 0;
-    currentTxBytes[i] = 0;
-    totalTxBytes[i] = 0;
-    ids[i] = 0;
-    retxs[i] = 0;
-  }
-  Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
-  b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
 void DtnApp::StartApplication (void){
@@ -654,43 +633,43 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
   }
 }
 
-void DtnApp::SendBundle (uint32_t dstnode, uint32_t packetsize){
-  // std::cout<< "SendBundle pasok. " ;
-  Ptr<Packet> packet = Create<Packet> (packetsize);
-  mypacket::BndlHeader bndlHeader;
-  char srcstring[1024]="";
-  sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
-  char dststring[1024]="";
-  sprintf(dststring,"10.0.0.%d",(dstnode+1));
-  // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << dstnode <<" with size " << packetsize<<"\n";
-  bndlHeader.SetOrigin (srcstring);
-  bndlHeader.SetDst (dststring);
-  bndlHeader.SetOriginSeqno (packet->GetUid());
-  bndlHeader.SetHopCount (0);
-  bndlHeader.SetSpray (4);
-  bndlHeader.SetNretx (0);
-  bndlHeader.SetBundleSize (packetsize);
-  bndlHeader.SetSrcTimestamp (Simulator::Now ());
-  bndlHeader.SetHopTimestamp (Simulator::Now ());
-  packet->AddHeader (bndlHeader);
-  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-  packet->AddHeader (tHeader);
-  if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
-    bool success = m_queue->Enqueue (packet);
-    if (success) {
-      std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-        " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-        " from " <<  bndlHeader.GetOrigin () <<
-        " to " << bndlHeader.GetDst () << "\n";
-    }
-  } 
-  else {
-    std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-      " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-      " from " <<  bndlHeader.GetOrigin () <<
-      " to " << bndlHeader.GetDst () << "\n";
-  }
-}
+// void DtnApp::SendBundle (uint32_t dstnode, uint32_t packetsize){
+//   // std::cout<< "SendBundle pasok. " ;
+//   Ptr<Packet> packet = Create<Packet> (packetsize);
+//   mypacket::BndlHeader bndlHeader;
+//   char srcstring[1024]="";
+//   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
+//   char dststring[1024]="";
+//   sprintf(dststring,"10.0.0.%d",(dstnode+1));
+//   // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << dstnode <<" with size " << packetsize<<"\n";
+//   bndlHeader.SetOrigin (srcstring);
+//   bndlHeader.SetDst (dststring);
+//   bndlHeader.SetOriginSeqno (packet->GetUid());
+//   bndlHeader.SetHopCount (0);
+//   bndlHeader.SetSpray (4);
+//   bndlHeader.SetNretx (0);
+//   bndlHeader.SetBundleSize (packetsize);
+//   bndlHeader.SetSrcTimestamp (Simulator::Now ());
+//   bndlHeader.SetHopTimestamp (Simulator::Now ());
+//   packet->AddHeader (bndlHeader);
+//   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+//   packet->AddHeader (tHeader);
+//   if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
+//     bool success = m_queue->Enqueue (packet);
+//     if (success) {
+//       std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+//         " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+//         " from " <<  bndlHeader.GetOrigin () <<
+//         " to " << bndlHeader.GetDst () << "\n";
+//     }
+//   } 
+//   else {
+//     std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+//       " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+//       " from " <<  bndlHeader.GetOrigin () <<
+//       " to " << bndlHeader.GetDst () << "\n";
+//   }
+// }
 
 void DtnApp::SendAP (Ipv4Address srcstring, Ipv4Address dststring, uint32_t seqno, Time srctimestamp){
   Ptr<Packet> packet = Create<Packet> (10);
@@ -1110,7 +1089,279 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
 }
 
 
-void DtnApp::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first) {
+
+
+
+
+
+class Stationary: public DtnApp {
+
+public:
+  void StationarySetup(Ptr<Node> node);
+  void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
+  void GenerateData(uint32_t first);
+  void StoreInBuffer(std::string tempor);
+  void CreateBundle();
+
+  void ReceiveHello (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
+
+  int bufferCount;
+  int entryLength;
+  int bufferLength;
+  uint32_t secondsInterval;
+
+  QueueStruct buffer;
+
+  int dataSizeInBundle;
+  int dataIDSize;
+  int nextID;
+  int maxID;
+  uint32_t destinationNode;
+};
+
+void Stationary::StationarySetup(Ptr<Node> node){
+  m_node = node;
+  m_antipacket_queue = CreateObject<DropTailQueue> ();
+  m_queue = CreateObject<DropTailQueue> ();
+  m_helper_queue = CreateObject<DropTailQueue> ();
+  m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  stationary = 1;
+  dataSizeInBundle=5;
+  dataIDSize=dataSizeInBundle-2;
+  nextID=000;
+  maxID=pow(10,dataIDSize)-1;
+  // std::cout<< "nextID|||maxID "<<nextID<<"|||"<<maxID<<"\n";
+  for(int i = 0; i < 10000; i++) {
+    firstSendTime[i] = 0;
+    lastSendTime[i] = 0;
+    lastTxBytes[i] = 0;
+    currentTxBytes[i] = 0;
+    totalTxBytes[i] = 0;
+    ids[i] = 0;
+    retxs[i] = 0;
+  }
+  Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
+  b_s = 1375000 + y->GetInteger(0, 1)*9625000;
+}
+
+void Stationary::GenerateData(uint32_t first){
+  if (first==0){
+    // if (bufferCount<bufferLength){
+    const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+    std::stringstream holder;
+    holder << nextID;
+    std::string tempor=std::string(dataIDSize - holder.str().length(), '0') + holder.str();
+    if(nextID==maxID){
+      nextID=000;
+    }
+    else{
+      nextID++;
+    }
+    for (int i=0; i<(entryLength-dataIDSize); i++){
+      tempor += alphanum[rand() % 36];
+    }
+    // std::cout<< "----------------------node is " << m_node->GetId()<<"\n" <<"BEFORE LIST";
+    // buffer.listPrinter();
+    // std::cout << "TEMPOR IS: "<< tempor <<"\n";
+    std::cout << tempor <<"\n";
+    StoreInBuffer(tempor);
+
+    // std::cout<< "AFTER LIST NOW IS: ";
+    // buffer.listPrinter();
+    // std::cout<< "----------------------node is " << m_node->GetId()<<"\n";
+    // bufferCount=bufferCount+1;
+    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+    // }
+  }
+  else{
+    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+  }
+}
+
+void Stationary::StoreInBuffer(std::string tempor){
+    if(buffer.getSize() <= bufferLength ){
+      buffer.enqueue(tempor);
+      // std::cout<< "enqueue LIST NOW IS: ";
+      // buffer.listPrinter();
+      if(buffer.getSize() >= dataSizeInBundle){
+        CreateBundle();
+      }
+    }
+    //eviction policy?????????????????
+}
+
+void Stationary::CreateBundle(){
+  std::string payload="";
+  for(int y=0; y<dataSizeInBundle; y++){
+    payload+=buffer.get(0);
+    buffer.dequeue();
+    // buffer.listPrinter();
+  }
+  int bndlSize=100000;//?????????????????? how to compute hehe
+  std::stringstream bndlData;
+  bndlData << payload ;
+
+  // std::cout<<"payload: "<<payload <<" bndlData " <<bndlData<< " bndlData str ekek "<< (uint8_t*) bndlData.str().c_str()<<"\n";
+  
+  Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
+  mypacket::BndlHeader bndlHeader;
+  char srcstring[1024]="";
+  sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
+  char dststring[1024]="";
+  sprintf(dststring,"10.0.0.%d",(destinationNode+1));
+  // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << destinationNode <<" with size " << bndlSize<<"\n";
+  bndlHeader.SetOrigin (srcstring);
+  bndlHeader.SetDst (dststring);
+  bndlHeader.SetOriginSeqno (packet->GetUid());
+  bndlHeader.SetHopCount (0);
+  bndlHeader.SetSpray (4);
+  bndlHeader.SetNretx (0);
+  bndlHeader.SetBundleSize (bndlSize);
+  bndlHeader.SetSrcTimestamp (Simulator::Now ());
+  bndlHeader.SetHopTimestamp (Simulator::Now ());
+  packet->AddHeader (bndlHeader);
+  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+  packet->AddHeader (tHeader);
+
+  if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
+    bool success = m_queue->Enqueue (packet);
+    if (success) {
+      std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+        " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+        " from " <<  bndlHeader.GetOrigin () <<
+        " to " << bndlHeader.GetDst () << "\n";
+    }
+  } 
+  else {
+    std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+      " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+      " from " <<  bndlHeader.GetOrigin () <<
+      " to " << bndlHeader.GetDst () << "\n";
+  }
+}
+
+void Stationary::ReceiveHello (Ptr<Socket> socket){
+  // std::cout<<"ReceiveHello. RSocket "<< socket<<"\n";
+  Ptr<Packet> packet;
+  Address from;
+  while (packet = socket->RecvFrom (from)) {
+    InetSocketAddress address = InetSocketAddress::ConvertFrom (from);
+    // std::cout<< "ReceiveHello. rcvrNode "<< GetNode() <<"  RSocket: "<<socket <<"  sIP: "<<address.GetIpv4() <<"\n";
+    uint32_t i = 0;
+    uint32_t found = 0;
+    while ((i < neighbors) && (found == 0)) {
+      if (address.GetIpv4() == neighbor_address[i].GetIpv4()) {
+        found = 1;
+      } 
+      else
+        i++;
+    }
+    if (found == 0) {
+      ++neighbors;
+      neighbor_address=(InetSocketAddress*)realloc(neighbor_address,neighbors*sizeof(InetSocketAddress));
+      neighbor_address[i]=address.GetIpv4();
+      neighbor_last_seen=(double*)realloc(neighbor_last_seen,neighbors*sizeof(double));
+      b_a=(uint32_t*)realloc(b_a,neighbors*sizeof(uint32_t));
+      neighbor_hello_bundles=(int32_t**)realloc(neighbor_hello_bundles,neighbors*sizeof(int32_t*));
+      neighbor_hello_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_bundles=(int32_t**)realloc(neighbor_sent_bundles,neighbors*sizeof(int32_t*));
+      neighbor_sent_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_aps=(int32_t**)realloc(neighbor_sent_aps,neighbors*sizeof(int32_t*));
+      neighbor_sent_aps[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_ap_when=(double**)realloc(neighbor_sent_ap_when,neighbors*sizeof(double*));
+      neighbor_sent_ap_when[i]=(double*)calloc(1000,sizeof(double));
+      for(uint32_t j=0; j < 1000; j++) {
+        neighbor_sent_bundles[i][j]=0;
+        neighbor_sent_aps[i][j]=0;
+        neighbor_sent_ap_when[i][j]=0;
+      }
+    }
+    neighbor_last_seen[i] = Simulator::Now ().GetSeconds ();
+    for(uint32_t j=0; j < 1000; j++)
+      neighbor_hello_bundles[i][j]=0;
+    
+    uint8_t *msg=new uint8_t[packet->GetSize()+1];
+    packet->CopyData (msg, packet->GetSize());
+    msg[packet->GetSize()]='\0';
+    const char *src=reinterpret_cast<const char *>(msg);
+    char word[1024];
+    strcpy(word, "");
+    int j=0, n=0;
+    int bundle_ids = 0;
+    while (sscanf (src, "%1023s%n", word, &n) == 1) {
+      if (j == 0) {
+        b_a[i]=atoi(word);
+      } 
+      else {
+        if (j == 1) {
+          bundle_ids=atoi(word);
+        } 
+        else {
+          if (j <= (bundle_ids + 1)) 
+            neighbor_hello_bundles[i][j-2]=strtol(word,NULL,16);
+          else
+            neighbor_hello_bundles[i][j-2]=-strtol(word,NULL,16);
+          int m=0, sent_found=0;
+          while ((m < 1000) && (sent_found == 0)) {
+            if (neighbor_hello_bundles[i][j-2] == neighbor_sent_aps[i][m]) {
+              sent_found=1;
+            } 
+            else
+              m++;
+            if (sent_found == 1) {
+              while ((neighbor_sent_aps[i][m] != 0) && (m < 999)) {
+                neighbor_sent_aps[i][m]=neighbor_sent_aps[i][m+1];
+                neighbor_sent_ap_when[i][m]=neighbor_sent_ap_when[i][m+1];
+                m++;
+              }
+              neighbor_sent_aps[i][999]=0;
+              neighbor_sent_ap_when[i][999]=0;
+            }
+          }
+        }
+      }
+      strcpy(word,"");
+      src += n;
+      j++;
+    }
+    delete [] msg;
+  }
+}
+
+
+
+class Mobile: public DtnApp {
+public:
+  void MobileSetup(Ptr<Node> node);
+  void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
+};
+
+void Mobile::MobileSetup (Ptr<Node> node){
+  m_node = node;
+  m_antipacket_queue = CreateObject<DropTailQueue> ();
+  m_queue = CreateObject<DropTailQueue> ();
+  m_helper_queue = CreateObject<DropTailQueue> ();
+  m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  stationary = 0;
+  for(int i = 0; i < 10000; i++) {
+    firstSendTime[i] = 0;
+    lastSendTime[i] = 0;
+    lastTxBytes[i] = 0;
+    currentTxBytes[i] = 0;
+    totalTxBytes[i] = 0;
+    ids[i] = 0;
+    retxs[i] = 0;
+  }
+  Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
+  b_s = 1375000 + y->GetInteger(0, 1)*9625000;
+}
+
+void Mobile::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first) {
   // std::cout<<"SendHello. SSocket "<< socket <<"\n";
   if (first == 0) {
     double now (Simulator::Now ().GetSeconds ());
@@ -1251,277 +1502,13 @@ void DtnApp::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, ui
       Ptr<Packet> pkt = Create<Packet> ((uint8_t*) msg.str().c_str(), msg.str().length());
       pkt->AddPacketTag (QosTag (6)); // High priority 
       socket->Send (pkt);
-      Simulator::Schedule (Seconds (0.1), &DtnApp::SendHello, this, socket, endTime, Seconds (0.1), 0);
+      Simulator::Schedule (Seconds (0.1), &Mobile::SendHello, this, socket, endTime, Seconds (0.1), 0);
     } 
     else
       socket->Close ();
   } 
   else
-    Simulator::Schedule (pktInterval, &DtnApp::SendHello, this, socket, endTime, pktInterval, 0);
-}
-
-
-void DtnApp::ReceiveHello (Ptr<Socket> socket){
-  // std::cout<<"ReceiveHello. RSocket "<< socket<<"\n";
-  Ptr<Packet> packet;
-  Address from;
-  while (packet = socket->RecvFrom (from)) {
-    InetSocketAddress address = InetSocketAddress::ConvertFrom (from);
-    // std::cout<< "ReceiveHello. rcvrNode "<< GetNode() <<"  RSocket: "<<socket <<"  sIP: "<<address.GetIpv4() <<"\n";
-    uint32_t i = 0;
-    uint32_t found = 0;
-    while ((i < neighbors) && (found == 0)) {
-      if (address.GetIpv4() == neighbor_address[i].GetIpv4()) {
-        found = 1;
-      } 
-      else
-        i++;
-    }
-    if (found == 0) {
-      ++neighbors;
-      neighbor_address=(InetSocketAddress*)realloc(neighbor_address,neighbors*sizeof(InetSocketAddress));
-      neighbor_address[i]=address.GetIpv4();
-      neighbor_last_seen=(double*)realloc(neighbor_last_seen,neighbors*sizeof(double));
-      b_a=(uint32_t*)realloc(b_a,neighbors*sizeof(uint32_t));
-      neighbor_hello_bundles=(int32_t**)realloc(neighbor_hello_bundles,neighbors*sizeof(int32_t*));
-      neighbor_hello_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
-      neighbor_sent_bundles=(int32_t**)realloc(neighbor_sent_bundles,neighbors*sizeof(int32_t*));
-      neighbor_sent_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
-      neighbor_sent_aps=(int32_t**)realloc(neighbor_sent_aps,neighbors*sizeof(int32_t*));
-      neighbor_sent_aps[i]=(int32_t*)calloc(1000,sizeof(int32_t));
-      neighbor_sent_ap_when=(double**)realloc(neighbor_sent_ap_when,neighbors*sizeof(double*));
-      neighbor_sent_ap_when[i]=(double*)calloc(1000,sizeof(double));
-      for(uint32_t j=0; j < 1000; j++) {
-        neighbor_sent_bundles[i][j]=0;
-        neighbor_sent_aps[i][j]=0;
-        neighbor_sent_ap_when[i][j]=0;
-      }
-    }
-    neighbor_last_seen[i] = Simulator::Now ().GetSeconds ();
-    for(uint32_t j=0; j < 1000; j++)
-      neighbor_hello_bundles[i][j]=0;
-    
-    uint8_t *msg=new uint8_t[packet->GetSize()+1];
-    packet->CopyData (msg, packet->GetSize());
-    msg[packet->GetSize()]='\0';
-    const char *src=reinterpret_cast<const char *>(msg);
-    char word[1024];
-    strcpy(word, "");
-    int j=0, n=0;
-    int bundle_ids = 0;
-    while (sscanf (src, "%1023s%n", word, &n) == 1) {
-      if (j == 0) {
-        b_a[i]=atoi(word);
-      } 
-      else {
-        if (j == 1) {
-          bundle_ids=atoi(word);
-        } 
-        else {
-          if (j <= (bundle_ids + 1)) 
-            neighbor_hello_bundles[i][j-2]=strtol(word,NULL,16);
-          else
-            neighbor_hello_bundles[i][j-2]=-strtol(word,NULL,16);
-          int m=0, sent_found=0;
-          while ((m < 1000) && (sent_found == 0)) {
-            if (neighbor_hello_bundles[i][j-2] == neighbor_sent_aps[i][m]) {
-              sent_found=1;
-            } 
-            else
-              m++;
-            if (sent_found == 1) {
-              while ((neighbor_sent_aps[i][m] != 0) && (m < 999)) {
-                neighbor_sent_aps[i][m]=neighbor_sent_aps[i][m+1];
-                neighbor_sent_ap_when[i][m]=neighbor_sent_ap_when[i][m+1];
-                m++;
-              }
-              neighbor_sent_aps[i][999]=0;
-              neighbor_sent_ap_when[i][999]=0;
-            }
-          }
-        }
-      }
-      strcpy(word,"");
-      src += n;
-      j++;
-    }
-    delete [] msg;
-  }
-}
-
-
-class Stationary: public DtnApp {
-
-public:
-  void StationarySetup(Ptr<Node> node);
-  void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
-  void GenerateData(uint32_t first);
-  void StoreInBuffer(std::string tempor);
-  void CreateBundle();
-
-  int bufferCount;
-  int entryLength;
-  int bufferLength;
-  uint32_t secondsInterval;
-
-  QueueStruct buffer;
-
-  int dataSizeInBundle;
-  int dataIDSize;
-  int nextID;
-  int maxID;
-  uint32_t destinationNode;
-};
-
-void Stationary::StationarySetup(Ptr<Node> node){
-  m_node = node;
-  m_antipacket_queue = CreateObject<DropTailQueue> ();
-  m_queue = CreateObject<DropTailQueue> ();
-  m_helper_queue = CreateObject<DropTailQueue> ();
-  m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  stationary = 1;
-  dataSizeInBundle=5;
-  dataIDSize=dataSizeInBundle-2;
-  nextID=000;
-  maxID=pow(10,dataIDSize)-1;
-  // std::cout<< "nextID|||maxID "<<nextID<<"|||"<<maxID<<"\n";
-  for(int i = 0; i < 10000; i++) {
-    firstSendTime[i] = 0;
-    lastSendTime[i] = 0;
-    lastTxBytes[i] = 0;
-    currentTxBytes[i] = 0;
-    totalTxBytes[i] = 0;
-    ids[i] = 0;
-    retxs[i] = 0;
-  }
-  Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
-  b_s = 1375000 + y->GetInteger(0, 1)*9625000;
-}
-
-void Stationary::GenerateData(uint32_t first){
-  if (first==0){
-    // if (bufferCount<bufferLength){
-    const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
-    std::stringstream holder;
-    holder << nextID;
-    std::string tempor=std::string(dataIDSize - holder.str().length(), '0') + holder.str();
-    if(nextID==maxID){
-      nextID=000;
-    }
-    else{
-      nextID++;
-    }
-    for (int i=0; i<(entryLength-dataIDSize); i++){
-      tempor += alphanum[rand() % 36];
-    }
-    // std::cout<< "----------------------node is " << m_node->GetId()<<"\n" <<"BEFORE LIST";
-    // buffer.listPrinter();
-    // std::cout << "TEMPOR IS: "<< tempor <<"\n";
-    std::cout << tempor <<"\n";
-    StoreInBuffer(tempor);
-
-    // std::cout<< "AFTER LIST NOW IS: ";
-    // buffer.listPrinter();
-    // std::cout<< "----------------------node is " << m_node->GetId()<<"\n";
-    // bufferCount=bufferCount+1;
-    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
-    // }
-  }
-  else{
-    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
-  }
-}
-
-void Stationary::StoreInBuffer(std::string tempor){
-    if(buffer.getSize() <= bufferLength ){
-      buffer.enqueue(tempor);
-      // std::cout<< "enqueue LIST NOW IS: ";
-      // buffer.listPrinter();
-      if(buffer.getSize() >= dataSizeInBundle){
-        CreateBundle();
-      }
-    }
-    //eviction policy?????????????????
-}
-
-void Stationary::CreateBundle(){
-  std::string payload="";
-  for(int y=0; y<dataSizeInBundle; y++){
-    payload+=buffer.get(0);
-    buffer.dequeue();
-    // buffer.listPrinter();
-  }
-  int bndlSize=100000;//?????????????????? how to compute hehe
-  std::stringstream bndlData;
-  bndlData << payload ;
-
-  // std::cout<<"payload: "<<payload <<" bndlData " <<bndlData<< " bndlData str ekek "<< (uint8_t*) bndlData.str().c_str()<<"\n";
-  
-  Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
-  mypacket::BndlHeader bndlHeader;
-  char srcstring[1024]="";
-  sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
-  char dststring[1024]="";
-  sprintf(dststring,"10.0.0.%d",(destinationNode+1));
-  // std::cout<< "SendBundle from " << m_node->GetId () <<" to " << destinationNode <<" with size " << bndlSize<<"\n";
-  bndlHeader.SetOrigin (srcstring);
-  bndlHeader.SetDst (dststring);
-  bndlHeader.SetOriginSeqno (packet->GetUid());
-  bndlHeader.SetHopCount (0);
-  bndlHeader.SetSpray (4);
-  bndlHeader.SetNretx (0);
-  bndlHeader.SetBundleSize (bndlSize);
-  bndlHeader.SetSrcTimestamp (Simulator::Now ());
-  bndlHeader.SetHopTimestamp (Simulator::Now ());
-  packet->AddHeader (bndlHeader);
-  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-  packet->AddHeader (tHeader);
-
-  if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
-    bool success = m_queue->Enqueue (packet);
-    if (success) {
-      std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-        " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-        " from " <<  bndlHeader.GetOrigin () <<
-        " to " << bndlHeader.GetDst () << "\n";
-    }
-  } 
-  else {
-    std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-      " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-      " from " <<  bndlHeader.GetOrigin () <<
-      " to " << bndlHeader.GetDst () << "\n";
-  }
-}
-
-class Mobile: public DtnApp {
-public:
-  void MobileSetup(Ptr<Node> node);
-};
-
-void Mobile::MobileSetup (Ptr<Node> node){
-  m_node = node;
-  m_antipacket_queue = CreateObject<DropTailQueue> ();
-  m_queue = CreateObject<DropTailQueue> ();
-  m_helper_queue = CreateObject<DropTailQueue> ();
-  m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
-  stationary = 0;
-  for(int i = 0; i < 10000; i++) {
-    firstSendTime[i] = 0;
-    lastSendTime[i] = 0;
-    lastTxBytes[i] = 0;
-    currentTxBytes[i] = 0;
-    totalTxBytes[i] = 0;
-    ids[i] = 0;
-    retxs[i] = 0;
-  }
-  Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
-  b_s = 1375000 + y->GetInteger(0, 1)*9625000;
+    Simulator::Schedule (pktInterval, &Mobile::SendHello, this, socket, endTime, pktInterval, 0);
 }
 
 class DtnExample {
@@ -1737,7 +1724,7 @@ void DtnExample::InstallApplications () {
       Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
       InetSocketAddress local (Ipv4Address::GetAny (), 80);
       recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
+      recvSink->SetRecvCallback (MakeCallback (&Stationary::ReceiveHello, app));
     }
     else{
       Ptr<Mobile> app;
@@ -1763,11 +1750,6 @@ void DtnExample::InstallApplications () {
       std::cout<<"node "<<i<<" is not stationary 0 = stationary value\n";
       app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
     
-      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress local (Ipv4Address::GetAny (), 80);
-      recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
-
     }
   }
 }
