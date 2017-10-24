@@ -1,7 +1,7 @@
 Creating 3 nodes.
-node 0 getnode 0xdb1e40 dst-> 0xdc8de0 10.0.0.1 source-> 0xdc9200
-node 1 getnode 0xdb23b0 dst-> 0xdca3f0 10.0.0.2 source-> 0xdcaaa0
-node 2 getnode 0xdb2140 dst-> 0xdcc100 10.0.0.3 source-> 0xdcc520
+node 0 getnode 0x191ce40 dst-> 0x1933de0 10.0.0.1 source-> 0x1934200
+node 1 getnode 0x191d3b0 dst-> 0x19353f0 10.0.0.2 source-> 0x1935aa0
+node 2 getnode 0x191d140 dst-> 0x1937100 10.0.0.3 source-> 0x1937520
 node 2 is not stationary 0 = stationary value
 Starting simulation for 50 s, seed value 12345679
 0.5 0 0 0 0 1 30 200

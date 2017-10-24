@@ -44,29 +44,29 @@ public:
   virtual ~DtnApp();
   
   void Setup (Ptr<Node> node);
-  void DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr);
+  // void DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr); //DI NAMAN NAGAGAMIT
   void ReceiveHello (Ptr<Socket> socket);
-  void ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize);
+  // void ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize); //DI NAMAN NAGAGAMIT
   void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first);
-  void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx);
-  void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx);
-  void ConnectionSucceeds (Ptr<Socket> localSocket);
-  void ConnectionFails (Ptr<Socket> localSocket);
+  void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG SEND HELLO AND CHECK QUEUES
+  void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx); // CALLED NG RETRANSMIT AND RECEIVE BUNDLE
+  // void ConnectionSucceeds (Ptr<Socket> localSocket); //DI NAMAN NAGAGAMIT
+  // void ConnectionFails (Ptr<Socket> localSocket); //DI NAMAN NAGAGAMIT
   void ReceiveBundle (Ptr<Socket> socket);
-  int IsStationary();
-  void setStationary(int value);
+  // int IsStationary(); //BYE
+  // void setStationary(int value); //BYE
 
 // protected:
   virtual void StartApplication (void);
   virtual void StopApplication (void);
   
   void SendBundle (uint32_t dstnode, uint32_t packetsize);
-  void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp);
-  void PrintBuffers (void);
-  void CheckQueues (uint32_t bundletype);
-  int IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue);
-  int AntipacketExists (Ptr<Packet> pkt);
-  void RemoveBundle (Ptr<Packet> pkt);
+  void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp); //CALLED NG RECEIVE BUNDLE
+  void PrintBuffers (void); //CALLED NG START APPLICATION
+  void CheckQueues (uint32_t bundletype); //CALLED NG CHECK QUEUES AND START APPLICATION
+  int IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue); //CALLED NG RECEIVE BUNDLE
+  int AntipacketExists (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
+  void RemoveBundle (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
   
   Ptr<Node>         m_node;
   Ptr<Socket>       m_socket;
@@ -177,15 +177,15 @@ void DtnApp::Setup (Ptr<Node> node){
 }
 
 
-int DtnApp::IsStationary(){
-  return stationary;
+// int DtnApp::IsStationary(){
+//   return stationary;
 
-}
+// }
 
-void DtnApp::setStationary(int value){  
-  stationary = value;
+// void DtnApp::setStationary(int value){  
+//   stationary = value;
+// }
 
-}
 void DtnApp::StartApplication (void){
   m_running = true;
   Ptr<WifiNetDevice> dev = DynamicCast<WifiNetDevice> (m_node->GetDevice (0));
@@ -213,15 +213,15 @@ void DtnApp::StopApplication (void){
     m_socket->Close ();
 }
 
-void DtnApp::ConnectionSucceeds (Ptr<Socket> localSocket){
-  //std::cout << "TCP connection succeeds at time " << Simulator::Now ().GetSeconds () <<
-  //" at node " << m_node->GetId () << "\n";
-}
+// void DtnApp::ConnectionSucceeds (Ptr<Socket> localSocket){
+//   //std::cout << "TCP connection succeeds at time " << Simulator::Now ().GetSeconds () <<
+//   //" at node " << m_node->GetId () << "\n";
+// }
 
-void DtnApp::ConnectionFails (Ptr<Socket> localSocket){
-  std::cout << "TCP connection fails at time " << Simulator::Now ().GetSeconds () <<
-    " at node " << m_node->GetId () << "\n";
-}
+// void DtnApp::ConnectionFails (Ptr<Socket> localSocket){
+//   std::cout << "TCP connection fails at time " << Simulator::Now ().GetSeconds () <<
+//     " at node " << m_node->GetId () << "\n";
+// }
 
 void DtnApp::Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx){
   // Check that this is last call for retransmit, otherwise return
@@ -747,14 +747,14 @@ void DtnApp::SendAP (Ipv4Address srcstring, Ipv4Address dststring, uint32_t seqn
       " to " << apHeader.GetDst () << "\n";
 }
 
-void DtnApp::ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize){
-  // std::cout<<"SCHEDULE SENDBUNDLE FROM "<< m_node->GetId ()  << " to " << dstnode <<"\n";
-  m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
-}
+// void DtnApp::ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize){
+//   // std::cout<<"SCHEDULE SENDBUNDLE FROM "<< m_node->GetId ()  << " to " << dstnode <<"\n";
+//   m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
+// }
 
-void DtnApp::DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr){
-  s->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, this));
-}
+// void DtnApp::DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr){
+//   s->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, this));
+// }
 
 int DtnApp::IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue){
   Ptr<Packet> cpkt = pkt->Copy();
@@ -1759,7 +1759,6 @@ void DtnExample::InstallApplications () {
     if(i!=nodeNum-1){
       Ptr<Stationary> app;
       app = CreateObject<Stationary> ();  
-      // app->setStationary(1);  
       app->StationarySetup (nodes.Get (i));
       app->destinationNode=2;
 
@@ -1810,7 +1809,6 @@ void DtnExample::InstallApplications () {
     else{
       Ptr<Mobile> app;
       app = CreateObject<Mobile> ();  
-      app->setStationary(0);  
       app->MobileSetup (nodes.Get (i));
 
       nodes.Get (i)->AddApplication (app);
@@ -1829,7 +1827,7 @@ void DtnExample::InstallApplications () {
       source->Connect (remote);
       std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
       
-      std::cout<<"node "<<i<<" is not stationary "<<app->IsStationary()<<" = stationary value\n";
+      std::cout<<"node "<<i<<" is not stationary 0 = stationary value\n";
       app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
     
       Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
