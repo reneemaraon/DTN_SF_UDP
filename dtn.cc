@@ -37,74 +37,72 @@ static void CourseChange (std::ostream *myos, std::string foo, Ptr<const Mobilit
 typedef std::map<Ptr<Socket>,int> sockOrder;
 
 class DtnApp : public Application{
+  public:
+    
+    DtnApp ();
+    virtual ~DtnApp();
+     
+    void ReceiveBundle (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
 
-public:
-  
-  DtnApp ();
-  virtual ~DtnApp();
-   
-  void ReceiveBundle (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
+    void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG SEND HELLO AND CHECK QUEUES AND SEND MORE
+    void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG RETRANSMIT AND RECEIVE BUNDLE
 
-  void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG SEND HELLO AND CHECK QUEUES
-  
-  void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG RETRANSMIT AND RECEIVE BUNDLE
+  protected:
+    virtual void StartApplication (void);
+    virtual void StopApplication (void);
+    
+    void PrintBuffers (void); //CALLED NG START APPLICATION
+    void CheckQueues (uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
 
-protected:
-  virtual void StartApplication (void);
-  virtual void StopApplication (void);
-  
-  void PrintBuffers (void); //CALLED NG START APPLICATION
-  void CheckQueues (uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
-
-  void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp); //CALLED NG RECEIVE BUNDLE
-  int IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue); //CALLED NG RECEIVE BUNDLE
-  int AntipacketExists (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
-  void RemoveBundle (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
-  
-  // void SendBundle (uint32_t dstnode, uint32_t packetsize); //di talaga send more of enqueue, wala nagccall, dati pag nagbbundleSched
-  
-  Ptr<Node>         m_node;
-  Ptr<Socket>       m_socket;
-  std::vector<Ptr<Packet> > newpkt;
-  std::vector<Ptr<Packet> > retxpkt;
-  Ptr<Queue>        m_antipacket_queue;
-  Ptr<Queue>        m_queue;
-  Ptr<Queue>        m_helper_queue;
-  Ptr<WifiMacQueue> mac_queue;
-  Address           m_peer;
-  EventId           m_sendEvent;
-  bool              m_running;
-  uint32_t          m_serverReadSize;
-  uint32_t          neighbors;
-  InetSocketAddress *neighbor_address;
-  double            *neighbor_last_seen;
-  uint32_t          *currentServerRxBytes;
-  int32_t           **neighbor_hello_bundles;
-  int32_t           **neighbor_sent_bundles;
-  int32_t           **neighbor_sent_aps;
-  double            **neighbor_sent_ap_when;
-  uint32_t          bundles;
-  InetSocketAddress *bundle_address;
-  int32_t           *bundle_seqno;
-  int32_t           *bundle_retx;
-  uint32_t          *bundle_size;
-  double            *bundle_ts;
-  double            firstSendTime[10000];
-  double            lastSendTime[10000];
-  uint32_t          lastTxBytes[10000];
-  uint32_t          currentTxBytes[10000];
-  uint32_t          totalTxBytes[10000];
-  InetSocketAddress *sendTos;
-  int32_t           ids[10000];
-  int32_t           retxs[10000];
-  int               NumFlows;
-  uint32_t          drops;
-  double            t_c;
-  uint32_t          b_s;
-  uint32_t          *b_a;
-  uint32_t          rp;
-  uint32_t          cc;
-  uint32_t          stationary;
+    void SendAP (Ipv4Address srcaddr, Ipv4Address dstaddr, uint32_t seqno, Time srctimestamp); //CALLED NG RECEIVE BUNDLE
+    int IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue); //CALLED NG RECEIVE BUNDLE
+    int AntipacketExists (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
+    void RemoveBundle (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
+    
+    // void SendBundle (uint32_t dstnode, uint32_t packetsize); //di talaga send more of enqueue, wala nagccall, dati pag nagbbundleSched
+    
+    Ptr<Node>         m_node;
+    Ptr<Socket>       m_socket;
+    std::vector<Ptr<Packet> > newpkt;
+    std::vector<Ptr<Packet> > retxpkt;
+    Ptr<Queue>        m_antipacket_queue;
+    Ptr<Queue>        m_queue;
+    Ptr<Queue>        m_helper_queue;
+    Ptr<WifiMacQueue> mac_queue;
+    Address           m_peer;
+    EventId           m_sendEvent;
+    bool              m_running;
+    uint32_t          m_serverReadSize;
+    uint32_t          neighbors;
+    InetSocketAddress *neighbor_address;
+    double            *neighbor_last_seen;
+    uint32_t          *currentServerRxBytes;
+    int32_t           **neighbor_hello_bundles;
+    int32_t           **neighbor_sent_bundles;
+    int32_t           **neighbor_sent_aps;
+    double            **neighbor_sent_ap_when;
+    uint32_t          bundles;
+    InetSocketAddress *bundle_address;
+    int32_t           *bundle_seqno;
+    int32_t           *bundle_retx;
+    uint32_t          *bundle_size;
+    double            *bundle_ts;
+    double            firstSendTime[10000];
+    double            lastSendTime[10000];
+    uint32_t          lastTxBytes[10000];
+    uint32_t          currentTxBytes[10000];
+    uint32_t          totalTxBytes[10000];
+    InetSocketAddress *sendTos;
+    int32_t           ids[10000];
+    int32_t           retxs[10000];
+    int               NumFlows;
+    uint32_t          drops;
+    double            t_c;
+    uint32_t          b_s;
+    uint32_t          *b_a;
+    uint32_t          rp;
+    uint32_t          cc;
+    uint32_t          stationary;
 };
 
 
@@ -1090,36 +1088,31 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
 
 
 
+class Sensor: public DtnApp {
+  public:
+    void StationarySetup(Ptr<Node> node);
+    void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
+    void GenerateData(uint32_t first);
+    void StoreInBuffer(std::string tempor);
+    void CreateBundle();
 
+    void ReceiveHello (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
 
+    int bufferCount;
+    int entryLength;
+    int bufferLength;
+    uint32_t secondsInterval;
 
+    QueueStruct buffer;
 
-class Stationary: public DtnApp {
-
-public:
-  void StationarySetup(Ptr<Node> node);
-  void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
-  void GenerateData(uint32_t first);
-  void StoreInBuffer(std::string tempor);
-  void CreateBundle();
-
-  void ReceiveHello (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
-
-  int bufferCount;
-  int entryLength;
-  int bufferLength;
-  uint32_t secondsInterval;
-
-  QueueStruct buffer;
-
-  int dataSizeInBundle;
-  int dataIDSize;
-  int nextID;
-  int maxID;
-  uint32_t destinationNode;
+    int dataSizeInBundle;
+    int dataIDSize;
+    int nextID;
+    int maxID;
+    uint32_t destinationNode;
 };
 
-void Stationary::StationarySetup(Ptr<Node> node){
+void Sensor::StationarySetup(Ptr<Node> node){
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue> ();
   m_queue = CreateObject<DropTailQueue> ();
@@ -1146,7 +1139,7 @@ void Stationary::StationarySetup(Ptr<Node> node){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
-void Stationary::GenerateData(uint32_t first){
+void Sensor::GenerateData(uint32_t first){
   if (first==0){
     // if (bufferCount<bufferLength){
     const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -1173,15 +1166,15 @@ void Stationary::GenerateData(uint32_t first){
     // buffer.listPrinter();
     // std::cout<< "----------------------node is " << m_node->GetId()<<"\n";
     // bufferCount=bufferCount+1;
-    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+    Simulator::Schedule (Seconds (secondsInterval), &Sensor::GenerateData, this, 0);
     // }
   }
   else{
-    Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
+    Simulator::Schedule (Seconds (secondsInterval), &Sensor::GenerateData, this, 0);
   }
 }
 
-void Stationary::StoreInBuffer(std::string tempor){
+void Sensor::StoreInBuffer(std::string tempor){
     if(buffer.getSize() <= bufferLength ){
       buffer.enqueue(tempor);
       // std::cout<< "enqueue LIST NOW IS: ";
@@ -1193,7 +1186,7 @@ void Stationary::StoreInBuffer(std::string tempor){
     //eviction policy?????????????????
 }
 
-void Stationary::CreateBundle(){
+void Sensor::CreateBundle(){
   std::string payload="";
   for(int y=0; y<dataSizeInBundle; y++){
     payload+=buffer.get(0);
@@ -1243,7 +1236,7 @@ void Stationary::CreateBundle(){
   }
 }
 
-void Stationary::ReceiveHello (Ptr<Socket> socket){
+void Sensor::ReceiveHello (Ptr<Socket> socket){
   // std::cout<<"ReceiveHello. RSocket "<< socket<<"\n";
   Ptr<Packet> packet;
   Address from;
@@ -1331,12 +1324,10 @@ void Stationary::ReceiveHello (Ptr<Socket> socket){
   }
 }
 
-
-
 class Mobile: public DtnApp {
-public:
-  void MobileSetup(Ptr<Node> node);
-  void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
+  public:
+    void MobileSetup(Ptr<Node> node);
+    void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
 };
 
 void Mobile::MobileSetup (Ptr<Node> node){
@@ -1511,6 +1502,125 @@ void Mobile::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, ui
     Simulator::Schedule (pktInterval, &Mobile::SendHello, this, socket, endTime, pktInterval, 0);
 }
 
+class Base: public DtnApp {
+  public:
+    void BaseSetup(Ptr<Node> node);
+
+    void ReceiveHello(Ptr<Socket> socket);
+};
+
+void Base::BaseSetup(Ptr<Node> node){
+  m_node = node;
+  m_antipacket_queue = CreateObject<DropTailQueue> ();
+  m_queue = CreateObject<DropTailQueue> ();
+  m_helper_queue = CreateObject<DropTailQueue> ();
+  m_antipacket_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  m_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
+  stationary = 1;
+  for(int i = 0; i < 10000; i++) {
+    firstSendTime[i] = 0;
+    lastSendTime[i] = 0;
+    lastTxBytes[i] = 0;
+    currentTxBytes[i] = 0;
+    totalTxBytes[i] = 0;
+    ids[i] = 0;
+    retxs[i] = 0;
+  }
+  Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
+  b_s = 1375000 + y->GetInteger(0, 1)*9625000;
+}
+
+void Base::ReceiveHello(Ptr<Socket> socket){
+  // std::cout<<"ReceiveHello. RSocket "<< socket<<"\n";
+  Ptr<Packet> packet;
+  Address from;
+  while (packet = socket->RecvFrom (from)) {
+    InetSocketAddress address = InetSocketAddress::ConvertFrom (from);
+    // std::cout<< "ReceiveHello. rcvrNode "<< GetNode() <<"  RSocket: "<<socket <<"  sIP: "<<address.GetIpv4() <<"\n";
+    uint32_t i = 0;
+    uint32_t found = 0;
+    while ((i < neighbors) && (found == 0)) {
+      if (address.GetIpv4() == neighbor_address[i].GetIpv4()) {
+        found = 1;
+      } 
+      else
+        i++;
+    }
+    if (found == 0) {
+      ++neighbors;
+      neighbor_address=(InetSocketAddress*)realloc(neighbor_address,neighbors*sizeof(InetSocketAddress));
+      neighbor_address[i]=address.GetIpv4();
+      neighbor_last_seen=(double*)realloc(neighbor_last_seen,neighbors*sizeof(double));
+      b_a=(uint32_t*)realloc(b_a,neighbors*sizeof(uint32_t));
+      neighbor_hello_bundles=(int32_t**)realloc(neighbor_hello_bundles,neighbors*sizeof(int32_t*));
+      neighbor_hello_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_bundles=(int32_t**)realloc(neighbor_sent_bundles,neighbors*sizeof(int32_t*));
+      neighbor_sent_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_aps=(int32_t**)realloc(neighbor_sent_aps,neighbors*sizeof(int32_t*));
+      neighbor_sent_aps[i]=(int32_t*)calloc(1000,sizeof(int32_t));
+      neighbor_sent_ap_when=(double**)realloc(neighbor_sent_ap_when,neighbors*sizeof(double*));
+      neighbor_sent_ap_when[i]=(double*)calloc(1000,sizeof(double));
+      for(uint32_t j=0; j < 1000; j++) {
+        neighbor_sent_bundles[i][j]=0;
+        neighbor_sent_aps[i][j]=0;
+        neighbor_sent_ap_when[i][j]=0;
+      }
+    }
+    neighbor_last_seen[i] = Simulator::Now ().GetSeconds ();
+    for(uint32_t j=0; j < 1000; j++)
+      neighbor_hello_bundles[i][j]=0;
+    
+    uint8_t *msg=new uint8_t[packet->GetSize()+1];
+    packet->CopyData (msg, packet->GetSize());
+    msg[packet->GetSize()]='\0';
+    const char *src=reinterpret_cast<const char *>(msg);
+    char word[1024];
+    strcpy(word, "");
+    int j=0, n=0;
+    int bundle_ids = 0;
+    while (sscanf (src, "%1023s%n", word, &n) == 1) {
+      if (j == 0) {
+        b_a[i]=atoi(word);
+      } 
+      else {
+        if (j == 1) {
+          bundle_ids=atoi(word);
+        } 
+        else {
+          if (j <= (bundle_ids + 1)) 
+            neighbor_hello_bundles[i][j-2]=strtol(word,NULL,16);
+          else
+            neighbor_hello_bundles[i][j-2]=-strtol(word,NULL,16);
+          int m=0, sent_found=0;
+          while ((m < 1000) && (sent_found == 0)) {
+            if (neighbor_hello_bundles[i][j-2] == neighbor_sent_aps[i][m]) {
+              sent_found=1;
+            } 
+            else
+              m++;
+            if (sent_found == 1) {
+              while ((neighbor_sent_aps[i][m] != 0) && (m < 999)) {
+                neighbor_sent_aps[i][m]=neighbor_sent_aps[i][m+1];
+                neighbor_sent_ap_when[i][m]=neighbor_sent_ap_when[i][m+1];
+                m++;
+              }
+              neighbor_sent_aps[i][999]=0;
+              neighbor_sent_ap_when[i][999]=0;
+            }
+          }
+        }
+      }
+      strcpy(word,"");
+      src += n;
+      j++;
+    }
+    delete [] msg;
+  }
+}
+
+
+
 class DtnExample {
 public:
   DtnExample ();
@@ -1676,15 +1786,16 @@ void DtnExample::InstallApplications () {
 
   TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
   for (uint32_t i = 0; i < nodeNum; ++i) { 
-    if(i!=nodeNum-1){
-      Ptr<Stationary> app;
-      app = CreateObject<Stationary> ();  
+    if(i<nodeNum-2){
+      std::cout<<"SENSOR: "<<"\n";
+      Ptr<Sensor> app;
+      app = CreateObject<Sensor> ();  
       app->StationarySetup (nodes.Get (i));
       app->destinationNode=2;
 
-      // std::cout << "Opening Stationary Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/stationaryBufferDetails");
+      // std::cout << "Opening Sensor Buffer Details"<< " \n";
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -1698,7 +1809,7 @@ void DtnExample::InstallApplications () {
         }
       }
       else{
-        std::cout<<"Unable to open Stationary Buffer Details\n";
+        std::cout<<"Unable to open Sensor Buffer Details\n";
       }
       bufferInput.close();
 
@@ -1724,9 +1835,10 @@ void DtnExample::InstallApplications () {
       Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
       InetSocketAddress local (Ipv4Address::GetAny (), 80);
       recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&Stationary::ReceiveHello, app));
+      recvSink->SetRecvCallback (MakeCallback (&Sensor::ReceiveHello, app));
     }
-    else{
+    else if(i==nodeNum-2){
+      std::cout<<"MOBILE: "<<"\n";
       Ptr<Mobile> app;
       app = CreateObject<Mobile> ();  
       app->MobileSetup (nodes.Get (i));
@@ -1747,9 +1859,35 @@ void DtnExample::InstallApplications () {
       source->Connect (remote);
       std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
       
-      std::cout<<"node "<<i<<" is not stationary 0 = stationary value\n";
+      // std::cout<<"node "<<i<<" is a sensor\n";
       app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-    
+    }
+    else if(i==nodeNum-1){
+      std::cout<<"BASE: "<<"\n";
+      Ptr<Base> app;  
+      app = CreateObject<Base> ();  
+      app->BaseSetup (nodes.Get (i));
+
+      nodes.Get (i)->AddApplication (app);
+      app->SetStartTime (Seconds (0.5 + 0.00001*i));
+      app->SetStopTime (Seconds (5000.));
+      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      char dststring[1024]="";
+      sprintf(dststring,"10.0.0.%d",(i + 1));
+      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
+      dst->Bind(dstlocaladdr);
+      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app));
+      
+      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
+      source->SetAllowBroadcast (true);
+      source->Connect (remote);
+      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
+
+      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress local (Ipv4Address::GetAny (), 80);
+      recvSink->Bind (local);
+      recvSink->SetRecvCallback (MakeCallback (&Base::ReceiveHello, app));
     }
   }
 }
