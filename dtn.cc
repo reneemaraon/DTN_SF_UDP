@@ -44,19 +44,13 @@ public:
   virtual ~DtnApp();
   
   void Setup (Ptr<Node> node);
-  // void DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr); //DI NAMAN NAGAGAMIT
   void ReceiveHello (Ptr<Socket> socket);
-  // void ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize); //DI NAMAN NAGAGAMIT
   void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first);
   void Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG SEND HELLO AND CHECK QUEUES
   void SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx); // CALLED NG RETRANSMIT AND RECEIVE BUNDLE
-  // void ConnectionSucceeds (Ptr<Socket> localSocket); //DI NAMAN NAGAGAMIT
-  // void ConnectionFails (Ptr<Socket> localSocket); //DI NAMAN NAGAGAMIT
   void ReceiveBundle (Ptr<Socket> socket);
-  // int IsStationary(); //BYE
-  // void setStationary(int value); //BYE
 
-// protected:
+protected:
   virtual void StartApplication (void);
   virtual void StopApplication (void);
   
@@ -176,16 +170,6 @@ void DtnApp::Setup (Ptr<Node> node){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
-
-// int DtnApp::IsStationary(){
-//   return stationary;
-
-// }
-
-// void DtnApp::setStationary(int value){  
-//   stationary = value;
-// }
-
 void DtnApp::StartApplication (void){
   m_running = true;
   Ptr<WifiNetDevice> dev = DynamicCast<WifiNetDevice> (m_node->GetDevice (0));
@@ -212,16 +196,6 @@ void DtnApp::StopApplication (void){
   if (m_socket)
     m_socket->Close ();
 }
-
-// void DtnApp::ConnectionSucceeds (Ptr<Socket> localSocket){
-//   //std::cout << "TCP connection succeeds at time " << Simulator::Now ().GetSeconds () <<
-//   //" at node " << m_node->GetId () << "\n";
-// }
-
-// void DtnApp::ConnectionFails (Ptr<Socket> localSocket){
-//   std::cout << "TCP connection fails at time " << Simulator::Now ().GetSeconds () <<
-//     " at node " << m_node->GetId () << "\n";
-// }
 
 void DtnApp::Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx){
   // Check that this is last call for retransmit, otherwise return
@@ -747,15 +721,6 @@ void DtnApp::SendAP (Ipv4Address srcstring, Ipv4Address dststring, uint32_t seqn
       " to " << apHeader.GetDst () << "\n";
 }
 
-// void DtnApp::ScheduleTx (uint32_t dstnode, Time tNext, uint32_t packetsize){
-//   // std::cout<<"SCHEDULE SENDBUNDLE FROM "<< m_node->GetId ()  << " to " << dstnode <<"\n";
-//   m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
-// }
-
-// void DtnApp::DstHandleConnectionCreated (Ptr<Socket> s, const Address & addr){
-//   s->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, this));
-// }
-
 int DtnApp::IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue){
   Ptr<Packet> cpkt = pkt->Copy();
   int duplicate = 0; 
@@ -922,9 +887,6 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
       }
     }
     neighbor_last_seen[i] = Simulator::Now ().GetSeconds ();
-
-
-
 
 
 
@@ -1402,8 +1364,6 @@ public:
   int bufferLength;
   uint32_t secondsInterval;
 
-  // uint32_t  bundleSize;
-  Ptr<Queue> bufferTest;
   QueueStruct buffer;
 
   int dataSizeInBundle;
@@ -1412,7 +1372,6 @@ public:
   int maxID;
   uint32_t destinationNode;
 };
-
 
 void Stationary::StationarySetup(Ptr<Node> node){
   m_node = node;
@@ -1440,7 +1399,6 @@ void Stationary::StationarySetup(Ptr<Node> node){
   Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
-
 
 void Stationary::GenerateData(uint32_t first){
   if (first==0){
@@ -1476,7 +1434,6 @@ void Stationary::GenerateData(uint32_t first){
     Simulator::Schedule (Seconds (secondsInterval), &Stationary::GenerateData, this, 0);
   }
 }
-
 
 void Stationary::StoreInBuffer(std::string tempor){
     if(buffer.getSize() <= bufferLength ){
@@ -1538,31 +1495,12 @@ void Stationary::CreateBundle(){
       " from " <<  bndlHeader.GetOrigin () <<
       " to " << bndlHeader.GetDst () << "\n";
   }
-
-
-  // if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
-  //   bool success = m_queue->Enqueue (packet);
-  //   if (success) {
-  //     std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-  // " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-  // " from " <<  bndlHeader.GetOrigin () <<
-  // " to " << bndlHeader.GetDst () << "\n";
-  //   }
-  // } else {
-  //   std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-  //     " tried to send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
-  //     " from " <<  bndlHeader.GetOrigin () <<
-  //     " to " << bndlHeader.GetDst () << "\n";
-  // }
 }
-
-  //check if may # of bundles = bundleSize, gawa ng bundle 
 
 class Mobile: public DtnApp {
 public:
   void MobileSetup(Ptr<Node> node);
 };
-
 
 void Mobile::MobileSetup (Ptr<Node> node){
   m_node = node;
@@ -1586,16 +1524,12 @@ void Mobile::MobileSetup (Ptr<Node> node){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
-
-
-
-
 class DtnExample {
 public:
   DtnExample ();
   bool Configure (int argc, char **argv);
   void Run ();
-  void Report (std::ostream & os);
+  // void Report (std::ostream & os);
   std::string traceFile;
   std::string logFile;
   std::ofstream myos;
@@ -1628,7 +1562,7 @@ int main (int argc, char **argv)
     NS_FATAL_ERROR ("Configuration failed. Aborted.");
   
   test.Run ();
-  test.Report (std::cout);
+  // test.Report (std::cout);
   return 0;
 }
 
@@ -1683,11 +1617,10 @@ void DtnExample::Run (){
   myos.close (); // close log file
   Simulator::Destroy ();
   // std::cout <<"DEST\n";
-
 }
 
-void DtnExample::Report (std::ostream &){ 
-}
+// void DtnExample::Report (std::ostream &){ 
+// }
 
 void DtnExample::CreateNodes (){
   Ns2MobilityHelper ns2 = Ns2MobilityHelper (traceFile);
