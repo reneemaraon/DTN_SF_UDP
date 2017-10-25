@@ -1,11 +1,11 @@
 Creating 3 nodes.
 SENSOR: 
 seconds interval1
-node 0 getnode 0x23f7590 dst-> 0x240de00 10.0.0.1 source-> 0x240e220
+node 0 getnode 0x9b6590 dst-> 0x9cce00 10.0.0.1 source-> 0x9cd220
 MOBILE: 
-node 1 getnode 0x23f7430 dst-> 0x240f420 10.0.0.2 source-> 0x240faa0
+node 1 getnode 0x9b6430 dst-> 0x9ce420 10.0.0.2 source-> 0x9ceaa0
 BASE: 
-node 2 getnode 0x23f7140 dst-> 0x2411160 10.0.0.3 source-> 0x2411580
+node 2 getnode 0x9b6140 dst-> 0x9d0160 10.0.0.3 source-> 0x9d0580
 Starting simulation for 50 s, seed value 12345673
 0.5 0 0 0 0 1 30 200
 0.50001 0 0 0 0 0 30 100
@@ -24,172 +24,182 @@ Starting simulation for 50 s, seed value 12345673
 4.50002 0 0 0 0 0 230 200
 At time 5 send bundle with sequence number 98 from 10.0.0.1 to 10.0.0.3
 Retransmitting from 10.0.0.1 to 10.0.0.2 sequence 98
+At time 5.34804 send antipacket with sequence number 98 original ts 5 new ts 0 from 10.0.0.3 to 10.0.0.1
 5.5 0 0 1 100028 1 30 200
-5.50001 0 0 1 100028 0 30 100
+5.50001 0 1 1 100028 0 30 100
 5.50002 0 0 0 0 0 230 200
-6.5 0 0 1 100028 1 30 200
+Sending antipacket with sequence number 98 to 10.0.0.1
+Removing bundle of sequence 98
+6.5 0 0 0 0 1 30 200
 6.50001 0 0 1 100028 0 30 100
 6.50002 0 0 0 0 0 230 200
-7.5 0 0 1 100028 1 30 200
+7.5 0 0 0 0 1 30 200
 7.50001 0 0 1 100028 0 30 100
 7.50002 0 0 0 0 0 230 200
-8.5 0 0 1 100028 1 30 200
+8.5 0 0 0 0 1 30 200
 8.50001 0 0 1 100028 0 30 100
 8.50002 0 0 0 0 0 230 200
-9.5 0 0 1 100028 1 30 200
+9.5 0 0 0 0 1 30 200
 9.50001 0 0 1 100028 0 30 100
 9.50002 0 0 0 0 0 230 200
-At time 10 send bundle with sequence number 754 from 10.0.0.1 to 10.0.0.3
-10.5 0 0 2 200056 1 30 200
-10.5 0 0 1 100028 0 40 100
+At time 10 send bundle with sequence number 762 from 10.0.0.1 to 10.0.0.3
+Retransmitting from 10.0.0.1 to 10.0.0.2 sequence 762
+At time 10.342 send antipacket with sequence number 762 original ts 10 new ts 0 from 10.0.0.3 to 10.0.0.1
+10.5 0 0 1 100028 1 30 200
+10.5 0 1 2 200056 0 40 100
 10.5 0 0 0 0 0 230 200
-11.5 0 0 2 200056 1 30 200
-11.5 0 0 1 100028 0 60 100
+Sending antipacket with sequence number 762 to 10.0.0.1
+Removing bundle of sequence 762
+11.5 0 0 0 0 1 30 200
+11.5 0 0 2 200056 0 60 100
 11.5 0 0 0 0 0 230 200
-12.5 0 0 2 200056 1 30 200
-12.5 0 0 1 100028 0 80 100
+12.5 0 0 0 0 1 30 200
+12.5 0 0 2 200056 0 80 100
 12.5 0 0 0 0 0 230 200
-13.5 0 0 2 200056 1 30 200
-13.5 0 0 1 100028 0 100 100
+13.5 0 0 0 0 1 30 200
+13.5 0 0 2 200056 0 100 100
 13.5 0 0 0 0 0 230 200
-14.5 0 0 2 200056 0 30 200
-14.5 0 0 1 100028 0 120 100
+14.5 0 0 0 0 0 30 200
+14.5 0 0 2 200056 0 120 100
 14.5 0 0 0 0 0 230 200
-At time 15 send bundle with sequence number 855 from 10.0.0.1 to 10.0.0.3
-15.5 0 0 3 300084 0 30 200
-15.5 0 0 1 100028 0 140 100
+At time 15 send bundle with sequence number 1418 from 10.0.0.1 to 10.0.0.3
+15.5 0 0 1 100028 0 30 200
+15.5 0 0 2 200056 0 140 100
 15.5 0 0 0 0 0 230 200
 Retransmitting from 10.0.0.2 to 10.0.0.3 sequence 98
-At time 16.054 received 100000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 11.054 bundle hop count: 2 sequence number: 98 bundle queue occupancy: 0
-At time 16.054 send antipacket with sequence number 98 original ts 5 new ts 0 from 10.0.0.3 to 10.0.0.1
-Sending antipacket with sequence number 98 to 10.0.0.2
-16.5 0 0 3 300084 0 30 200
-16.5 0 0 1 100028 1 160 100
+Retransmitting from 10.0.0.2 to 10.0.0.3 sequence 762
+At time 16.088 received 100000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 11.088 bundle hop count: 2 sequence number: 98 bundle queue occupancy: 0
+At time 16.088 send antipacket with sequence number 98 original ts 5 new ts 0 from 10.0.0.3 to 10.0.0.1
+At time 16.191 received 100000 bytes at 10.0.0.3 (final dst) from 10.0.0.2 delay: 6.1914 bundle hop count: 2 sequence number: 762 bundle queue occupancy: 0
+At time 16.191 send antipacket with sequence number 762 original ts 10 new ts 0 from 10.0.0.3 to 10.0.0.1
+Sending antipacket with sequence number 762 to 10.0.0.2
+16.5 0 0 1 100028 0 30 200
+16.5 0 0 2 200056 1 160 100
 16.5 0 1 0 0 1 230 200
-17.5 0 0 3 300084 0 30 200
-17.5 0 0 1 100028 1 180 100
+17.5 0 0 1 100028 0 30 200
+17.5 0 0 2 200056 1 180 100
 17.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-18.5 0 0 3 300084 0 30 200
-18.5 0 0 1 100028 1 200 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+18.5 0 0 1 100028 0 30 200
+18.5 0 0 2 200056 1 200 100
 18.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-19.5 0 0 3 300084 0 30 200
-19.5 0 0 1 100028 1 220 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+19.5 0 0 1 100028 0 30 200
+19.5 0 0 2 200056 1 220 100
 19.5 0 1 0 0 1 230 200
-At time 20 send bundle with sequence number 1500 from 10.0.0.1 to 10.0.0.3
-20.5 0 0 4 400112 0 30 200
-20.5 0 0 1 100028 1 230 100
+At time 20 send bundle with sequence number 2608 from 10.0.0.1 to 10.0.0.3
+20.5 0 0 2 200056 0 30 200
+20.5 0 0 2 200056 1 230 100
 20.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-21.5 0 0 4 400112 0 30 200
-21.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+21.5 0 0 2 200056 0 30 200
+21.5 0 0 2 200056 1 230 100
 21.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-22.5 0 0 4 400112 0 30 200
-22.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+22.5 0 0 2 200056 0 30 200
+22.5 0 0 2 200056 1 230 100
 22.5 0 1 0 0 1 230 200
-23.5 0 0 4 400112 0 30 200
-23.5 0 0 1 100028 1 230 100
+23.5 0 0 2 200056 0 30 200
+23.5 0 0 2 200056 1 230 100
 23.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-24.5 0 0 4 400112 0 30 200
-24.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+24.5 0 0 2 200056 0 30 200
+24.5 0 0 2 200056 1 230 100
 24.5 0 1 0 0 1 230 200
-At time 25 send bundle with sequence number 1601 from 10.0.0.1 to 10.0.0.3
-Sending antipacket with sequence number 98 to 10.0.0.2
-25.5 0 0 5 500140 0 30 200
-25.5 0 0 1 100028 1 230 100
+At time 25 send bundle with sequence number 2709 from 10.0.0.1 to 10.0.0.3
+Sending antipacket with sequence number 762 to 10.0.0.2
+25.5 0 0 3 300084 0 30 200
+25.5 0 0 2 200056 1 230 100
 25.5 0 1 0 0 1 230 200
-26.5 0 0 5 500140 0 30 200
-26.5 0 0 1 100028 1 230 100
+26.5 0 0 3 300084 0 30 200
+26.5 0 0 2 200056 1 230 100
 26.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-27.5 0 0 5 500140 0 30 200
-27.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+27.5 0 0 3 300084 0 30 200
+27.5 0 0 2 200056 1 230 100
 27.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-28.5 0 0 5 500140 0 30 200
-28.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+28.5 0 0 3 300084 0 30 200
+28.5 0 0 2 200056 1 230 100
 28.5 0 1 0 0 1 230 200
-29.5 0 0 5 500140 0 30 200
-29.5 0 0 1 100028 1 230 100
+29.5 0 0 3 300084 0 30 200
+29.5 0 0 2 200056 1 230 100
 29.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-At time 30 send bundle with sequence number 1702 from 10.0.0.1 to 10.0.0.3
-30.5 0 0 6 600168 0 30 200
-30.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+At time 30 send bundle with sequence number 2810 from 10.0.0.1 to 10.0.0.3
+30.5 0 0 4 400112 0 30 200
+30.5 0 0 2 200056 1 230 100
 30.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-31.5 0 0 6 600168 0 30 200
-31.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+31.5 0 0 4 400112 0 30 200
+31.5 0 0 2 200056 1 230 100
 31.5 0 1 0 0 1 230 200
-32.5 0 0 6 600168 0 30 200
-32.5 0 0 1 100028 1 230 100
+32.5 0 0 4 400112 0 30 200
+32.5 0 0 2 200056 1 230 100
 32.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-33.5 0 0 6 600168 0 30 200
-33.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+33.5 0 0 4 400112 0 30 200
+33.5 0 0 2 200056 1 230 100
 33.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-34.5 0 0 6 600168 0 30 200
-34.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+34.5 0 0 4 400112 0 30 200
+34.5 0 0 2 200056 1 230 100
 34.5 0 1 0 0 1 230 200
-At time 35 send bundle with sequence number 1803 from 10.0.0.1 to 10.0.0.3
-35.5 0 0 7 700196 0 30 200
-35.5 0 0 1 100028 1 230 100
+At time 35 send bundle with sequence number 2911 from 10.0.0.1 to 10.0.0.3
+35.5 0 0 5 500140 0 30 200
+35.5 0 0 2 200056 1 230 100
 35.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-36.5 0 0 7 700196 0 30 200
-36.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+36.5 0 0 5 500140 0 30 200
+36.5 0 0 2 200056 1 230 100
 36.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-37.5 0 0 7 700196 0 30 200
-37.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+37.5 0 0 5 500140 0 30 200
+37.5 0 0 2 200056 1 230 100
 37.5 0 1 0 0 1 230 200
-38.5 0 0 7 700196 0 30 200
-38.5 0 0 1 100028 1 230 100
+38.5 0 0 5 500140 0 30 200
+38.5 0 0 2 200056 1 230 100
 38.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-39.5 0 0 7 700196 0 30 200
-39.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+39.5 0 0 5 500140 0 30 200
+39.5 0 0 2 200056 1 230 100
 39.5 0 1 0 0 1 230 200
-At time 40 send bundle with sequence number 1904 from 10.0.0.1 to 10.0.0.3
-Sending antipacket with sequence number 98 to 10.0.0.2
-40.5 0 0 8 800224 0 30 200
-40.5 0 0 1 100028 1 230 100
+At time 40 send bundle with sequence number 3012 from 10.0.0.1 to 10.0.0.3
+Sending antipacket with sequence number 762 to 10.0.0.2
+40.5 0 0 6 600168 0 30 200
+40.5 0 0 2 200056 1 230 100
 40.5 0 1 0 0 1 230 200
-41.5 0 0 8 800224 0 30 200
-41.5 0 0 1 100028 1 230 100
+41.5 0 0 6 600168 0 30 200
+41.5 0 0 2 200056 1 230 100
 41.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-42.5 0 0 8 800224 0 30 200
-42.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+42.5 0 0 6 600168 0 30 200
+42.5 0 0 2 200056 1 230 100
 42.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-43.5 0 0 8 800224 0 30 200
-43.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+43.5 0 0 6 600168 0 30 200
+43.5 0 0 2 200056 1 230 100
 43.5 0 1 0 0 1 230 200
-44.5 0 0 8 800224 0 30 200
-44.5 0 0 1 100028 1 230 100
+44.5 0 0 6 600168 0 30 200
+44.5 0 0 2 200056 1 230 100
 44.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-At time 45 send bundle with sequence number 2005 from 10.0.0.1 to 10.0.0.3
-45.5 0 0 9 900252 0 30 200
-45.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+At time 45 send bundle with sequence number 3113 from 10.0.0.1 to 10.0.0.3
+45.5 0 0 7 700196 0 30 200
+45.5 0 0 2 200056 1 230 100
 45.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-46.5 0 0 9 900252 0 30 200
-46.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+46.5 0 0 7 700196 0 30 200
+46.5 0 0 2 200056 1 230 100
 46.5 0 1 0 0 1 230 200
-47.5 0 0 9 900252 0 30 200
-47.5 0 0 1 100028 1 230 100
+47.5 0 0 7 700196 0 30 200
+47.5 0 0 2 200056 1 230 100
 47.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-48.5 0 0 9 900252 0 30 200
-48.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+48.5 0 0 7 700196 0 30 200
+48.5 0 0 2 200056 1 230 100
 48.5 0 1 0 0 1 230 200
-Sending antipacket with sequence number 98 to 10.0.0.2
-49.5 0 0 9 900252 0 30 200
-49.5 0 0 1 100028 1 230 100
+Sending antipacket with sequence number 762 to 10.0.0.2
+49.5 0 0 7 700196 0 30 200
+49.5 0 0 2 200056 1 230 100
 49.5 0 1 0 0 1 230 200

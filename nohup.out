@@ -1,28 +1,88 @@
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[660/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (6.973s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.596s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345673', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
 [  3/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
 [682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (10.464s)
+'build' finished successfully (6.931s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
 awk: line 1: syntax error at or near }
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.955s)
+'build' finished successfully (0.575s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345673', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (6.278s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.454s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345673', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.521s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.431s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345673', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[660/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (5.411s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.610s)
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345673', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst1.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=3', '--duration=50.0'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[659/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (6.529s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.699s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (7.391s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.548s)
 awk: line 1: syntax error at or near }
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
 [  3/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
 [682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (10.517s)
+'build' finished successfully (5.807s)
 awk: line 1: syntax error at or near }
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (0.923s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (1.234s)
-awk: line 1: syntax error at or near }
-Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (1.150s)
+'build' finished successfully (0.672s)
 awk: line 1: syntax error at or near }

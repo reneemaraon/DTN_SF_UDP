@@ -753,9 +753,9 @@ int DtnApp::AntipacketExists (Ptr<Packet> pkt){
       p->AddHeader(apHeader);
       p->AddHeader(tHeader);
     }
-    bool success = m_antipacket_queue->Enqueue (p);
-    if (success) {
-    }
+    // bool success = m_antipacket_queue->Enqueue (p);
+    // if (success) {
+    // }
     i++;
   }
   return (apExists);
@@ -1007,6 +1007,8 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
     if (currentServerRxBytes[i] == bundle_size[i]) {
       currentServerRxBytes[i] = 0;
       Ptr<Packet> qpkt = newpkt[i]->Copy ();
+      Ptr<Packet> qpkt1 = newpkt[i]->Copy ();
+
       mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
       newpkt[i]->RemoveHeader(tHeader);
       if (tHeader.Get () == mypacket::MYTYPE_AP) {
@@ -1022,9 +1024,9 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
           apHeader.SetHopCount (apHeader.GetHopCount () + 1);
           qpkt->AddHeader (apHeader);
           qpkt->AddHeader (tHeader);
-          bool success = m_antipacket_queue->Enqueue (qpkt);
-          if (success) {
-          }
+          // bool success = m_antipacket_queue->Enqueue (qpkt);
+          // if (success) {
+          // }
           RemoveBundle (qpkt); 
         }
       } 
@@ -1051,6 +1053,20 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               " sequence number: "  << bndlHeader.GetOriginSeqno () <<
               " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
             SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+            // int baseNode=2;
+            // char dststring[1024]="";
+            // sprintf(dststring,"10.0.0.%d",(baseNode+1));
+            // mypacket::TypeHeader tHeader1 (mypacket::MYTYPE_BNDL);
+            // std::cout<<"HI\n";
+            // qpkt1->RemoveHeader(tHeader1);
+            // mypacket::BndlHeader bndlHeader1;
+            // qpkt1->RemoveHeader(bndlHeader1);
+            // bndlHeader1.SetDst(dststring);
+            // qpkt1->AddHeader(bndlHeader1);
+            // qpkt1->AddHeader(tHeader1);
+            
+            // m_queue->Enqueue (qpkt1);     
+
           } 
           else {
             mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
@@ -1063,6 +1079,8 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
             qpkt->AddHeader (tHeader);
             if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s) {
               bool success = m_queue->Enqueue (qpkt);
+              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+
               if (success) {
               }
             } 
