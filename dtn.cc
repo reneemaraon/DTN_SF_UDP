@@ -417,7 +417,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
               // if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
               if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
                 //sending antipacket to this person
-                std::cout <<"Sending antipacket with sequence number "<<apHeader.GetOriginSeqno()<<" to " <<neighbor_address[i].GetIpv4()<< "\n";
+                // std::cout <<"Sending antipacket with sequence number "<<apHeader.GetOriginSeqno()<<" to " <<neighbor_address[i].GetIpv4()<< "\n";
                 if (stationary ==0)
                   send_bundle = 1;
                 j = 0;
@@ -583,7 +583,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
       anotherp->RemoveHeader(bndlHeader);
       anotherp->AddHeader(bndlHeader);
       anotherp->AddHeader(tHeader);
-      std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
+      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
@@ -1309,7 +1309,7 @@ void Sensor::CreateBundle(){
     bool success = m_queue->Enqueue (packet);
     if (success) {
       std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-        " send bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
+        " created bundle with sequence number " <<  bndlHeader.GetOriginSeqno () <<
         " from " <<  bndlHeader.GetOrigin () <<
         " to " << bndlHeader.GetDst () << "\n";
     }
