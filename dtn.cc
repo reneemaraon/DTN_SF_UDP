@@ -1291,7 +1291,7 @@ void Sensor::CreateBundle(){
   char srcstring[1024]="";
   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
   char dststring[1024]="";
-  sprintf(dststring,"10.0.0.%d",(destinationNode+1));
+  sprintf(dststring,"10.0.0.%d",(destinationNode+2));
   bndlHeader.SetOrigin (srcstring);
   bndlHeader.SetDst (dststring);
   bndlHeader.SetOriginSeqno (packet->GetUid());
@@ -2103,8 +2103,12 @@ void DtnExample::InstallApplications () {
 
 
   TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
+
+
+  //set up base
+
   for (uint32_t i = 0; i < nodeNum; ++i) { 
-    if(i<nodeNum-2){
+    if(i<nodeNum-3){
       std::cout<<"SENSOR: "<<"\n";
       Ptr<Sensor> app;
       app = CreateObject<Sensor> ();  
@@ -2112,8 +2116,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
