@@ -2112,8 +2112,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -2155,7 +2155,7 @@ void DtnExample::InstallApplications () {
       recvSink->Bind (local);
       recvSink->SetRecvCallback (MakeCallback (&Sensor::ReceiveHello, app));
     }
-    else if(i==nodeNum-2){
+    else if((i==nodeNum-2) || (i==nodeNum-3)){
       std::cout<<"MOBILE: "<<"\n";
       Ptr<Mobile> app;
       app = CreateObject<Mobile> ();  
