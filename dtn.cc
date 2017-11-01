@@ -20,6 +20,7 @@
 #include "ns3/netanim-module.h"
 #include "QueueStruct.h"
 #include <sstream>
+#include <string.h>
 
 using namespace ns3;
 
@@ -1008,6 +1009,10 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
       currentServerRxBytes[i] = 0;
       Ptr<Packet> qpkt = newpkt[i]->Copy ();
       Ptr<Packet> qpkt1 = newpkt[i]->Copy ();
+      uint8_t *buffer1 = new uint8_t[qpkt->GetSize ()];
+      // uint8_t size = qpkt->CopyData(buffer, qpkt->GetSize ());
+      std::string s = std::string(buffer1, buffer1+qpkt->GetSize());
+      // cout<<"Received:"<<s<<endl;
 
       mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
       newpkt[i]->RemoveHeader(tHeader);
@@ -1033,6 +1038,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
       else {
         mypacket::BndlHeader bndlHeader;
         newpkt[i]->RemoveHeader(bndlHeader);
+        
         bundle_size[i] = bndlHeader.GetBundleSize ();
         if (IsDuplicate (qpkt, m_queue) == 1)
           std::cout << "At time " << Simulator::Now ().GetSeconds () <<
@@ -1042,6 +1048,8 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
             " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () <<
             " sequence number: "  << bndlHeader.GetOriginSeqno () <<
             " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
+
+
         if ((IsDuplicate (qpkt, m_queue) == 0) && (AntipacketExists (qpkt) == 0) && ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0)) {
           if (bndlHeader.GetDst () == owniaddress.GetIpv4 ()) {
             std::cout << "At time " << Simulator::Now ().GetSeconds () <<
@@ -1052,20 +1060,9 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
               " sequence number: "  << bndlHeader.GetOriginSeqno () <<
               " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
+              // std::cout<<"Here is the string \n"<<s<<"\n";
             SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
-            // int baseNode=2;
-            // char dststring[1024]="";
-            // sprintf(dststring,"10.0.0.%d",(baseNode+1));
-            // mypacket::TypeHeader tHeader1 (mypacket::MYTYPE_BNDL);
-            // std::cout<<"HI\n";
-            // qpkt1->RemoveHeader(tHeader1);
-            // mypacket::BndlHeader bndlHeader1;
-            // qpkt1->RemoveHeader(bndlHeader1);
-            // bndlHeader1.SetDst(dststring);
-            // qpkt1->AddHeader(bndlHeader1);
-            // qpkt1->AddHeader(tHeader1);
-            
-            // m_queue->Enqueue (qpkt1);     
+              
 
           } 
           else {
@@ -1281,17 +1278,19 @@ void Sensor::CreateBundle(){
     buffer.dequeue();
     // buffer.listPrinter();
   }
-  int bndlSize=100000;//?????????????????? how to compute hehe
+  std::cout<<"payload "<<payload<<"\n";
+  // int bndlSize=100000;//?????????????????? how to compute hehe
   std::stringstream bndlData;
   bndlData << payload ;
+  uint16_t bndlSize = bndlData.str().length()+1;
 
-  
+  // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
   mypacket::BndlHeader bndlHeader;
   char srcstring[1024]="";
   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
   char dststring[1024]="";
-  sprintf(dststring,"10.0.0.%d",(destinationNode+2));
+  sprintf(dststring,"10.0.0.%d",(destinationNode+1));
   bndlHeader.SetOrigin (srcstring);
   bndlHeader.SetDst (dststring);
   bndlHeader.SetOriginSeqno (packet->GetUid());
@@ -2117,8 +2116,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
