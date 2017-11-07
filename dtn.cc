@@ -690,13 +690,15 @@ void DtnApp::SendAP (Ipv4Address srcstring, Ipv4Address dststring, uint32_t seqn
     mypacket::TypeHeader tHeader (mypacket::MYTYPE_AP);
     packet->AddHeader (tHeader);
     bool success = m_antipacket_queue->Enqueue (packet);
-    if (success)
-      std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-        " send antipacket with sequence number " <<  apHeader.GetOriginSeqno () <<
-        " original ts " <<  srctimestamp.GetSeconds () <<
-        " new ts " <<  apHeader.GetSrcTimestamp ().GetSeconds () <<
-        " from " <<  apHeader.GetOrigin () <<
-      " to " << apHeader.GetDst () << "\n";
+    if (success){
+      // std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+      //   " send antipacket with sequence number " <<  apHeader.GetOriginSeqno () <<
+      //   " original ts " <<  srctimestamp.GetSeconds () <<
+      //   " new ts " <<  apHeader.GetSrcTimestamp ().GetSeconds () <<
+      //   " from " <<  apHeader.GetOrigin () <<
+      // " to " << apHeader.GetDst () << "\n";
+      
+    }
 }
 
 int DtnApp::IsDuplicate (Ptr<Packet> pkt, Ptr<Queue> queue){
@@ -1052,21 +1054,21 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
           if (bndlHeader.GetDst () == owniaddress.GetIpv4 ()) {
             float time = Simulator::Now().GetSeconds();
             float delay = Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds () + 1000.0*(bndlHeader.GetNretx ());
-            std::cout << "At time " << time<<
-              " received " << newpkt[i]->GetSize() <<
-              " bytes at " << owniaddress.GetIpv4 () <<
-              " (final dst) from " << address.GetIpv4 () <<
-              " delay: "  << delay <<
-              " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
-              " sequence number: "  << bndlHeader.GetOriginSeqno () <<
-              " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
+            // std::cout << "At time " << time<<
+            //   " received " << newpkt[i]->GetSize() <<
+            //   " bytes at " << owniaddress.GetIpv4 () <<
+            //   " (final dst) from " << address.GetIpv4 () <<
+            //   " delay: "  << delay <<
+            //   " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
+            //   " sequence number: "  << bndlHeader.GetOriginSeqno () <<
+            //   " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
               uint8_t *buffer1 = new uint8_t[newpkt[i]->GetSize ()+1];
               newpkt[i]->CopyData(buffer1, newpkt[i]->GetSize ());
               buffer1[newpkt[i]->GetSize()]='\0';
               
               std::string s = std::string(buffer1, buffer1+newpkt[i]->GetSize());
 
-              std::cout<<"string is :"<<s<<"\n";
+              // std::cout<<"string is :"<<s<<"\n";
               // std::ofstream datapoints;
               // datapoints.open("datapoints.txt",std::ios_base::app);
               // if (datapoints.is_open()){
@@ -1083,7 +1085,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               std::string token;
               while ((pos = s.find(delimiter)) != std::string::npos) {
                   token = s.substr(0, pos);
-                  std::cout << token.substr(0,3) <<" "<< time<<" "<<delay<<std::endl;
+                  std::cout << token.substr(0,3) <<","<< time<<","<<delay<<std::endl;
                   s.erase(0, pos + delimiter.length());
               }
 
