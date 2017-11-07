@@ -1009,9 +1009,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
       currentServerRxBytes[i] = 0;
       Ptr<Packet> qpkt = newpkt[i]->Copy ();
       Ptr<Packet> qpkt1 = newpkt[i]->Copy ();
-      uint8_t *buffer1 = new uint8_t[qpkt->GetSize ()];
-      // uint8_t size = qpkt->CopyData(buffer, qpkt->GetSize ());
-      std::string s = std::string(buffer1, buffer1+qpkt->GetSize());
+
       // cout<<"Received:"<<s<<endl;
 
       mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
@@ -1060,8 +1058,30 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
               " sequence number: "  << bndlHeader.GetOriginSeqno () <<
               " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
-              // std::cout<<"Here is the string \n"<<s<<"\n";
-            SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+              uint8_t *buffer1 = new uint8_t[newpkt[i]->GetSize ()+1];
+              newpkt[i]->CopyData(buffer1, newpkt[i]->GetSize ());
+              buffer1[newpkt[i]->GetSize()]='\0';
+              
+              std::string s = std::string(buffer1, buffer1+newpkt[i]->GetSize());
+              std::cout<<"Here is the string received:   "<<s<<"\n";
+
+              
+              // std::ofstream datapoints;
+              // datapoints.open("datapoints.txt",std::ios_base::app);
+              // if (datapoints.is_open()){
+              //   std::cout<<"Hello\n";
+              //   datapoints<<s;
+              //   datapoints<<"HI THERE FAM\n";
+              // }
+              // datapoints.close();
+            
+              std::string delimiter = ",";
+              size_t pos = 0;
+              std::string token;
+              
+
+
+              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
               
 
           } 
@@ -1275,14 +1295,15 @@ void Sensor::CreateBundle(){
   std::string payload="";
   for(int y=0; y<dataSizeInBundle; y++){
     payload+=buffer.get(0);
+    if (y<dataSizeInBundle-1) payload+=",";
     buffer.dequeue();
     // buffer.listPrinter();
   }
-  std::cout<<"payload "<<payload<<"\n";
+  // std::cout<<"payload "<<payload<<"\n";
   // int bndlSize=100000;//?????????????????? how to compute hehe
   std::stringstream bndlData;
   bndlData << payload ;
-  uint16_t bndlSize = bndlData.str().length()+1;
+  uint16_t bndlSize = bndlData.str().length();
 
   // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
@@ -2019,7 +2040,6 @@ void DtnExample::Run (){
   // std::cout <<"after IA\n";
   PopulateArpCache ();
   // std::cout <<"YESPopu arp cache \n";
-  
   std::cout << "Starting simulation for " << duration << " s, " <<
     "seed value " << seed << "\n";
   
