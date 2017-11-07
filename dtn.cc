@@ -1050,11 +1050,13 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
 
         if ((IsDuplicate (qpkt, m_queue) == 0) && (AntipacketExists (qpkt) == 0) && ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0)) {
           if (bndlHeader.GetDst () == owniaddress.GetIpv4 ()) {
-            std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+            float time = Simulator::Now().GetSeconds();
+            float delay = Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds () + 1000.0*(bndlHeader.GetNretx ());
+            std::cout << "At time " << time<<
               " received " << newpkt[i]->GetSize() <<
               " bytes at " << owniaddress.GetIpv4 () <<
               " (final dst) from " << address.GetIpv4 () <<
-              " delay: "  << Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds () + 1000.0*(bndlHeader.GetNretx ()) <<
+              " delay: "  << delay <<
               " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
               " sequence number: "  << bndlHeader.GetOriginSeqno () <<
               " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
@@ -1063,9 +1065,8 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               buffer1[newpkt[i]->GetSize()]='\0';
               
               std::string s = std::string(buffer1, buffer1+newpkt[i]->GetSize());
-              std::cout<<"Here is the string received:   "<<s<<"\n";
 
-              
+              std::cout<<"string is :"<<s<<"\n";
               // std::ofstream datapoints;
               // datapoints.open("datapoints.txt",std::ios_base::app);
               // if (datapoints.is_open()){
@@ -1075,10 +1076,16 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               // }
               // datapoints.close();
             
+
               std::string delimiter = ",";
+              std::string::size_type sz;
               size_t pos = 0;
               std::string token;
-              
+              while ((pos = s.find(delimiter)) != std::string::npos) {
+                  token = s.substr(0, pos);
+                  std::cout << token.substr(0,3) <<" "<< time<<" "<<delay<<std::endl;
+                  s.erase(0, pos + delimiter.length());
+              }
 
 
               SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
@@ -1293,9 +1300,11 @@ void Sensor::StoreInBuffer(std::string tempor){
 
 void Sensor::CreateBundle(){
   std::string payload="";
+
+  // payload+=std::to_string(dataSizeInBundle);
   for(int y=0; y<dataSizeInBundle; y++){
     payload+=buffer.get(0);
-    if (y<dataSizeInBundle-1) payload+=",";
+    payload+=",";
     buffer.dequeue();
     // buffer.listPrinter();
   }
