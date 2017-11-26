@@ -2057,6 +2057,7 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
+  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2139,7 +2140,7 @@ void DtnExample::InstallApplications () {
 
   for (uint32_t i = 0; i < nodeNum; ++i) { 
     // if(i<=nodeNum-3){
-    if(i==0){
+    if(i==1){
       std::cout<<"SENSOR: "<<"\n";
       Ptr<Sensor> app;
       app = CreateObject<Sensor> ();  
@@ -2147,8 +2148,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -2191,7 +2192,7 @@ void DtnExample::InstallApplications () {
       recvSink->SetRecvCallback (MakeCallback (&Sensor::ReceiveHello, app));
     }
     // else if(i==nodeNum-2){
-    else if(i==1){
+    else if(i==0){
       std::cout<<"MOBILE: "<<"\n";
       Ptr<Mobile> app;
       app = CreateObject<Mobile> ();  
