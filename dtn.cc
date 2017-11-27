@@ -37,6 +37,38 @@ static void CourseChange (std::ostream *myos, std::string foo, Ptr<const Mobilit
 
 typedef std::map<Ptr<Socket>,int> sockOrder;
 
+class DtnExample {
+public:
+  DtnExample ();
+  bool Configure (int argc, char **argv);
+  void Run ();
+  void Teleport(int locx, int locy);
+  // void Report (std::ostream & os);
+  std::string traceFile;
+  std::string logFile;
+  std::ofstream myos;
+  std::ifstream bufferInput;
+
+private:
+  uint32_t seed;
+  uint32_t nodeNum;
+  double duration;
+  bool pcap;
+  bool printRoutes;
+  
+  NodeContainer nodes;
+  NetDeviceContainer devices;
+  Ipv4InterfaceContainer interfaces;
+  
+private:
+  void CreateNodes ();
+  void CreateDevices ();
+  void InstallInternetStack ();
+  void InstallApplications ();
+  void PopulateArpCache ();
+};
+
+
 class DtnApp : public Application{
   public:
     
@@ -62,7 +94,7 @@ class DtnApp : public Application{
     void RemoveBundle (Ptr<Packet> pkt); //CALLED NG RECEIVE BUNDLE
     
     // void SendBundle (uint32_t dstnode, uint32_t packetsize); //di talaga send more of enqueue, wala nagccall, dati pag nagbbundleSched
-    
+    DtnExample        *dtnExample;
     Ptr<Node>         m_node;
     Ptr<Socket>       m_socket;
     std::vector<Ptr<Packet> > newpkt;
@@ -1970,35 +2002,6 @@ void Base::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint
 }
 
 
-class DtnExample {
-public:
-  DtnExample ();
-  bool Configure (int argc, char **argv);
-  void Run ();
-  // void Report (std::ostream & os);
-  std::string traceFile;
-  std::string logFile;
-  std::ofstream myos;
-  std::ifstream bufferInput;
-
-private:
-  uint32_t seed;
-  uint32_t nodeNum;
-  double duration;
-  bool pcap;
-  bool printRoutes;
-  
-  NodeContainer nodes;
-  NetDeviceContainer devices;
-  Ipv4InterfaceContainer interfaces;
-  
-private:
-  void CreateNodes ();
-  void CreateDevices ();
-  void InstallInternetStack ();
-  void InstallApplications ();
-  void PopulateArpCache ();
-};
 
 int main (int argc, char **argv)
 {
@@ -2067,6 +2070,9 @@ void DtnExample::Run (){
 
 // void DtnExample::Report (std::ostream &){ 
 // }
+void DtnExample::Teleport(int locx, int locy){
+  std::cout<<"Teleport is called\n";
+}
 
 void DtnExample::CreateNodes (){
   Ns2MobilityHelper ns2 = Ns2MobilityHelper (traceFile);
@@ -2148,8 +2154,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
