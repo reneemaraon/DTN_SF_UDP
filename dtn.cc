@@ -1247,7 +1247,7 @@ void DtnApp::ReceiveHello (Ptr<Socket> socket){
 
 class Sensor: public DtnApp {
   public:
-    void StationarySetup(Ptr<Node> node);
+    void StationarySetup(Ptr<Node> node, DtnExample *dtnExample);
     void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
     void GenerateData(uint32_t first);
     void StoreInBuffer(std::string tempor);
@@ -1269,7 +1269,9 @@ class Sensor: public DtnApp {
     uint32_t destinationNode;
 };
 
-void Sensor::StationarySetup(Ptr<Node> node){
+void Sensor::StationarySetup(Ptr<Node> node, DtnExample *dtnEx){
+  dtnExample = dtnEx;
+  dtnExample->Teleport(1,1);
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue> ();
   m_queue = CreateObject<DropTailQueue> ();
@@ -1473,13 +1475,14 @@ void Sensor::ReceiveHello (Ptr<Socket> socket){
 
 class Mobile: public DtnApp {
   public:
-    void MobileSetup(Ptr<Node> node);
+    void MobileSetup(Ptr<Node> node, DtnExample *dtnEx);
     void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
     void ReceiveHello(Ptr<Socket> socket);
 
 };
 
-void Mobile::MobileSetup (Ptr<Node> node){
+void Mobile::MobileSetup (Ptr<Node> node, DtnExample *dtnEx){
+  dtnExample = dtnEx;
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue> ();
   m_queue = CreateObject<DropTailQueue> ();
@@ -1738,13 +1741,14 @@ void Mobile::ReceiveHello(Ptr<Socket> socket){
 
 class Base: public DtnApp {
   public:
-    void BaseSetup(Ptr<Node> node);
+    void BaseSetup(Ptr<Node> node, DtnExample *dtnEx);
     void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
 
     void ReceiveHello(Ptr<Socket> socket);
 };
 
-void Base::BaseSetup(Ptr<Node> node){
+void Base::BaseSetup(Ptr<Node> node, DtnExample *dtnEx){
+  dtnExample = dtnEx;
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue> ();
   m_queue = CreateObject<DropTailQueue> ();
@@ -2150,7 +2154,7 @@ void DtnExample::InstallApplications () {
       std::cout<<"SENSOR: "<<"\n";
       Ptr<Sensor> app;
       app = CreateObject<Sensor> ();  
-      app->StationarySetup (nodes.Get (i));
+      app->StationarySetup (nodes.Get (i), this);
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
@@ -2202,7 +2206,7 @@ void DtnExample::InstallApplications () {
       std::cout<<"MOBILE: "<<"\n";
       Ptr<Mobile> app;
       app = CreateObject<Mobile> ();  
-      app->MobileSetup (nodes.Get (i));
+      app->MobileSetup (nodes.Get (i), this);
 
       nodes.Get (i)->AddApplication (app);
       app->SetStartTime (Seconds (0.5 + 0.00001*i));
@@ -2232,7 +2236,7 @@ void DtnExample::InstallApplications () {
       std::cout<<"BASE: "<<"\n";
       Ptr<Base> app;  
       app = CreateObject<Base> ();  
-      app->BaseSetup (nodes.Get (i));
+      app->BaseSetup (nodes.Get (i), this);
 
       nodes.Get (i)->AddApplication (app);
       app->SetStartTime (Seconds (0.5 + 0.00001*i));
