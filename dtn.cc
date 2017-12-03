@@ -43,6 +43,7 @@ public:
   bool Configure (int argc, char **argv);
   void Run ();
   void Teleport(int locx, int locy, Ptr<Packet>);
+  // Ptr<Base> *basenode;
   // void Report (std::ostream & os);
   std::string traceFile;
   std::string logFile;
@@ -1086,14 +1087,14 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
           if (bndlHeader.GetDst () == owniaddress.GetIpv4 ()) {
             float time = Simulator::Now().GetSeconds();
             float delay = Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds () + 1000.0*(bndlHeader.GetNretx ());
-            // std::cout << "At time " << time<<
-            //   " received " << newpkt[i]->GetSize() <<
-            //   " bytes at " << owniaddress.GetIpv4 () <<
-            //   " (final dst) from " << address.GetIpv4 () <<
-            //   " delay: "  << delay <<
-            //   " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
-            //   " sequence number: "  << bndlHeader.GetOriginSeqno () <<
-            //   " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
+            std::cout << "At time " << time<<
+              " received " << newpkt[i]->GetSize() <<
+              " bytes at " << owniaddress.GetIpv4 () <<
+              " (final dst) from " << address.GetIpv4 () <<
+              " delay: "  << delay <<
+              " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
+              " sequence number: "  << bndlHeader.GetOriginSeqno () <<
+              " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
               uint8_t *buffer1 = new uint8_t[newpkt[i]->GetSize ()+1];
               newpkt[i]->CopyData(buffer1, newpkt[i]->GetSize ());
               buffer1[newpkt[i]->GetSize()]='\0';
@@ -1111,15 +1112,15 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               // datapoints.close();
             
 
-              std::string delimiter = ",";
-              std::string::size_type sz;
-              size_t pos = 0;
-              std::string token;
-              while ((pos = s.find(delimiter)) != std::string::npos) {
-                  token = s.substr(0, pos);
-                  std::cout << token.substr(0,3) <<","<< time<<","<<delay<<std::endl;
-                  s.erase(0, pos + delimiter.length());
-              }
+              // std::string delimiter = ",";
+              // std::string::size_type sz;
+              // size_t pos = 0;
+              // std::string token;
+              // while ((pos = s.find(delimiter)) != std::string::npos) {
+              //     token = s.substr(0, pos);
+              //     std::cout << token.substr(0,3) <<","<< time<<","<<delay<<std::endl;
+              //     s.erase(0, pos + delimiter.length());
+              // }
 
 
               SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
@@ -1769,303 +1770,16 @@ void Base::BaseSetup(Ptr<Node> node, DtnExample *dtnEx){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 }
 
-void Base::ReceiveTeleport(Ptr<Packet> p){
-  Address ownaddress;
-  socket->GetSockName (ownaddress);
-  InetSocketAddress owniaddress = InetSocketAddress::ConvertFrom (ownaddress); //receiver address   
-  // Address from;
-  // Ptr<Packet> p = socket->RecvFrom (from);
-    // InetSocketAddress address = InetSocketAddress::ConvertFrom (from); //sender address
+void Base::ReceiveTeleport(Ptr<Packet> pkt){
+  Ptr<Packet> cpkt = pkt->Copy();
+  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+  mypacket::BndlHeader bndlHeader;
+  cpkt->RemoveHeader(tHeader);
+  cpkt->RemoveHeader(bndlHeader);
+  uint32_t seqno = bndlHeader.GetOriginSeqno ();
 
-    // hello here
+  std::cout<<"Received bundle seqno "<<seqno<<" at the base station\n";
 
-    // uint32_t i = 0;
-    // uint32_t found = 0;
-    // while ((i < neighbors) && (found == 0)) {
-    //   if (address.GetIpv4() == neighbor_address[i].GetIpv4()) {
-    //     found = 1;
-    //   } 
-    //   else
-    //     i++;
-    // }
-    // if (found == 0) {
-    //   ++neighbors;
-    //   neighbor_address=(InetSocketAddress*)realloc(neighbor_address,neighbors*sizeof(InetSocketAddress));
-    //   neighbor_address[i]=address.GetIpv4();
-    //   neighbor_last_seen=(double*)realloc(neighbor_last_seen,neighbors*sizeof(double));
-    //   b_a=(uint32_t*)realloc(b_a,neighbors*sizeof(uint32_t));
-    //   neighbor_hello_bundles=(int32_t**)realloc(neighbor_hello_bundles,neighbors*sizeof(int32_t*));
-    //   neighbor_hello_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
-    //   neighbor_sent_bundles=(int32_t**)realloc(neighbor_sent_bundles,neighbors*sizeof(int32_t*));
-    //   neighbor_sent_bundles[i]=(int32_t*)calloc(1000,sizeof(int32_t));
-    //   neighbor_sent_aps=(int32_t**)realloc(neighbor_sent_aps,neighbors*sizeof(int32_t*));
-    //   neighbor_sent_aps[i]=(int32_t*)calloc(1000,sizeof(int32_t));
-    //   neighbor_sent_ap_when=(double**)realloc(neighbor_sent_ap_when,neighbors*sizeof(double*));
-    //   neighbor_sent_ap_when[i]=(double*)calloc(1000,sizeof(double));
-    //   for(uint32_t j=0; j < 1000; j++) {
-    //     neighbor_sent_bundles[i][j]=0;
-    //     neighbor_sent_aps[i][j]=0;
-    //     neighbor_sent_ap_when[i][j]=0;
-    //   }
-    // }
-    // neighbor_last_seen[i] = Simulator::Now ().GetSeconds ();
-
-
-
-    int src_seqno = 0;
-    QosTag tag;
-    int packet_type = 0;
-    if (p->PeekPacketTag (tag))
-      packet_type = tag.GetTid ();
-    if (packet_type == 5) { // Ack
-      p->RemoveAllByteTags ();
-      p->RemoveAllPacketTags ();
-      uint8_t *msg=new uint8_t[p->GetSize()+1];
-      p->CopyData (msg, p->GetSize());
-      msg[p->GetSize()]='\0';
-      const char *src=reinterpret_cast<const char *>(msg);
-      char word[1024];
-      strcpy(word, "");
-      int j=0, n=0;
-      int32_t id = 0;
-      int32_t retx = 0;
-      while (sscanf (src, "%1023s%n", word, &n) == 1) {
-        if (j == 0)
-          id=strtol(word,NULL,16);
-        else
-          retx=strtol(word,NULL,16);
-        strcpy(word,"");
-        src += n;
-        j++;
-      }
-      delete [] msg;
-      SendMore (address.GetIpv4(), id, retx);
-      return;
-    } 
-    else {
-      FlowIdTag ftag = 0;
-      if (p->PeekPacketTag (ftag))
-        src_seqno = ftag.GetFlowId ();
-      std::stringstream msg;
-      msg.clear ();
-      msg.str ("");
-      char seqnostring[1024]="";
-      sprintf(seqnostring," %x %x", src_seqno, packet_type); // Add: how much data received; will be used by the sender. If total received > bundle size: discard packet.
-      msg << seqnostring;
-      Ptr<Packet> ack = Create<Packet> ((uint8_t*) msg.str().c_str(), msg.str().length());
-      if (m_socket == 0) {
-        m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::UdpSocketFactory"));
-        Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4> ();
-        Ipv4Address ipaddr = (ipv4->GetAddress (1, 0)).GetLocal ();
-        InetSocketAddress local = InetSocketAddress (ipaddr, 50000);
-        m_socket->Bind (local);    
-      }
-      ack->AddPacketTag (QosTag (5));
-      InetSocketAddress ackaddr (address.GetIpv4(), 50000);
-      m_socket->SendTo (ack, 0, ackaddr);
-    }
-    p->RemoveAllByteTags ();
-    p->RemoveAllPacketTags ();
-
-    i = 0;
-    found = 0;
-    while ((i < bundles) && (found == 0)) {
-      if ((address.GetIpv4() == bundle_address[i].GetIpv4()) && (src_seqno == bundle_seqno[i]) && (packet_type == bundle_retx[i])) {
-        found = 1;
-      } 
-      else
-      i++;
-    }
-    if (found == 0) {
-      i = 0;
-      while ((i < bundles) && (found == 0)) {
-        if (currentServerRxBytes[i] == 0) {
-          found = 1;
-          bundle_address[i] = address.GetIpv4();
-          bundle_seqno[i] = src_seqno;
-          bundle_retx[i] = packet_type;
-          bundle_ts[i] = Simulator::Now ().GetSeconds ();
-          currentServerRxBytes[i] = 0;
-        } 
-        else
-          i++;
-      }
-    }
-    if (found == 0) {
-      ++bundles;
-      bundle_address=(InetSocketAddress*)realloc(bundle_address,bundles*sizeof(InetSocketAddress));
-      bundle_address[i] = address.GetIpv4();
-      bundle_seqno=(int32_t*)realloc(bundle_seqno,bundles*sizeof(int32_t));
-      bundle_seqno[i] = src_seqno;
-      bundle_retx=(int32_t*)realloc(bundle_retx,bundles*sizeof(int32_t));
-      bundle_retx[i] = packet_type;
-      currentServerRxBytes=(uint32_t*)realloc(currentServerRxBytes,bundles*sizeof(uint32_t));
-      currentServerRxBytes[i] = 0;
-      bundle_size=(uint32_t*)realloc(bundle_size,bundles*sizeof(uint32_t));
-      bundle_ts=(double*)realloc(bundle_ts,bundles*sizeof(double));
-      bundle_ts[i] = Simulator::Now ().GetSeconds ();
-      newpkt.push_back (p->Copy ());
-    }
-    if (p == 0 && socket->GetErrno () != Socket::ERROR_NOTERROR)
-      NS_FATAL_ERROR ("Server could not read stream at byte " << currentServerRxBytes[i]);
-    if (currentServerRxBytes[i] == 0) {
-      currentServerRxBytes[i] += p->GetSize ();
-      newpkt[i] = p;
-      mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-      newpkt[i]->RemoveHeader(tHeader);
-      if (tHeader.Get () == mypacket::MYTYPE_AP) {
-        mypacket::APHeader apHeader;
-        newpkt[i]->RemoveHeader(apHeader);
-        bundle_size[i] = apHeader.GetBundleSize () + 26;
-        newpkt[i]->AddHeader(apHeader);
-      } 
-      else {
-        if (tHeader.Get () == mypacket::MYTYPE_BNDL) {
-          mypacket::BndlHeader bndlHeader;
-          newpkt[i]->RemoveHeader(bndlHeader);
-          bundle_size[i] = bndlHeader.GetBundleSize () + 28;
-          newpkt[i]->AddHeader(bndlHeader);
-        } 
-        else {
-          // Bundle fragments arrive in wrong order; no bundle header
-          currentServerRxBytes[i] = 0;
-          return;
-        }
-      }
-      newpkt[i]->AddHeader(tHeader);
-    } 
-    else {
-      if (currentServerRxBytes[i] > bundle_size[i]) {
-        std::cout<<"Current server bytes: "<<currentServerRxBytes[i]<<" Bundle size: "<<bundle_size[i]<<"\n";
-        std::cout << "WTF at time " << Simulator::Now ().GetSeconds () <<
-          " received " << p->GetSize() <<
-          " bytes at " << owniaddress.GetIpv4 () <<
-          " total bytes " << currentServerRxBytes[i] <<
-          " from " << address.GetIpv4() <<
-          " seqno " << src_seqno << "\n";
-      } 
-      else {
-        currentServerRxBytes[i] += p->GetSize ();
-        newpkt[i]->AddAtEnd (p);
-      }
-    }
-    if (currentServerRxBytes[i] == bundle_size[i]) {
-      currentServerRxBytes[i] = 0;
-      Ptr<Packet> qpkt = newpkt[i]->Copy ();
-      Ptr<Packet> qpkt1 = newpkt[i]->Copy ();
-
-      // cout<<"Received:"<<s<<endl;
-
-      mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-      newpkt[i]->RemoveHeader(tHeader);
-      if (tHeader.Get () == mypacket::MYTYPE_AP) {
-        mypacket::APHeader apHeader;
-        newpkt[i]->RemoveHeader(apHeader);
-        bundle_size[i] = apHeader.GetBundleSize ();
-        if ((IsDuplicate (qpkt, m_antipacket_queue) == 0) && ((Simulator::Now ().GetSeconds () - apHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0)) {
-          mypacket::TypeHeader tHeader (mypacket::MYTYPE_AP);
-          qpkt->RemoveHeader(tHeader);
-          mypacket::APHeader apHeader;
-          qpkt->RemoveHeader(apHeader);
-          apHeader.SetHopTimestamp (Simulator::Now ());
-          apHeader.SetHopCount (apHeader.GetHopCount () + 1);
-          qpkt->AddHeader (apHeader);
-          qpkt->AddHeader (tHeader);
-          // bool success = m_antipacket_queue->Enqueue (qpkt);
-          // if (success) {
-          // }
-          RemoveBundle (qpkt); 
-        }
-      } 
-      else {
-        mypacket::BndlHeader bndlHeader;
-        newpkt[i]->RemoveHeader(bndlHeader);
-        
-        bundle_size[i] = bndlHeader.GetBundleSize ();
-        if (IsDuplicate (qpkt, m_queue) == 1)
-          std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-            " received duplicate " << newpkt[i]->GetSize() <<
-            " bytes at " << owniaddress.GetIpv4 () <<
-            " from " << address.GetIpv4 () <<
-            " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () <<
-            " sequence number: "  << bndlHeader.GetOriginSeqno () <<
-            " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
-
-
-        if ((IsDuplicate (qpkt, m_queue) == 0) && (AntipacketExists (qpkt) == 0) && ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0)) {
-          if (bndlHeader.GetDst () == owniaddress.GetIpv4 ()) {
-            float time = Simulator::Now().GetSeconds();
-            float delay = Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds () + 1000.0*(bndlHeader.GetNretx ());
-            // std::cout << "At time " << time<<
-            //   " received " << newpkt[i]->GetSize() <<
-            //   " bytes at " << owniaddress.GetIpv4 () <<
-            //   " (final dst) from " << address.GetIpv4 () <<
-            //   " delay: "  << delay <<
-            //   " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () + 1 <<
-            //   " sequence number: "  << bndlHeader.GetOriginSeqno () <<
-            //   " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
-              uint8_t *buffer1 = new uint8_t[newpkt[i]->GetSize ()+1];
-              newpkt[i]->CopyData(buffer1, newpkt[i]->GetSize ());
-              buffer1[newpkt[i]->GetSize()]='\0';
-              
-              std::string s = std::string(buffer1, buffer1+newpkt[i]->GetSize());
-
-              // std::cout<<"string is :"<<s<<"\n";
-              // std::ofstream datapoints;
-              // datapoints.open("datapoints.txt",std::ios_base::app);
-              // if (datapoints.is_open()){
-              //   std::cout<<"Hello\n";
-              //   datapoints<<s;
-              //   datapoints<<"HI THERE FAM\n";
-              // }
-              // datapoints.close();
-            
-
-              std::string delimiter = ",";
-              std::string::size_type sz;
-              size_t pos = 0;
-              std::string token;
-              while ((pos = s.find(delimiter)) != std::string::npos) {
-                  token = s.substr(0, pos);
-                  std::cout << token.substr(0,3) <<","<< time<<","<<delay<<std::endl;
-                  s.erase(0, pos + delimiter.length());
-              }
-
-
-              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
-              
-
-          } 
-          else {
-            mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-            qpkt->RemoveHeader(tHeader);
-            mypacket::BndlHeader bndlHeader;
-            qpkt->RemoveHeader(bndlHeader);
-            bndlHeader.SetHopTimestamp (Simulator::Now ());
-            bndlHeader.SetHopCount (bndlHeader.GetHopCount () + 1);
-            qpkt->AddHeader (bndlHeader);
-            qpkt->AddHeader (tHeader);
-            if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s) {
-              bool success = m_queue->Enqueue (qpkt);
-              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
-
-              if (success) {
-              }
-            } 
-            else {
-              drops++;
-              std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-              " dropped " << newpkt[i]->GetSize() <<
-              " bytes at " << owniaddress.GetIpv4 () <<
-              " from " << address.GetIpv4 () <<
-              " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () <<
-              " sequence number: "  << bndlHeader.GetOriginSeqno () <<
-              " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
-            }
-          }
-        }
-      }
-    }
 
 }
 
@@ -2363,7 +2077,8 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
-  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2374,7 +2089,15 @@ void DtnExample::Run (){
 // void DtnExample::Report (std::ostream &){ 
 // }
 void DtnExample::Teleport(int locx, int locy, Ptr<Packet> pkt){
-  std::cout<<"Teleport is called\n";
+  Ptr<Packet> cpkt = pkt->Copy();
+  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+  mypacket::BndlHeader bndlHeader;
+  cpkt->RemoveHeader(tHeader);
+  cpkt->RemoveHeader(bndlHeader);
+  uint32_t seqno = bndlHeader.GetOriginSeqno ();
+  std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
+  nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
+
 
 }
 
@@ -2534,19 +2257,19 @@ void DtnExample::InstallApplications () {
     // else if(i==nodeNum-1){
     else if(i==2){
       std::cout<<"BASE: "<<"\n";
-      Ptr<Base> app;  
-      app = CreateObject<Base> ();  
-      app->BaseSetup (nodes.Get (i), this);
+      Ptr<Base> basenode;
+      basenode = CreateObject<Base> ();  
+      basenode->BaseSetup (nodes.Get (i), this);
 
-      nodes.Get (i)->AddApplication (app);
-      app->SetStartTime (Seconds (0.5 + 0.00001*i));
-      app->SetStopTime (Seconds (5000.));
+      nodes.Get (i)->AddApplication (basenode);
+      basenode->SetStartTime (Seconds (0.5 + 0.00001*i));
+      basenode->SetStopTime (Seconds (5000.));
       Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
       char dststring[1024]="";
       sprintf(dststring,"10.0.0.%d",(i + 1));
       InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
       dst->Bind(dstlocaladdr);
-      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app));
+      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, basenode));
       
       Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
       InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
@@ -2557,9 +2280,9 @@ void DtnExample::InstallApplications () {
       Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
       InetSocketAddress local (Ipv4Address::GetAny (), 80);
       recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&Base::ReceiveHello, app));
+      recvSink->SetRecvCallback (MakeCallback (&Base::ReceiveHello, basenode));
 
-      app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+      basenode->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
 
     }
   }

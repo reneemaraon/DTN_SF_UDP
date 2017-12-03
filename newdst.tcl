@@ -1,5 +1,9 @@
 $node_(0) set X_ 863.666699999
 $node_(0) set Y_ 1008.6667
+$node_(1) set X_ 1053.3333
+$node_(1) set Y_ 952.6667
+$node_(2) set X_ 1549.3333
+$node_(2) set Y_ 262.6667
 $ns_ at 0 "$node_(0) setdest 863.666699999 1008.6667 0.5"
 $ns_ at 1 "$node_(0) setdest 864.0 1008.5 0.37266"
 $ns_ at 2 "$node_(0) setdest 864.166699999 1008.6667 0.23575"
