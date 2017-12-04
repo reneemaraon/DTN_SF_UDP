@@ -37,6 +37,11 @@ static void CourseChange (std::ostream *myos, std::string foo, Ptr<const Mobilit
 
 typedef std::map<Ptr<Socket>,int> sockOrder;
 
+// class DtnApp : public Application;
+// class Base : public DtnApp;
+// class Sensor : public DtnApp;
+// class Mobile : public DtnApp;
+
 class DtnExample {
 public:
   DtnExample ();
@@ -1747,6 +1752,9 @@ class Base: public DtnApp {
     void ReceiveHello(Ptr<Socket> socket);
 };
 
+Ptr<Base> basenode;
+
+
 void Base::BaseSetup(Ptr<Node> node, DtnExample *dtnEx){
   dtnExample = dtnEx;
   m_node = node;
@@ -2096,8 +2104,8 @@ void DtnExample::Teleport(int locx, int locy, Ptr<Packet> pkt){
   cpkt->RemoveHeader(bndlHeader);
   uint32_t seqno = bndlHeader.GetOriginSeqno ();
   std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
-  nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
-
+  // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
+  basenode->ReceiveTeleport(pkt);
 
 }
 
@@ -2257,7 +2265,7 @@ void DtnExample::InstallApplications () {
     // else if(i==nodeNum-1){
     else if(i==2){
       std::cout<<"BASE: "<<"\n";
-      Ptr<Base> basenode;
+      // Ptr<Base> basenode;
       basenode = CreateObject<Base> ();  
       basenode->BaseSetup (nodes.Get (i), this);
 
@@ -2283,6 +2291,8 @@ void DtnExample::InstallApplications () {
       recvSink->SetRecvCallback (MakeCallback (&Base::ReceiveHello, basenode));
 
       basenode->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+      // int x = nodes.Get(2)->GetNApplications();
+      // std::cout<<"number of apps "<<x<<"\n";
 
     }
   }
