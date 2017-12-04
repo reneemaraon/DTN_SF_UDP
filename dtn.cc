@@ -1279,9 +1279,13 @@ class Sensor: public DtnApp {
 
     int dataSizeInBundle;
     int dataIDSize;
+    int dataTimeSize;
     int nextID;
     int maxID;
     uint32_t destinationNode;
+
+    std::string timeNow;
+
 };
 
 void Sensor::StationarySetup(Ptr<Node> node, DtnExample *dtnEx){
@@ -1295,6 +1299,7 @@ void Sensor::StationarySetup(Ptr<Node> node, DtnExample *dtnEx){
   m_helper_queue->SetAttribute ("MaxPackets", UintegerValue (1000));
   stationary = 1;
   dataSizeInBundle=5;
+  dataTimeSize=4;
   dataIDSize=dataSizeInBundle-2;
   nextID=000;
   maxID=pow(10,dataIDSize)-1;
@@ -1315,20 +1320,28 @@ void Sensor::GenerateData(uint32_t first){
   if (first==0){
     // if (bufferCount<bufferLength){
     const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+    
     std::stringstream holder;
-    holder << nextID;
-    std::string tempor=std::string(dataIDSize - holder.str().length(), '0') + holder.str();
+    holder <<Simulator::Now().GetSeconds();
+    std::string tempo=std::string(dataTimeSize - holder.str().length(), '0') + holder.str();
+
+    // std::cout << "YSAAAAAAAAAAAA" <<" "<<Simulator::Now().GetSeconds()<<" "<<tempo<<"\n";
+    // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now ()<<" with data ";
+    std::stringstream holder2;
+    holder2 << nextID;
+    std::string tempor=tempo+"-";
+    tempor+=std::string(dataIDSize - holder2.str().length(), '0') + holder2.str();
+    tempor+="-";
     if(nextID==maxID){
       nextID=000;
     }
     else{
       nextID++;
     }
-    for (int i=0; i<(entryLength-dataIDSize); i++){
+    for (int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
       tempor += alphanum[rand() % 36];
     }
-    // std::cout << tempor <<"\n";
+    // std::cout << "TEMPOR IS  "<<tempor <<"\n";
     StoreInBuffer(tempor);
 
     Simulator::Schedule (Seconds (secondsInterval), &Sensor::GenerateData, this, 0);
@@ -1350,8 +1363,8 @@ void Sensor::StoreInBuffer(std::string tempor){
 
 void Sensor::CreateBundle(){
   std::string payload="";
-
-  // payload+=std::to_string(dataSizeInBundle);
+	// payload+=Simulator::Now ().GetSeconds ();
+  // payload+=std::to_string(dataSizeInBundle);\n
   for(int y=0; y<dataSizeInBundle; y++){
     payload+=buffer.get(0);
     payload+=",";
