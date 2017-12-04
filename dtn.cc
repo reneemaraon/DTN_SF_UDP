@@ -219,7 +219,7 @@ void DtnApp::Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx){
 
   int index = 0, found = 0;
   while ((found == 0) && (index < NumFlows)) {
-    if ((sendTos[index] == sendTo) && (ids[index] == id) && (retxs[index] == retx) && ((Simulator::Now ().GetSeconds () - firstSendTime[index]) < 750.0)) {
+    if ((sendTos[index] == sendTo) && (ids[index] == id) && (retxs[index] == retx) && ((Simulator::Now ().GetSeconds () - firstSendTime[index]) < 1000.0)) {
       found = 1;
       if ((Simulator::Now ().GetSeconds () - lastSendTime[index] < 1.0)){
         return;
@@ -256,7 +256,7 @@ void DtnApp::Retransmit (InetSocketAddress sendTo, int32_t id, int32_t retx){
 void DtnApp::SendMore (InetSocketAddress sendTo, int32_t id, int32_t retx){
   int index = 0, found = 0;
   while ((found == 0) && (index < NumFlows)) {
-    if ((sendTos[index] == sendTo) && (ids[index] == id) && (retxs[index] == retx) && ((Simulator::Now ().GetSeconds () - firstSendTime[index]) < 750.0)) {
+    if ((sendTos[index] == sendTo) && (ids[index] == id) && (retxs[index] == retx) && ((Simulator::Now ().GetSeconds () - firstSendTime[index]) < 1000.0)) {
       found = 1;
     } 
     else
@@ -365,38 +365,47 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
     while (n < pkts) {
       n++;
       packet = m_queue->Dequeue ();
+      Ptr<Packet> cpkt = packet->Copy();
+
       mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
       packet->RemoveHeader(tHeader);
       packet->RemoveHeader(bndlHeader);
       //if less 750, keep
-      if (((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0) || (bndlHeader.GetHopCount () == 0)) {
-        packet->AddHeader (bndlHeader);
-        packet->AddHeader (tHeader);
-        bool success = m_queue->Enqueue (packet);
-        if (success) {
+      if (stationary ==0){
+        if ((int32_t)bndlHeader.GetOriginSeqno() > 3000){
+          dtnExample->Teleport(1,1,cpkt);
         }
-      } 
-      else {
-        uint32_t d=0;
-        while (d < neighbors) {
-          uint32_t m=0, sent_found=0;
-          //rearranging neighbor_sent_bundles, if nasend na ang bundle sa final destination
-          while ((m < 1000) && (sent_found == 0)) {
-            if (neighbor_sent_bundles[d][m] == (int32_t)bndlHeader.GetOriginSeqno ()) {
-              sent_found=1;
-            } 
-            else
-              m++;
-            if (sent_found == 1) {
-              while ((neighbor_sent_bundles[d][m] != 0) && (m < 999)) {
-                //deleting theat sequence number from neighbor_sent_bundles
-                neighbor_sent_bundles[d][m]=neighbor_sent_bundles[d][m+1];
-                m++;
-              }
-              neighbor_sent_bundles[d][999]=0;
-            }
+      }
+      else{
+        if (((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0) || (bndlHeader.GetHopCount () == 0)) {
+          packet->AddHeader (bndlHeader);
+          packet->AddHeader (tHeader);
+          bool success = m_queue->Enqueue (packet);
+          if (success) {
           }
-          d++;
+        } 
+        else {
+          uint32_t d=0;
+          while (d < neighbors) {
+            uint32_t m=0, sent_found=0;
+            //rearranging neighbor_sent_bundles, if nasend na ang bundle sa final destination
+            while ((m < 1000) && (sent_found == 0)) {
+              if (neighbor_sent_bundles[d][m] == (int32_t)bndlHeader.GetOriginSeqno ()) {
+                sent_found=1;
+              } 
+              else
+                m++;
+              if (sent_found == 1) {
+                while ((neighbor_sent_bundles[d][m] != 0) && (m < 999)) {
+                  //deleting theat sequence number from neighbor_sent_bundles
+                  neighbor_sent_bundles[d][m]=neighbor_sent_bundles[d][m+1];
+                  m++;
+                }
+                neighbor_sent_bundles[d][999]=0;
+              }
+            }
+            d++;
+          }
         }
       }
     } 
@@ -492,7 +501,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
         packet->RemoveHeader(tHeader);
         packet->RemoveHeader(bndlHeader);
         //if not old ang bundle
-        if ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0) {
+        if ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0) {
           // ano lang basta di pa bago ang bundle narating sa node na itu
           if (n==1){
             if ((Simulator::Now ().GetSeconds () - bndlHeader.GetHopTimestamp ().GetSeconds ()) > 0.2) {
@@ -826,7 +835,7 @@ void DtnApp::RemoveBundle (Ptr<Packet> pkt){
         }  
       } 
       else{
-        std::cout<<"Removing bundle of sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
+        std::cout<<"Removing bundle of sequence "<<bndlHeader.GetOriginSeqno()<<" from node "<<m_node->GetId()<<"\n";
         found = 1;
         uint32_t n=0;
         while (n < neighbors) {
@@ -1088,7 +1097,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
             " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
 
 
-        if ((IsDuplicate (qpkt, m_queue) == 0) && (AntipacketExists (qpkt) == 0) && ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 750.0)) {
+        if ((IsDuplicate (qpkt, m_queue) == 0) && (AntipacketExists (qpkt) == 0) && ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0)) {
           if (bndlHeader.GetDst () == owniaddress.GetIpv4 ()) {
             float time = Simulator::Now().GetSeconds();
             float delay = Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds () + 1000.0*(bndlHeader.GetNretx ());
@@ -2085,8 +2094,8 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
-  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2189,8 +2198,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
