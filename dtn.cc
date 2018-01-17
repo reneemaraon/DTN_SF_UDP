@@ -1371,12 +1371,12 @@ void Sensor::CreateBundle(){
     buffer.dequeue();
     // buffer.listPrinter();
   }
-  // std::cout<<"payload "<<payload<<"\n";
+  std::cout<<"PAYLOAD IS"<<payload;
   // int bndlSize=100000;//?????????????????? how to compute hehe
   std::stringstream bndlData;
   bndlData << payload ;
   uint16_t bndlSize = bndlData.str().length();
-
+  std::cout << "IN UINT8"<< (uint8_t*) bndlData.str().c_str() <<"\n";
   // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
   mypacket::BndlHeader bndlHeader;
@@ -2203,12 +2203,12 @@ void DtnExample::InstallApplications () {
 
   for (uint32_t i = 0; i < nodeNum; ++i) { 
     // if(i<=nodeNum-3){
-    if(i==1){
+    if(i==1 || i==2){
       std::cout<<"SENSOR: "<<"\n";
       Ptr<Sensor> app;
       app = CreateObject<Sensor> ();  
       app->StationarySetup (nodes.Get (i), this);
-      app->destinationNode=2;
+      app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
       // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
@@ -2285,7 +2285,7 @@ void DtnExample::InstallApplications () {
       app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
     }
     // else if(i==nodeNum-1){
-    else if(i==2){
+    else if(i==3){
       std::cout<<"BASE: "<<"\n";
       // Ptr<Base> basenode;
       basenode = CreateObject<Base> ();  
