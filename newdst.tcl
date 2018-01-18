@@ -2,8 +2,8 @@ $node_(0) set X_ 863.666699999
 $node_(0) set Y_ 1008.6667
 $node_(1) set X_ 1053.3333
 $node_(1) set Y_ 952.6667
-$node_(2) set X_ 1038
-$node_(2) set Y_ 839
+$node_(2) set X_ 1100
+$node_(2) set Y_ 726
 $node_(3) set X_ 1549.3333
 $node_(3) set Y_ 262.6667
 $ns_ at 0 "$node_(0) setdest 863.666699999 1008.6667 0.5"
