@@ -1031,7 +1031,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
         if (tHeader.Get () == mypacket::MYTYPE_BNDL) {
           mypacket::BndlHeader bndlHeader;
           newpkt[i]->RemoveHeader(bndlHeader);
-          bundle_size[i] = bndlHeader.GetBundleSize () + 29;
+          bundle_size[i] = bndlHeader.GetBundleSize () + 29 + 12;
           newpkt[i]->AddHeader(bndlHeader);
         } 
         else {
@@ -1285,6 +1285,9 @@ class Sensor: public DtnApp {
     int dataTimeSize;
     int nextID;
     int maxID;
+    int dataSum;
+    int largestData;
+    int smallestData;
     uint32_t destinationNode;
 
     std::string timeNow;
@@ -1293,6 +1296,9 @@ class Sensor: public DtnApp {
 
 void Sensor::StationarySetup(Ptr<Node> node, DtnExample *dtnEx){
   dtnExample = dtnEx;
+  dataSum = 0;
+  largestData = 0;
+  smallestData = 2000000;
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue> ();
   m_queue = CreateObject<DropTailQueue> ();
@@ -1322,7 +1328,7 @@ void Sensor::StationarySetup(Ptr<Node> node, DtnExample *dtnEx){
 void Sensor::GenerateData(uint32_t first){
   if (first==0){
     // if (bufferCount<bufferLength){
-    const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const char alphanum[] = "0123456789";
     
     std::stringstream holder;
     holder <<Simulator::Now().GetSeconds();
@@ -1341,9 +1347,22 @@ void Sensor::GenerateData(uint32_t first){
     else{
       nextID++;
     }
+    int numOfDigits = entryLength-dataIDSize-dataTimeSize-2;
+    float currentSum =0;
     for (int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
-      tempor += alphanum[rand() % 36];
+      int randnum = rand() % 10;
+      tempor += alphanum[randnum];
+      // std::cout<<alphanum[randnum]<<"=="<<(int)alphanum[randnum]-48<<" "<<"\n";
+      currentSum += ((int)alphanum[randnum]-48)*(pow(10,(numOfDigits-i-1)));
     }
+    // std::cout<<"\n"<<currentSum<<"\n";
+    if (currentSum<smallestData){
+      smallestData = currentSum;
+    }
+    if (currentSum>largestData){
+      largestData = currentSum;
+    }
+    dataSum+=currentSum;
     // std::cout << "TEMPOR IS  "<<tempor <<"\n";
     StoreInBuffer(tempor);
 
@@ -1374,6 +1393,7 @@ void Sensor::CreateBundle(){
     buffer.dequeue();
     // buffer.listPrinter();
   }
+  float dataAve = dataSum/dataSizeInBundle;
   // std::cout<<"PAYLOAD: "<<payload;
   // int bndlSize=100000;//?????????????????? how to compute hehe
   std::stringstream bndlData;
@@ -1399,10 +1419,16 @@ void Sensor::CreateBundle(){
   bndlHeader.SetSrcTimestamp (Simulator::Now ());
   bndlHeader.SetHopTimestamp (Simulator::Now ());
   bndlHeader.SetDataCount(cnt);
+  bndlHeader.SetDataAverage(dataAve);
+  bndlHeader.SetLargestVal(largestData);
+  bndlHeader.SetSmallestVal(smallestData);
   packet->AddHeader (bndlHeader);
   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
   packet->AddHeader (tHeader);
 
+  dataSum=0;
+  largestData=0;
+  smallestData =2000000;
   if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s) {
     bool success = m_queue->Enqueue (packet);
     if (success) {
@@ -1673,7 +1699,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
         if (tHeader.Get () == mypacket::MYTYPE_BNDL) {
           mypacket::BndlHeader bndlHeader;
           newpkt[i]->RemoveHeader(bndlHeader);
-          bundle_size[i] = bndlHeader.GetBundleSize () + 29;
+          bundle_size[i] = bndlHeader.GetBundleSize () + 29+12;
           newpkt[i]->AddHeader(bndlHeader);
         } 
         else {
