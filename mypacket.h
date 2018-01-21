@@ -85,7 +85,7 @@ namespace ns3 {
     public:
       BndlHeader (uint8_t hopCount = 0, uint8_t spray = 0, uint8_t nretx = 0, Ipv4Address dst = Ipv4Address (),
 		  Ipv4Address origin = Ipv4Address (), uint32_t originSeqNo = 0, uint32_t bundleSize = 0, 
-      Time srcTimestamp = MilliSeconds (0), Time hopTimestamp = MilliSeconds (0), uint8_t datacount =0);
+      Time srcTimestamp = MilliSeconds (0), Time hopTimestamp = MilliSeconds (0), uint8_t datacount =0, float dataAverage=0, float largestVal=0, float smallestVal =0);
       
       static TypeId GetTypeId ();
       TypeId GetInstanceTypeId () const;
@@ -118,6 +118,25 @@ namespace ns3 {
       uint8_t GetDataCount(){
         return datacount;
       }
+      void SetDataAverage(float ave) { 
+        dataAverage = ave;
+      }
+      float GetDataAverage(){
+        return datacount;
+      }
+      void SetSmallestVal(float val) { 
+        smallestVal = val;
+      }
+      float GetSmallestVal(){
+        return smallestVal;
+      }
+
+      void SetLargestVal(float val) { 
+        largestVal = val;
+      }
+      float GetLargestVal(){
+        return largestVal;
+      }
 
       bool operator== (BndlHeader const & o) const;
     private:
@@ -131,7 +150,9 @@ namespace ns3 {
       uint32_t       m_srcTimestamp;
       uint32_t       m_hopTimestamp;
       uint8_t        datacount;
-
+      float          dataAverage;
+      float          largestVal;
+      float          smallestVal;
     };
     
     std::ostream & operator<< (std::ostream & os, BndlHeader const &);
