@@ -1,5 +1,3 @@
-// ME13 QueueStruct.cpp
-
 #include <iostream>
 #include <cstdlib>
 #include <cmath>

@@ -19,6 +19,7 @@
 #include "ns3/qos-tag.h"
 #include "ns3/netanim-module.h"
 #include "QueueStruct.h"
+#include "flowtablematch.h"
 #include <sstream>
 #include <string.h>
 
@@ -1507,10 +1508,10 @@ class Mobile: public DtnApp {
     void MobileSetup(Ptr<Node> node, DtnExample *dtnEx);
     void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
     void ReceiveHello(Ptr<Socket> socket);
-    void CheckMatch(std::string idString);
+    void CheckMatch(std::string ichcheck[]);
     void ReceiveBundle(Ptr<Socket> socket);
-    // int flowTableHeight;
-    // int flowTable[1][1];
+
+    FlowTableMatch flowTableMatch;
 };
 
 void Mobile::ReceiveBundle (Ptr<Socket> socket){
@@ -1797,10 +1798,14 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               std::stringstream forcheck;
               address.GetIpv4().Print(forcheck);
               forcheck.str();
+              std::string ichcheck[3];
+              ichcheck[0]=forcheck.str();
+              ichcheck[1]="100";
+              ichcheck[2]="200";
              
               // address.GetIpv4().Serialize(ipaddress);
               // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
-              CheckMatch(forcheck.str());
+              CheckMatch(ichcheck);
               SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
               if (success) {
@@ -1822,26 +1827,51 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
     }
   }
 }
-void Mobile::CheckMatch (std::string idString){
-  std::cout<<"IN CHECK MATCH\n";
-  int matchFlag=1;
-  if (idString=="10.0.0.2"){
-    matchFlag=matchFlag*1;
-  }
-  else{
-    matchFlag=matchFlag*0;
+void Mobile::CheckMatch (std::string ichcheck[]){
+  // std::cout<<"IN CHECK MATCH\n"<< ichcheck[0] << " " << ichcheck[1] << " " << ichcheck[2] << "\n";
+  int matchFlag;
+  for(int x=0; x<flowTableMatch.getSize(); x++){
+    matchFlag=1;
+    std::string* flowTableMatchEntry=flowTableMatch.get(x);
+    //ip address
+    // std::cout << flowTableMatchEntry[0] << " == " << ichcheck[0] << "\n"; 
+    if (NULL || flowTableMatchEntry[0]==ichcheck[0]){
+      matchFlag=matchFlag*1;
+      // std::cout<<" PUMASOK\n";
+      // std::cout << flowTableMatchEntry[1] << " >= " << ichcheck[1] << "\n"; 
+      if (NULL || flowTableMatchEntry[1]>=ichcheck[1]){
+        matchFlag=matchFlag*1;
+        // std::cout<<" PUMASOK\n";
+        // std::cout << flowTableMatchEntry[2] << " <= " << ichcheck[2] << "\n"; 
+        if (NULL || flowTableMatchEntry[2]<=ichcheck[2]){
+          // std::cout<<" PUMASOK\n";
+          matchFlag=matchFlag*1;
+          break;
+        }
+        else{
+          matchFlag=matchFlag*0;
+        }
+      }
+      else{
+        matchFlag=matchFlag*0;
+      }
+    }
+    else{
+      matchFlag=matchFlag*0;
+    }
   }
   
   if (matchFlag==1){
-    std::cout << "MATCH!!!" << "\n";
+    std::cout << "~~~MATCH!!!" << ichcheck[0] << " " << ichcheck[1] << " " << ichcheck[2] << "\n";
   }
   else{
-    std::cout << "NO MATCH!!!" << "\n"; 
+    std::cout << "~~~NO MATCH OR WILDCARD!!!" << ichcheck[0] << " " << ichcheck[1] << " " << ichcheck[2] << "\n"; 
   }
 
 }
 
 void Mobile::MobileSetup (Ptr<Node> node, DtnExample *dtnEx){
+  std::cout <<"PUMASOK SA MOBILE SETUP\n";
   dtnExample = dtnEx;
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue> ();
@@ -1862,6 +1892,14 @@ void Mobile::MobileSetup (Ptr<Node> node, DtnExample *dtnEx){
   }
   Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
+
+  std::string tempArr[]={"10.0.0.2", "101", "102"};
+  flowTableMatch.insert(0, tempArr);
+  // std::cout <<"NEWNEWNEW\n";
+  // flowTableMatch.listPrinter();
+  std::string tempArr2[]={"10.0.0.8", "50", "300"};
+  flowTableMatch.insert(1, tempArr2);
+  flowTableMatch.listPrinter();
 }
 
 void Mobile::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first) {
