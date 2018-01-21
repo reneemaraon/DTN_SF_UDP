@@ -878,6 +878,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
   // std::cout << "SA DTNAPP\n";
   //m_node or GetNode() is yung receiver
   Address ownaddress;
+
   socket->GetSockName (ownaddress);
   InetSocketAddress owniaddress = InetSocketAddress::ConvertFrom (ownaddress); //receiver address   
   while (socket->GetRxAvailable () > 0) {
@@ -1030,7 +1031,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
         if (tHeader.Get () == mypacket::MYTYPE_BNDL) {
           mypacket::BndlHeader bndlHeader;
           newpkt[i]->RemoveHeader(bndlHeader);
-          bundle_size[i] = bndlHeader.GetBundleSize () + 28;
+          bundle_size[i] = bndlHeader.GetBundleSize () + 29;
           newpkt[i]->AddHeader(bndlHeader);
         } 
         else {
@@ -1383,6 +1384,7 @@ void Sensor::CreateBundle(){
   // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
   mypacket::BndlHeader bndlHeader;
+  uint8_t cnt = (uint8_t)dataSizeInBundle;
   char srcstring[1024]="";
   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
   char dststring[1024]="";
@@ -1396,6 +1398,7 @@ void Sensor::CreateBundle(){
   bndlHeader.SetBundleSize (bndlSize);
   bndlHeader.SetSrcTimestamp (Simulator::Now ());
   bndlHeader.SetHopTimestamp (Simulator::Now ());
+  bndlHeader.SetDataCount(cnt);
   packet->AddHeader (bndlHeader);
   mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
   packet->AddHeader (tHeader);
@@ -1670,7 +1673,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
         if (tHeader.Get () == mypacket::MYTYPE_BNDL) {
           mypacket::BndlHeader bndlHeader;
           newpkt[i]->RemoveHeader(bndlHeader);
-          bundle_size[i] = bndlHeader.GetBundleSize () + 28;
+          bundle_size[i] = bndlHeader.GetBundleSize () + 29;
           newpkt[i]->AddHeader(bndlHeader);
         } 
         else {
@@ -1727,7 +1730,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
       else {
         mypacket::BndlHeader bndlHeader;
         newpkt[i]->RemoveHeader(bndlHeader);
-        
+        // std::cout<<"DATA COUNT "<<unsigned(bndlHeader.GetDataCount())<<"\n";
         bundle_size[i] = bndlHeader.GetBundleSize ();
         if (IsDuplicate (qpkt, m_queue) == 1)
           std::cout << "At time " << Simulator::Now ().GetSeconds () <<
@@ -2478,8 +2481,8 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
-  // anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2582,8 +2585,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){

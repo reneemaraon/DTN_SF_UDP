@@ -100,11 +100,12 @@ namespace ns3
     //-----------------------------------------------------------------------------
     // BNDL
     //-----------------------------------------------------------------------------
-    BndlHeader::BndlHeader (uint8_t hopCount, uint8_t spray, uint8_t nretx, Ipv4Address dst, Ipv4Address origin, uint32_t originSeqNo, uint32_t bundleSize, Time srcTimestamp, Time hopTimestamp) :
-      m_hopCount (hopCount), m_spray (spray), m_nretx (nretx), m_dst(dst), m_origin(origin), m_originSeqNo (originSeqNo), m_bundleSize (bundleSize) 
+    BndlHeader::BndlHeader (uint8_t hopCount, uint8_t spray, uint8_t nretx, Ipv4Address dst, Ipv4Address origin, uint32_t originSeqNo, uint32_t bundleSize, Time srcTimestamp, Time hopTimestamp, uint8_t cnt) :
+      m_hopCount (hopCount), m_spray (spray), m_nretx (nretx), m_dst(dst), m_origin(origin), m_originSeqNo (originSeqNo), m_bundleSize (bundleSize), datacount (cnt)
     {
       m_srcTimestamp = uint32_t (srcTimestamp.GetMilliSeconds ());
       m_hopTimestamp = uint32_t (hopTimestamp.GetMilliSeconds ());
+    
     }
     
     NS_OBJECT_ENSURE_REGISTERED (BndlHeader);
@@ -128,7 +129,7 @@ namespace ns3
     uint32_t
     BndlHeader::GetSerializedSize () const
     {
-      return 27;
+      return 28;
     }
     
     void
@@ -143,6 +144,7 @@ namespace ns3
       i.WriteHtonU32 (m_bundleSize);
       i.WriteHtonU32 (m_srcTimestamp);
       i.WriteHtonU32 (m_hopTimestamp);
+      i.WriteU8 (datacount);
     }
     
     uint32_t
@@ -158,6 +160,7 @@ namespace ns3
       m_bundleSize = i.ReadNtohU32 ();
       m_srcTimestamp = i.ReadNtohU32 ();
       m_hopTimestamp = i.ReadNtohU32 ();
+      datacount = i.ReadU8();
       
       uint32_t dist = i.GetDistanceFrom (start);
       NS_ASSERT (dist == GetSerializedSize ());
@@ -200,7 +203,8 @@ namespace ns3
       Time t (MilliSeconds (m_hopTimestamp));
       return t;
     }
-    
+
+
     std::ostream &
     operator<< (std::ostream & os, BndlHeader const & h)
     {
@@ -219,7 +223,8 @@ namespace ns3
 	      m_originSeqNo == o.m_originSeqNo &&
 	      m_bundleSize == o.m_bundleSize &&
 	      m_srcTimestamp == o.m_srcTimestamp &&
-	      m_hopTimestamp == o.m_hopTimestamp);
+	      m_hopTimestamp == o.m_hopTimestamp &&
+        datacount == o.datacount);
     }
     
     //-----------------------------------------------------------------------------
