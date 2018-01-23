@@ -3,7 +3,7 @@
 #include <cmath>
 
 class strArray{
-	std::string data[3];
+	std::string data[11];
 	strArray* prev = NULL;
 	strArray* next = NULL;
 public:
@@ -26,6 +26,14 @@ public:
 		this->data[0] = data[0];
 		this->data[1] = data[1];
 		this->data[2] = data[2];
+		this->data[3] = data[3];
+		this->data[4] = data[4];
+		this->data[5] = data[5];
+		this->data[6] = data[6];
+		this->data[7] = data[7];
+		this->data[8] = data[8];
+		this->data[9] = data[9];
+		this->data[10] = data[10];
 	};
 };
 
@@ -205,7 +213,17 @@ bool FlowTableMatch::contains(std::string data[]){
 	std::string* temp =ptr->getData();
 
 	for(int x=0; x<size; x++){
-		if(temp[0]==data[0] && temp[1]==data[1] && temp[2]==data[2]){
+		if(temp[0]==data[0] 
+			&& temp[1]==data[1] 
+			&& temp[2]==data[2]
+			&& temp[3]==data[3]
+			&& temp[4]==data[4]
+			&& temp[5]==data[5]
+			&& temp[6]==data[6]
+			&& temp[7]==data[7]
+			&& temp[8]==data[8]
+			&& temp[9]==data[9]
+			&& temp[10]==data[10]){
 			return 1;
 		}
 		ptr = ptr->getNext();
@@ -221,9 +239,9 @@ void FlowTableMatch::listPrinter(){
 	int counter=0;
 	while(printer){
 		std::string* temp=printer->getData();
-		std::cout << counter << ": [" << temp[0] << ", " << temp[1] << ", " << temp[2] << "]\n";
+		std::cout << counter << ": [" << temp[0] << ", " << temp[1] << ", " << temp[2] << ", " << temp[3] << ", " << temp[4] << ", " << temp[5] << ", " << temp[6] << ", " << temp[7] << ", " << temp[8] << ", " << temp[9] << ", " << temp[10] << "]\n";
 		counter++;
 		printer = printer->getNext();
 	}
-	std::cout <<"\n \n";
+	std::cout << std::endl << std::endl;
 }
