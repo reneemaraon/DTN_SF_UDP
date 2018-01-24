@@ -374,7 +374,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
       //if less 750, keep
       if (stationary ==0){
         if ((int32_t)bndlHeader.GetOriginSeqno() > 3000){
-          dtnExample->Teleport(1,1,cpkt);
+          // dtnExample->Teleport(1,1,cpkt);
         }
       }
       else{
@@ -1280,12 +1280,12 @@ class Sensor: public DtnApp {
 
     QueueStruct buffer;
 
-    int dataSizeInBundle;
+    float dataSizeInBundle;
     int dataIDSize;
     int dataTimeSize;
     int nextID;
     int maxID;
-    int dataSum;
+    float dataSum;
     int largestData;
     int smallestData;
     uint32_t destinationNode;
@@ -1393,7 +1393,7 @@ void Sensor::CreateBundle(){
     buffer.dequeue();
     // buffer.listPrinter();
   }
-  float dataAve = dataSum/dataSizeInBundle;
+  float dataAve = (float)dataSum/(float)dataSizeInBundle;
   // std::cout<<"PAYLOAD: "<<payload;
   // int bndlSize=100000;//?????????????????? how to compute hehe
   std::stringstream bndlData;
@@ -1419,7 +1419,7 @@ void Sensor::CreateBundle(){
   bndlHeader.SetSrcTimestamp (Simulator::Now ());
   bndlHeader.SetHopTimestamp (Simulator::Now ());
   bndlHeader.SetDataCount(cnt);
-  bndlHeader.SetDataAverage(dataAve);
+  bndlHeader.SetDataAverage((float)dataAve);
   bndlHeader.SetLargestVal(largestData);
   bndlHeader.SetSmallestVal(smallestData);
   packet->AddHeader (bndlHeader);
@@ -1823,6 +1823,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
             qpkt->AddHeader (tHeader);
             if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s) {
               // std::cout << "PUMASOK SA IF \n";
+              // WORKING HERE
               bool success = m_queue->Enqueue (qpkt);
               std::stringstream forcheck;
               address.GetIpv4().Print(forcheck);
@@ -1830,17 +1831,18 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               std::string ichcheck[11];
               ichcheck[0]=forcheck.str();
               ichcheck[1]="101";
-              ichcheck[2]="102";
-            	ichcheck[3]="101";
-              ichcheck[4]="102";
-              ichcheck[5]="101";
-              ichcheck[6]="102";
-              ichcheck[7]="101";
-              ichcheck[8]="102";
-              ichcheck[9]="101";
-              ichcheck[10]="10";
+              sprintf (ichcheck[2], "%d", bndlHeader.GetDataAverage());
+              // ichcheck[2]= std::to_string(bndlHeader.GetDataAverage()); //ave
+            	ichcheck[3]="101"; //ave
+              ichcheck[4]="102"; //ave
+              ichcheck[5]="101"; //smallest
+              ichcheck[6]="102"; //smallest
+              ichcheck[7]="101"; //smallest
+              ichcheck[8]="102"; //largest
+              ichcheck[9]="101"; //largest
+              ichcheck[10]="10"; //largest
               // address.GetIpv4().Serialize(ipaddress);
-              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
+             // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
               CheckMatch(ichcheck);
               SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
@@ -2631,8 +2633,8 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
-  // anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2735,8 +2737,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
