@@ -119,10 +119,10 @@ namespace ns3 {
         return datacount;
       }
       void SetDataAverage(float ave) { 
-        dataAverage = ave;
+        dataAverage = (float)ave;
       }
       float GetDataAverage(){
-        return datacount;
+        return dataAverage;
       }
       void SetSmallestVal(float val) { 
         smallestVal = val;
