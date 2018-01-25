@@ -22,6 +22,7 @@
 #include "flowtablematch.h"
 #include <sstream>
 #include <string.h>
+#include <string>
 
 using namespace ns3;
 
@@ -1828,19 +1829,27 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               std::stringstream forcheck;
               address.GetIpv4().Print(forcheck);
               forcheck.str();
+              std::ostringstream ave;
+              std::ostringstream largest;
+              std::ostringstream smallest;
+              ave << bndlHeader.GetDataAverage();
+              largest << bndlHeader.GetLargestVal();
+              smallest << bndlHeader.GetSmallestVal();
               std::string ichcheck[11];
               ichcheck[0]=forcheck.str();
-              ichcheck[1]="101";
-              sprintf (ichcheck[2], "%d", bndlHeader.GetDataAverage());
+              ichcheck[1]=ave.str();
+              // sprintf (ichcheck[2], "%d", bndlHeader.GetDataAverage());
               // ichcheck[2]= std::to_string(bndlHeader.GetDataAverage()); //ave
-            	ichcheck[3]="101"; //ave
-              ichcheck[4]="102"; //ave
-              ichcheck[5]="101"; //smallest
-              ichcheck[6]="102"; //smallest
-              ichcheck[7]="101"; //smallest
-              ichcheck[8]="102"; //largest
-              ichcheck[9]="101"; //largest
-              ichcheck[10]="10"; //largest
+              ichcheck[2]=ave.str(); //ave
+            	ichcheck[3]=ave.str(); //ave
+              ichcheck[4]=ave.str(); //ave
+              ichcheck[5]=largest.str(); //smallest
+              ichcheck[6]=largest.str(); //smallest
+              ichcheck[7]=largest.str(); //smallest
+              ichcheck[8]=smallest.str(); //largest
+              ichcheck[9]=smallest.str(); //largest
+              ichcheck[10]=smallest.str(); //largest
+              std::cout <<"ichcheck 1 "<< ichcheck[1]<<" ichcheck 5 "<< ichcheck[5]<<" ichcheck "<<ichcheck[8]<<"\n";
               // address.GetIpv4().Serialize(ipaddress);
              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
               CheckMatch(ichcheck);
