@@ -1538,7 +1538,7 @@ class Mobile: public DtnApp {
     void MobileSetup(Ptr<Node> node, DtnExample *dtnEx);
     void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
     void ReceiveHello(Ptr<Socket> socket);
-    void CheckMatch(std::string ichcheck[]);
+    int CheckMatch(std::string ichcheck[]);
     void ReceiveBundle(Ptr<Socket> socket);
 
     FlowTableMatch flowTableMatch;
@@ -1852,7 +1852,8 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               std::cout <<"ichcheck 1 "<< ichcheck[1]<<" ichcheck 5 "<< ichcheck[5]<<" ichcheck "<<ichcheck[8]<<"\n";
               // address.GetIpv4().Serialize(ipaddress);
              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
-              CheckMatch(ichcheck);
+              int result=CheckMatch(ichcheck);
+              std::cout << "NIRETURN: " << result << "\n";
               SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
               if (success) {
@@ -1887,7 +1888,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
 //9 largest data ==
 //10 largest data <
 
-void Mobile::CheckMatch (std::string ichcheck[]){
+int Mobile::CheckMatch (std::string ichcheck[]){
   // flowTableMatch.listPrinter();
   std::cout << "IN CHECK MATCH\n";
   // std::cout << "IN CHECK MATCH" << ": [" << ichcheck[0] << ", " << ichcheck[1] << ", " << ichcheck[2] << ", " << ichcheck[3] << ", " << ichcheck[4] << ", " << ichcheck[5] << ", " << ichcheck[6] << ", " << ichcheck[7] << ", " << ichcheck[8] << ", " << ichcheck[9] << ", " << ichcheck[10] << "]\n";
@@ -1896,6 +1897,7 @@ void Mobile::CheckMatch (std::string ichcheck[]){
   // std::stringstream ichcheckStream;
 	int ftmEntry;
 	int toCheck;
+	int irereturn;
 
   for(int x=0; x<flowTableMatch.getSize(); x++){
     matchFlag=1;
@@ -1909,10 +1911,10 @@ void Mobile::CheckMatch (std::string ichcheck[]){
  		   	//for conditions with int comparables
 	    	if (y>0){
 	    		// std::cout << y << " \n";
-				  std::stringstream ftmEntryStream( flowTableMatchEntry[y] );
+				  std::stringstream ftmEntryStream(flowTableMatchEntry[y]);
 				  ftmEntryStream >> ftmEntry;
 
-				  std::stringstream ichcheckStream( ichcheck[y] );
+				  std::stringstream ichcheckStream(ichcheck[y]);
 				  ichcheckStream >> toCheck;
 
 				  // std::cout << "ENTRY: " << ftmEntry << " " << ftmEntry+2 << "\n";
@@ -2023,13 +2025,19 @@ void Mobile::CheckMatch (std::string ichcheck[]){
 
 
 	  if (matchFlag==1){
-	  	std::cout << "MATCH; Flow index: " << x << "\n";
-	  	break;
+    	std::string* matchEntry=flowTableMatch.get(x);
+	  	std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
+	  	std::stringstream matchEntryStream(matchEntry[11]);
+			matchEntryStream >> irereturn;
+			return irereturn;
+	  	// break;
 	  }
   }
   if (matchFlag==0){
-  	std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTableMatch.getSize()<< "\n";
+  	std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTableMatch.getSize() << " ACTION: something action ng wildcard" << "\n";
+  	return 999;
   }
+  return 000;
 }
 
 void Mobile::MobileSetup (Ptr<Node> node, DtnExample *dtnEx){
@@ -2055,9 +2063,9 @@ void Mobile::MobileSetup (Ptr<Node> node, DtnExample *dtnEx){
   Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable> ();
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 
-  std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102"};
-  std::string tempArr2[]={"10.0.0.2", "101", "102", "101", "102", "101", "102", "101", "102", "101", "10"};
-  std::string tempArr3[]={"10.0.0.2", "101", "-", "101", "-", "-", "102", "-", "-", "101", "-"};
+  std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
+  std::string tempArr2[]={"10.0.0.2", "101", "102", "101", "102", "101", "102", "101", "102", "101", "10", "1"};
+  std::string tempArr3[]={"10.0.0.2", "101", "-", "101", "-", "-", "102", "-", "-", "101", "-", "2"};
   flowTableMatch.insert(0, tempArr);
   // std::cout <<"NEWNEWNEW\n";
   // flowTableMatch.listPrinter();
@@ -2642,8 +2650,8 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
-  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2746,8 +2754,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){

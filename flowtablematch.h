@@ -3,7 +3,7 @@
 #include <cmath>
 
 class strArray{
-	std::string data[11];
+	std::string data[12];
 	strArray* prev = NULL;
 	strArray* next = NULL;
 public:
@@ -34,6 +34,7 @@ public:
 		this->data[8] = data[8];
 		this->data[9] = data[9];
 		this->data[10] = data[10];
+		this->data[11] = data[11];
 	};
 };
 
@@ -223,7 +224,8 @@ bool FlowTableMatch::contains(std::string data[]){
 			&& temp[7]==data[7]
 			&& temp[8]==data[8]
 			&& temp[9]==data[9]
-			&& temp[10]==data[10]){
+			&& temp[10]==data[10]
+			&& temp[11]==data[11]){
 			return 1;
 		}
 		ptr = ptr->getNext();
@@ -239,7 +241,7 @@ void FlowTableMatch::listPrinter(){
 	int counter=0;
 	while(printer){
 		std::string* temp=printer->getData();
-		std::cout << counter << ": [" << temp[0] << ", " << temp[1] << ", " << temp[2] << ", " << temp[3] << ", " << temp[4] << ", " << temp[5] << ", " << temp[6] << ", " << temp[7] << ", " << temp[8] << ", " << temp[9] << ", " << temp[10] << "]\n";
+		std::cout << counter << ": [" << temp[0] << ", " << temp[1] << ", " << temp[2] << ", " << temp[3] << ", " << temp[4] << ", " << temp[5] << ", " << temp[6] << ", " << temp[7] << ", " << temp[8] << ", " << temp[9] << ", " << temp[10] << ", " << temp[11] << "]\n";
 		counter++;
 		printer = printer->getNext();
 	}
