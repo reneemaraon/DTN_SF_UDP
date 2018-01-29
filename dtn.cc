@@ -1848,7 +1848,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               ichcheck[8]=smallest.str(); //largest
               ichcheck[9]=smallest.str(); //largest
               ichcheck[10]=smallest.str(); //largest
-              std::cout <<"ichcheck 1 "<< ichcheck[1]<<" ichcheck 5 "<< ichcheck[5]<<" ichcheck "<<ichcheck[8]<<"\n";
+              // std::cout <<"ichcheck 1 "<< ichcheck[1]<<" ichcheck 5 "<< ichcheck[5]<<" ichcheck "<<ichcheck[8]<<"\n";
               // address.GetIpv4().Serialize(ipaddress);
              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
               int result=CheckMatch(ichcheck);
@@ -1939,6 +1939,7 @@ int Mobile::CheckMatch (std::string ichcheck[]){
 	    	}
 	    	if (y==0){
 	    		if (flowTableMatchEntry[y]==ichcheck[y]){
+            std::cout<<"Match ip address "<<matchFlag<<"\n";
 	    			matchFlag=matchFlag*1;
 	    		}
 	    		else{
@@ -2029,7 +2030,7 @@ int Mobile::CheckMatch (std::string ichcheck[]){
     		// 	std::cout <<"1 "<< "\n";
 
 	    	// }
-	    	if (matchFlag==0){
+	    	if (matchFlag==1){
     			// std::cout <<"0 "<< "\n";
 
 	    		break;
@@ -2081,8 +2082,8 @@ void Mobile::MobileSetup (Ptr<Node> node, DtnExample *dtnEx){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
-  std::string tempArr2[]={"10.0.0.2", "101", "102", "101", "102", "101", "102", "101", "102", "101", "10", "1"};
-  std::string tempArr3[]={"10.0.0.2", "101", "-", "101", "-", "-", "102", "-", "-", "101", "-", "2"};
+  std::string tempArr2[]={"10.0.0.2", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
+  std::string tempArr3[]={"10.0.0.3", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
   flowTableMatch.insert(0, tempArr);
   // std::cout <<"NEWNEWNEW\n";
   // flowTableMatch.listPrinter();
@@ -2667,8 +2668,8 @@ void DtnExample::Run (){
   Simulator::Stop (Seconds (duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim ("animDTN.xml");
-  // anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run ();
   myos.close (); // close log file
@@ -2771,8 +2772,8 @@ void DtnExample::InstallApplications () {
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if (bufferInput.is_open()){
         while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
