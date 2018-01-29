@@ -1825,7 +1825,6 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
             if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s) {
               // std::cout << "PUMASOK SA IF \n";
               // WORKING HERE
-              bool success = m_queue->Enqueue (qpkt);
               std::stringstream forcheck;
               address.GetIpv4().Print(forcheck);
               forcheck.str();
@@ -1854,6 +1853,24 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
               int result=CheckMatch(ichcheck);
               std::cout << "NIRETURN: " << result << "\n";
+              bool success;
+              if (result ==0){  //drop
+                drops++;
+                std::cout << "At time " << Simulator::Now ().GetSeconds () <<
+              " dropped " << newpkt[i]->GetSize() <<
+              " bytes at " << owniaddress.GetIpv4 () <<
+              " from " << address.GetIpv4 () <<
+              " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () <<
+              " sequence number: "  << bndlHeader.GetOriginSeqno () <<
+              " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
+              }
+              else if (result == 1){
+                std::cout<<"DIRECT TO BASE\n";
+              }
+              else{
+                std::cout<<"Spread\n";
+                success = m_queue->Enqueue (qpkt);
+              }
               SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
               if (success) {
