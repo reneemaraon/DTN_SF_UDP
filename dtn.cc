@@ -317,49 +317,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
 
   // Remove expired antipackets and bundles -- do this check only once
   if (bundletype == 2) {
-    pkts = m_antipacket_queue->GetNPackets();
-    n = 0;
-    //iterating through antipacket queue
-    while (n < pkts) {
-      n++;
-      packet = m_antipacket_queue->Dequeue ();
-      mypacket::TypeHeader tHeader (mypacket::MYTYPE_AP);
-      packet->RemoveHeader(tHeader);
-      packet->RemoveHeader(apHeader);
-      //if antipacket is less than 1000 seconds old, enqueue ulit
-      if ((Simulator::Now ().GetSeconds () - apHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0) {
-        packet->AddHeader (apHeader);
-        packet->AddHeader (tHeader);
-        bool success = m_antipacket_queue->Enqueue (packet);
-        if (success) {
-        }
-      }
-      // 
-      else {
-        uint32_t d=0;
-        while (d < neighbors) {
-          uint32_t m=0, sent_found=0;
-          //rearranging neighbor_sent_aps, if nasend sa origin ng bundle being antipacketed. 
-          while ((m < 1000) && (sent_found == 0)) {
-            if (neighbor_sent_aps[d][m] == -(int32_t)apHeader.GetOriginSeqno ()) {
-              sent_found=1;
-            } 
-            else
-              m++;
-            if (sent_found == 1) {
-              while ((neighbor_sent_aps[d][m] != 0) && (m < 999)) {
-                neighbor_sent_aps[d][m]=neighbor_sent_aps[d][m+1];
-                neighbor_sent_ap_when[d][m]=neighbor_sent_ap_when[d][m+1];
-                m++;
-              }
-              neighbor_sent_aps[d][999]=0;
-              neighbor_sent_ap_when[d][999]=0;
-            }
-          }
-          d++;
-        }
-      }
-    }
+
     pkts = m_queue->GetNPackets();
     n = 0;
 
@@ -419,76 +377,9 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
   if (mac_queue->GetSize () < 2) {
     
     if (bundletype == 2) {
-      pkts = m_antipacket_queue->GetNPackets();
-      n = 0;
+      // pkts = m_antipacket_queue->GetNPackets();
+      // n = 0;
 
-      //iterating
-      while ((n < pkts) && (send_bundle == 0)) {
-    
-        n++;
-        ///// copying apheaders, packet and theader then enqueueing packet again /////
-        packet = m_antipacket_queue->Dequeue ();
-        mypacket::TypeHeader tHeader (mypacket::MYTYPE_AP);
-        packet->RemoveHeader(tHeader);
-        packet->RemoveHeader(apHeader);
-        packet->AddHeader (apHeader);
-        packet->AddHeader (tHeader);
-        Ptr<Packet> qp = packet->Copy();
-
-        //////////////////////////////////////////////////////////////////
-        
-
-
-        if ((Simulator::Now ().GetSeconds () - apHeader.GetHopTimestamp ().GetSeconds ()) > 0.2) {
-          i = 0;
-          while ((i < neighbors) && (send_bundle == 0)) {
-            //if bago lang nakita si neighbor, and aneighbor is not origin of antipacket
-            if (((Simulator::Now ().GetSeconds () - neighbor_last_seen[i]) < 0.5) && (neighbor_address[i].GetIpv4() != apHeader.GetOrigin())) {
-              // if (stationary == 0)
-              int neighbor_has_bundle = 0, ap_sent = 0, j=0;
-              
-              while ((neighbor_has_bundle == 0) && (neighbor_hello_bundles[i][j] != 0) && (j < 1000)) {
-                //check if neighbor has the antipacket
-                // std::cout <<neighbor_hello_bundles[i][j]<<" "<<-(int32_t)apHeader.GetOriginSeqno()<<"\n";
-                if (neighbor_hello_bundles[i][j] == -(int32_t)apHeader.GetOriginSeqno ()){
-                  neighbor_has_bundle = 1;
-                }
-                else
-                  j++;
-              }
-              j=0;
-
-              while ((neighbor_has_bundle == 0) && (ap_sent == 0) && (neighbor_sent_aps[i][j] != 0) && (j < 1000)) {
-                if ((neighbor_sent_aps[i][j] == -(int32_t)apHeader.GetOriginSeqno ()) && (Simulator::Now ().GetSeconds () - neighbor_sent_ap_when[i][j] < 1.5))
-                  ap_sent = 1;
-                else
-                  j++;
-              }
-              // if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
-              if ((neighbor_has_bundle == 0) && (ap_sent == 0)) {
-                //sending antipacket to this person
-                // std::cout <<"Sending antipacket with sequence number "<<apHeader.GetOriginSeqno()<<" to " <<neighbor_address[i].GetIpv4()<< "\n";
-                if (stationary ==0)
-                  send_bundle = 1;
-                j = 0;
-                while ((neighbor_sent_aps[i][j] != 0) && (neighbor_sent_aps[i][j] != -(int32_t)apHeader.GetOriginSeqno ()) && (j < 999))
-                  j++; //positioning i and j
-                neighbor_sent_aps[i][j] = -(int32_t)apHeader.GetOriginSeqno ();
-                neighbor_sent_ap_when[i][j] = Simulator::Now ().GetSeconds ();
-              } 
-              else
-                i++;
-            } 
-            else
-              i++;
-          }
-        }
-        if (send_bundle ==0){
-          bool success = m_antipacket_queue->Enqueue (qp);
-          if (success) {
-          }
-        }
-      }
     }
 
      
@@ -565,11 +456,13 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
           packet->AddHeader (bndlHeader);
           packet->AddHeader (tHeader);
           Ptr<Packet> qp = packet->Copy();
-          if (n==1){
+          if ((n==1)&&(send_bundle==1)){
             firstpacket= packet->Copy();
           }
-          bool success = m_queue->Enqueue (qp);
-          if (success) {
+          else{
+            bool success = m_queue->Enqueue (qp);
+            if (success) {
+            }            
           }
         } 
         else {
@@ -1141,7 +1034,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
               // }
 
 
-              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+              // SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
               
 
           } 
@@ -1156,7 +1049,7 @@ void DtnApp::ReceiveBundle (Ptr<Socket> socket){
             qpkt->AddHeader (tHeader);
             if ((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s) {
               bool success = m_queue->Enqueue (qpkt);
-              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+              // SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
               if (success) {
               }
@@ -1809,7 +1702,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               // }
 
 
-              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+              // SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
               
 
           } 
@@ -1871,7 +1764,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
                 std::cout<<"Spread\n";
                 success = m_queue->Enqueue (qpkt);
               }
-              SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
+              // SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
               if (success) {
               }
