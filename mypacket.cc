@@ -100,8 +100,8 @@ namespace ns3
     //-----------------------------------------------------------------------------
     // BNDL
     //-----------------------------------------------------------------------------
-    BndlHeader::BndlHeader (uint8_t hopCount, uint8_t spray, uint8_t nretx, Ipv4Address dst, Ipv4Address origin, uint32_t originSeqNo, uint32_t bundleSize, Time srcTimestamp, Time hopTimestamp, uint8_t cnt, float dataave, float largest, float smallest) :
-      m_hopCount (hopCount), m_spray (spray), m_nretx (nretx), m_dst(dst), m_origin(origin), m_originSeqNo (originSeqNo), m_bundleSize (bundleSize), datacount (cnt), dataAverage(dataave), largestVal(largest), smallestVal(smallest)
+    BndlHeader::BndlHeader (uint8_t hopCount, uint8_t spray, uint8_t nretx, Ipv4Address dst, Ipv4Address origin, uint32_t originSeqNo, uint32_t bundleSize, Time srcTimestamp, Time hopTimestamp, uint8_t flg, float dataave, float largest, float smallest) :
+      m_hopCount (hopCount), m_spray (spray), m_nretx (nretx), m_dst(dst), m_origin(origin), m_originSeqNo (originSeqNo), m_bundleSize (bundleSize), dtbFlag (flg), dataAverage(dataave), largestVal(largest), smallestVal(smallest)
     {
       m_srcTimestamp = uint32_t (srcTimestamp.GetMilliSeconds ());
       m_hopTimestamp = uint32_t (hopTimestamp.GetMilliSeconds ());
@@ -144,7 +144,7 @@ namespace ns3
       i.WriteHtonU32 (m_bundleSize);
       i.WriteHtonU32 (m_srcTimestamp);
       i.WriteHtonU32 (m_hopTimestamp);
-      i.WriteU8 (datacount);
+      i.WriteU8 (dtbFlag);
       i.WriteHtonU32 (dataAverage);
       i.WriteHtonU32 (largestVal);
       i.WriteHtonU32 (smallestVal);
@@ -164,7 +164,7 @@ namespace ns3
       m_bundleSize = i.ReadNtohU32 ();
       m_srcTimestamp = i.ReadNtohU32 ();
       m_hopTimestamp = i.ReadNtohU32 ();
-      datacount = i.ReadU8();
+      dtbFlag = i.ReadU8();
       dataAverage = i.ReadNtohU32 ();
       largestVal = i.ReadNtohU32 ();
       smallestVal = i.ReadNtohU32 ();
@@ -231,7 +231,7 @@ namespace ns3
 	      m_bundleSize == o.m_bundleSize &&
 	      m_srcTimestamp == o.m_srcTimestamp &&
 	      m_hopTimestamp == o.m_hopTimestamp &&
-        datacount == o.datacount &&
+        dtbFlag == o.dtbFlag &&
         dataAverage == o.dataAverage &&
         largestVal == o.largestVal &&
         smallestVal == o.smallestVal 
