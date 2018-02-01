@@ -320,7 +320,8 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
 
     pkts = m_queue->GetNPackets();
     n = 0;
-
+    // if (stationary==0)
+    // std::cout<<"number of packets "<<pkts<<"\n"; 
     //iterating through packets in m_queue
     while (n < pkts) {
       n++;
@@ -336,38 +337,38 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
           // dtnExample->Teleport(1,1,cpkt);
         }
       }
-      else{
-        if (((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0) || (bndlHeader.GetHopCount () == 0)) {
-          packet->AddHeader (bndlHeader);
-          packet->AddHeader (tHeader);
-          bool success = m_queue->Enqueue (packet);
-          if (success) {
-          }
-        } 
-        else {
-          uint32_t d=0;
-          while (d < neighbors) {
-            uint32_t m=0, sent_found=0;
-            //rearranging neighbor_sent_bundles, if nasend na ang bundle sa final destination
-            while ((m < 1000) && (sent_found == 0)) {
-              if (neighbor_sent_bundles[d][m] == (int32_t)bndlHeader.GetOriginSeqno ()) {
-                sent_found=1;
-              } 
-              else
+      
+      if (((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0) || (bndlHeader.GetHopCount () == 0)) {
+        packet->AddHeader (bndlHeader);
+        packet->AddHeader (tHeader);
+        bool success = m_queue->Enqueue (packet);
+        if (success) {
+        }
+      } 
+      else {
+        uint32_t d=0;
+        while (d < neighbors) {
+          uint32_t m=0, sent_found=0;
+          //rearranging neighbor_sent_bundles, if nasend na ang bundle sa final destination
+          while ((m < 1000) && (sent_found == 0)) {
+            if (neighbor_sent_bundles[d][m] == (int32_t)bndlHeader.GetOriginSeqno ()) {
+              sent_found=1;
+            } 
+            else
+              m++;
+            if (sent_found == 1) {
+              while ((neighbor_sent_bundles[d][m] != 0) && (m < 999)) {
+                //deleting theat sequence number from neighbor_sent_bundles
+                neighbor_sent_bundles[d][m]=neighbor_sent_bundles[d][m+1];
                 m++;
-              if (sent_found == 1) {
-                while ((neighbor_sent_bundles[d][m] != 0) && (m < 999)) {
-                  //deleting theat sequence number from neighbor_sent_bundles
-                  neighbor_sent_bundles[d][m]=neighbor_sent_bundles[d][m+1];
-                  m++;
-                }
-                neighbor_sent_bundles[d][999]=0;
               }
+              neighbor_sent_bundles[d][999]=0;
             }
-            d++;
           }
+          d++;
         }
       }
+      
     } 
   }
   
@@ -385,6 +386,9 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
      
     else { //if not bundle type ==2
       pkts = m_queue->GetNPackets();
+      int found_toSend=0;
+      // if (stationary==0)
+      // std::cout<<"number of packets "<<pkts<<"\n"; 
       n = 0;
       while (n < pkts) {
         n++;
@@ -396,7 +400,7 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
         //if not old ang bundle
         if ((Simulator::Now ().GetSeconds () - bndlHeader.GetSrcTimestamp ().GetSeconds ()) < 1000.0) {
           // ano lang basta di pa bago ang bundle narating sa node na itu
-          if (n==1){
+          if (found_toSend==0){
             if ((Simulator::Now ().GetSeconds () - bndlHeader.GetHopTimestamp ().GetSeconds ()) > 0.2) {
 
               Ipv4Address dst = bndlHeader.GetDst ();
@@ -456,14 +460,24 @@ void DtnApp::CheckQueues (uint32_t bundletype) {
           packet->AddHeader (bndlHeader);
           packet->AddHeader (tHeader);
           Ptr<Packet> qp = packet->Copy();
-          if ((n==1)&&(send_bundle==1)){
-            firstpacket= packet->Copy();
+          if (found_toSend==0){
+            if (send_bundle==1){
+              if (bndlHeader.GetDTBFlag()==0){
+                firstpacket = packet->Copy();
+                found_toSend=1;
+              }
+              else{
+                m_queue->Enqueue(qp);
+              }
+            }
+            else{
+              m_queue->Enqueue(qp);
+            }
           }
           else{
-            bool success = m_queue->Enqueue (qp);
-            if (success) {
-            }            
+            m_queue->Enqueue(qp);
           }
+          
         } 
         else {
           //erase bundle kung di ikaw source tas old na 
@@ -1298,7 +1312,7 @@ void Sensor::CreateBundle(){
   // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
   mypacket::BndlHeader bndlHeader;
-  uint8_t cnt = (uint8_t)dataSizeInBundle;
+  uint8_t cnt = (uint8_t)0;
   char srcstring[1024]="";
   sprintf(srcstring,"10.0.0.%d",(m_node->GetId () + 1));
   char dststring[1024]="";
@@ -1312,7 +1326,7 @@ void Sensor::CreateBundle(){
   bndlHeader.SetBundleSize (bndlSize);
   bndlHeader.SetSrcTimestamp (Simulator::Now ());
   bndlHeader.SetHopTimestamp (Simulator::Now ());
-  bndlHeader.SetDataCount(cnt);
+  bndlHeader.SetDTBFlag(cnt);
   bndlHeader.SetDataAverage((float)dataAve);
   bndlHeader.SetLargestVal(largestData);
   bndlHeader.SetSmallestVal(smallestData);
@@ -1749,20 +1763,27 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               bool success;
               if (result ==0){  //drop
                 drops++;
-                std::cout << "At time " << Simulator::Now ().GetSeconds () <<
-              " dropped " << newpkt[i]->GetSize() <<
-              " bytes at " << owniaddress.GetIpv4 () <<
-              " from " << address.GetIpv4 () <<
-              " bundle hop count: "  << (unsigned)bndlHeader.GetHopCount () <<
-              " sequence number: "  << bndlHeader.GetOriginSeqno () <<
-              " bundle queue occupancy: " << m_queue->GetNBytes () << "\n";
+                std::cout << "dropped\n";
               }
               else if (result == 1){
+                qpkt->RemoveHeader(tHeader);
+                qpkt->RemoveHeader(bndlHeader);
+                bndlHeader.SetDTBFlag(1);
+                qpkt->AddHeader (bndlHeader);
+                qpkt->AddHeader (tHeader);
+            
+                success = m_queue->Enqueue (qpkt);
+                if (success){
+                  std::cout<<"Successfully enqueued packet\n";
+                }
                 std::cout<<"DIRECT TO BASE\n";
+                std::cout<<m_queue->GetNPackets()<<"\n";
+
               }
               else{
                 std::cout<<"Spread\n";
                 success = m_queue->Enqueue (qpkt);
+                std::cout<<m_queue->GetNPackets()<<"\n";
               }
               // SendAP (bndlHeader.GetDst (), bndlHeader.GetOrigin (), bndlHeader.GetOriginSeqno (), bndlHeader.GetSrcTimestamp ());
 
@@ -1832,7 +1853,6 @@ int Mobile::CheckMatch (std::string ichcheck[]){
 	    	}
 	    	if (y==0){
 	    		if (flowTableMatchEntry[y]==ichcheck[y]){
-            std::cout<<"Match ip address "<<matchFlag<<"\n";
 	    			matchFlag=matchFlag*1;
 	    		}
 	    		else{
