@@ -39,11 +39,7 @@ static void CourseChange (std::ostream *myos, std::string foo, Ptr<const Mobilit
 
 typedef std::map<Ptr<Socket>,int> sockOrder;
 
-// class DtnApp : public Application;
-// class Base : public DtnApp;
-// class Sensor : public DtnApp;
-// class Mobile : public DtnApp;
-
+//////////////////////////////DTN EXAMPLE CLASS DEC//////////////////////////////
 class DtnExample {
 public:
   DtnExample ();
@@ -68,7 +64,6 @@ private:
   NetDeviceContainer devices;
   Ipv4InterfaceContainer interfaces;
   
-private:
   void CreateNodes ();
   void CreateDevices ();
   void InstallInternetStack ();
@@ -77,6 +72,7 @@ private:
 };
 
 
+//////////////////////////////DTN APP CLASS DEC//////////////////////////////
 class DtnApp : public Application{
   public:
     
@@ -148,6 +144,367 @@ class DtnApp : public Application{
 };
 
 
+//////////////////////////////SENSOR CLASS DEC//////////////////////////////
+class Sensor: public DtnApp {
+  public:
+    void StationarySetup(Ptr<Node> node, DtnExample *dtnExample);
+    void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
+    void GenerateData(uint32_t first);
+    void StoreInBuffer(std::string tempor);
+    void CreateBundle();
+
+    void ReceiveHello (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
+
+    int bufferCount;
+    int entryLength;
+    int bufferLength;
+    uint32_t secondsInterval;
+
+    QueueStruct buffer;
+
+    float dataSizeInBundle;
+    int dataIDSize;
+    int dataTimeSize;
+    int nextID;
+    int maxID;
+    float dataSum;
+    int largestData;
+    int smallestData;
+    uint32_t destinationNode;
+
+    std::string timeNow;
+
+};
+
+//////////////////////////////MOBILE CLASS DEC//////////////////////////////
+class Mobile: public DtnApp {
+  public:
+    void MobileSetup(Ptr<Node> node, DtnExample *dtnEx);
+    void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
+    void ReceiveHello(Ptr<Socket> socket);
+    int CheckMatch(std::string ichcheck[]);
+    void ReceiveBundle(Ptr<Socket> socket);
+
+    FlowTableMatch flowTableMatch;
+};
+
+//////////////////////////////BASE CLASS DEC//////////////////////////////
+class Base: public DtnApp {
+  public:
+    void BaseSetup(Ptr<Node> node, DtnExample *dtnEx);
+    void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
+    void ReceiveTeleport(Ptr<Packet> packet);
+    void ReceiveHello(Ptr<Socket> socket);
+};
+
+Ptr<Base> basenode;
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////DTN EXAMPLE FUNCTION DEFS//////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+DtnExample::DtnExample () :
+  seed (1),
+  nodeNum (116),
+  duration (3600),
+  pcap (false),
+  printRoutes (true)
+{}
+
+bool DtnExample::Configure (int argc, char **argv){
+  CommandLine cmd;
+
+  cmd.AddValue ("seed", "RNG seed.", seed);
+  cmd.AddValue ("pcap", "Write PCAP traces.", pcap);
+  cmd.AddValue ("printRoutes", "Print routing table dumps.", printRoutes);
+  cmd.AddValue ("nodeNum", "Number of nodes.", nodeNum);
+  cmd.AddValue ("duration", "Simulation time, s.", duration);
+  cmd.AddValue ("traceFile", "Ns2 movement trace file", traceFile);
+  cmd.AddValue ("logFile", "Log file", logFile);
+  
+  cmd.Parse (argc, argv);
+  SeedManager::SetSeed(seed); 
+  return true;
+}
+
+void DtnExample::Run (){
+  Config::SetDefault ("ns3::ArpCache::WaitReplyTimeout", StringValue ("100000000ns")); // 0.1 s, default: 1.0 s
+  Config::SetDefault ("ns3::ArpCache::MaxRetries", UintegerValue (10)); // default: 3
+  Config::SetDefault ("ns3::ArpCache::AliveTimeout", StringValue ("5000000000000ns")); // 5000 s, default: 120 s
+  CreateNodes ();
+  // std::cout <<"CN\n";
+  CreateDevices ();
+  // std::cout <<"CD\n";
+  InstallInternetStack ();
+  // std::cout <<"after IIS\n";
+  InstallApplications ();
+  // std::cout <<"after IA\n";
+  PopulateArpCache ();
+  // std::cout <<"YESPopu arp cache \n";
+  std::cout << "Starting simulation for " << duration << " s, " <<
+    "seed value " << seed << "\n";
+  
+  Simulator::Stop (Seconds (duration));
+  // std::cout <<"STOP\n";
+  AnimationInterface anim ("animDTN.xml");
+  // anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // std::cout <<"RUN\n";
+  Simulator::Run ();
+  myos.close (); // close log file
+  Simulator::Destroy ();
+  // std::cout <<"DEST\n";
+}
+
+// void DtnExample::Report (std::ostream &){ 
+// }
+
+void DtnExample::Teleport(int locx, int locy, Ptr<Packet> pkt){
+  Ptr<Packet> cpkt = pkt->Copy();
+  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
+  mypacket::BndlHeader bndlHeader;
+  cpkt->RemoveHeader(tHeader);
+  cpkt->RemoveHeader(bndlHeader);
+  uint32_t seqno = bndlHeader.GetOriginSeqno ();
+  std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
+  // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
+  basenode->ReceiveTeleport(pkt);
+}
+
+void DtnExample::CreateNodes (){
+  Ns2MobilityHelper ns2 = Ns2MobilityHelper (traceFile);
+  myos.open (logFile.c_str ());
+  std::cout << "Creating " << nodeNum << " nodes.\n";
+  nodes.Create (nodeNum);
+  // Name nodes
+  for (uint32_t i = 0; i < nodeNum; ++i) {
+    std::ostringstream os;
+    os << "node-" << i;
+    Names::Add (os.str (), nodes.Get (i));
+  }
+  ns2.Install ();
+  Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange",
+  MakeBoundCallback (&CourseChange, &myos));
+}
+
+void DtnExample::CreateDevices (){
+  Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode",StringValue ("ErpOfdmRate6Mbps"));
+  Config::SetDefault ("ns3::WifiRemoteStationManager::RtsCtsThreshold", StringValue ("0"));
+  WifiHelper wifi;
+  wifi.SetStandard (WIFI_PHY_STANDARD_80211g);
+  YansWifiPhyHelper wifiPhy =  YansWifiPhyHelper::Default ();
+  YansWifiChannelHelper wifiChannel;
+  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
+  wifiChannel.AddPropagationLoss ("ns3::FriisPropagationLossModel");
+  wifiPhy.SetChannel (wifiChannel.Create ());
+  QosWifiMacHelper wifiMac = QosWifiMacHelper::Default ();
+  wifi.SetRemoteStationManager ("ns3::IdealWifiManager");
+  wifiPhy.Set ("TxPowerLevels", UintegerValue (1) ); // default: 1
+  wifiPhy.Set ("TxPowerStart",DoubleValue (12.5)); // default: 16.0206
+  wifiPhy.Set ("TxPowerEnd", DoubleValue (12.5)); // default: 16.0206
+  wifiPhy.Set ("EnergyDetectionThreshold", DoubleValue (-74.5) ); // default: -96
+  wifiPhy.Set ("CcaMode1Threshold", DoubleValue (-77.5) ); // default: -99
+  wifiPhy.Set ("RxNoiseFigure", DoubleValue (7) ); // default: 7
+  wifiPhy.Set ("TxGain", DoubleValue (1.0) ); // default: 1.0
+  wifiPhy.Set ("RxGain", DoubleValue (1.0) ); // deafult: 1.0
+  wifiMac.SetType ("ns3::AdhocWifiMac");
+  devices = wifi.Install (wifiPhy, wifiMac, nodes);
+  
+  if (pcap)
+    wifiPhy.EnablePcapAll (std::string ("rtprot"));
+}
+
+void DtnExample::InstallInternetStack () {
+  Ipv4StaticRoutingHelper rtprot;
+  InternetStackHelper stack;
+  stack.SetRoutingHelper (rtprot);
+  stack.Install (nodes);
+  Ipv4AddressHelper address;
+  address.SetBase ("10.0.0.0", "255.0.0.0");
+  interfaces = address.Assign (devices);
+  
+  if (printRoutes) {
+    Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("rtprot.routes", std::ios::out);
+    rtprot.PrintRoutingTableAllAt (Seconds (8), routingStream);
+  }
+}
+
+void DtnExample::InstallApplications () {
+  uint32_t node_num;
+  uint32_t numOfEntries;
+  uint32_t entrySize;
+  float secondsIntervalinput;
+
+
+  TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
+
+
+  //set up base
+
+  for (uint32_t i = 0; i < nodeNum; ++i) { 
+    // if(i<=nodeNum-3){
+    if(i==1 || i==2){
+      std::cout<<"SENSOR: "<<"\n";
+      Ptr<Sensor> app;
+      app = CreateObject<Sensor> ();  
+      app->StationarySetup (nodes.Get (i), this);
+      app->destinationNode=3;
+
+      // std::cout << "Opening Sensor Buffer Details"<< " \n";
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      if (bufferInput.is_open()){
+        while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
+          if(node_num==i){
+            // app->BufferSetup(numOfEntries, entrySize, secondsIntervalinput);
+            app->bufferCount=0;
+            app->entryLength = entrySize;
+            app->secondsInterval = secondsIntervalinput;
+            app->bufferLength = numOfEntries;
+          std::cout<<"seconds interval" <<secondsIntervalinput<<"\n";
+          }
+        }
+      }
+      else{
+        std::cout<<"Unable to open Sensor Buffer Details\n";
+      }
+      bufferInput.close();
+
+
+      nodes.Get (i)->AddApplication (app);
+      app->SetStartTime (Seconds (0.5 + 0.00001*i));
+      app->SetStopTime (Seconds (5000.));
+      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      char dststring[1024]="";
+      sprintf(dststring,"10.0.0.%d",(i + 1));
+      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
+      dst->Bind(dstlocaladdr);
+      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app));
+      
+      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
+      source->SetAllowBroadcast (true);
+      source->Connect (remote);
+      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
+
+      app->GenerateData(1);
+
+      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress local (Ipv4Address::GetAny (), 80);
+      recvSink->Bind (local);
+      recvSink->SetRecvCallback (MakeCallback (&Sensor::ReceiveHello, app));
+    }
+    // else if(i==nodeNum-2){
+    else if(i==0){
+      std::cout<<"MOBILE: "<<"\n";
+      Ptr<Mobile> app;
+      app = CreateObject<Mobile> ();  
+      app->MobileSetup (nodes.Get (i), this);
+
+      nodes.Get (i)->AddApplication (app);
+      app->SetStartTime (Seconds (0.5 + 0.00001*i));
+      app->SetStopTime (Seconds (5000.));
+      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      char dststring[1024]="";
+      sprintf(dststring,"10.0.0.%d",(i + 1));
+      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
+      dst->Bind(dstlocaladdr);
+      dst->SetRecvCallback (MakeCallback (&Mobile::ReceiveBundle, app));
+      
+      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
+      source->SetAllowBroadcast (true);
+      source->Connect (remote);
+      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
+      
+      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress local (Ipv4Address::GetAny (), 80);
+      recvSink->Bind (local);
+      recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
+
+      app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+    }
+    // else if(i==nodeNum-1){
+    else if(i==3){
+      std::cout<<"BASE: "<<"\n";
+      // Ptr<Base> basenode;
+      basenode = CreateObject<Base> ();  
+      basenode->BaseSetup (nodes.Get (i), this);
+
+      nodes.Get (i)->AddApplication (basenode);
+      basenode->SetStartTime (Seconds (0.5 + 0.00001*i));
+      basenode->SetStopTime (Seconds (5000.));
+      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      char dststring[1024]="";
+      sprintf(dststring,"10.0.0.%d",(i + 1));
+      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
+      dst->Bind(dstlocaladdr);
+      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, basenode));
+      
+      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
+      source->SetAllowBroadcast (true);
+      source->Connect (remote);
+      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
+
+      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
+      InetSocketAddress local (Ipv4Address::GetAny (), 80);
+      recvSink->Bind (local);
+      recvSink->SetRecvCallback (MakeCallback (&Base::ReceiveHello, basenode));
+
+      basenode->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
+      // int x = nodes.Get(2)->GetNApplications();
+      // std::cout<<"number of apps "<<x<<"\n";
+
+    }
+  }
+}
+
+void DtnExample::PopulateArpCache () { 
+  Ptr<ArpCache> arp = CreateObject<ArpCache> (); 
+  arp->SetAliveTimeout (Seconds(3600 * 24 * 365)); 
+  for (NodeList::Iterator i = NodeList::Begin(); i != NodeList::End(); ++i) { 
+    Ptr<Ipv4L3Protocol> ip = (*i)->GetObject<Ipv4L3Protocol> (); 
+    NS_ASSERT(ip !=0); 
+    ObjectVectorValue interfaces; 
+    ip->GetAttribute("InterfaceList", interfaces); 
+    for(uint32_t j = 0; j != ip->GetNInterfaces (); j ++) {
+      Ptr<Ipv4Interface> ipIface = ip->GetInterface (j);
+      NS_ASSERT(ipIface != 0); 
+      Ptr<NetDevice> device = ipIface->GetDevice(); 
+      NS_ASSERT(device != 0); 
+      Mac48Address addr = Mac48Address::ConvertFrom(device->GetAddress ()); 
+      for(uint32_t k = 0; k < ipIface->GetNAddresses (); k ++) { 
+        Ipv4Address ipAddr = ipIface->GetAddress (k).GetLocal(); 
+        if(ipAddr == Ipv4Address::GetLoopback()) 
+          continue; 
+        ArpCache::Entry * entry = arp->Add(ipAddr); 
+        entry->MarkWaitReply(0); 
+        entry->MarkAlive(addr); 
+      } 
+    } 
+  } 
+  for (NodeList::Iterator i = NodeList::Begin(); i != NodeList::End(); ++i) { 
+    Ptr<Ipv4L3Protocol> ip = (*i)->GetObject<Ipv4L3Protocol> (); 
+    NS_ASSERT(ip !=0); 
+    ObjectVectorValue interfaces; 
+    ip->GetAttribute("InterfaceList", interfaces);
+    for(uint32_t j = 0; j != ip->GetNInterfaces (); j ++) {
+      Ptr<Ipv4Interface> ipIface = ip->GetInterface (j);
+      ipIface->SetAttribute("ArpCache", PointerValue(arp)); 
+    } 
+  } 
+}
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////DTN APP FUNCTION DEFS//////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 DtnApp::DtnApp ()
   : m_socket (0),
     newpkt (0),
@@ -182,8 +539,7 @@ DtnApp::DtnApp ()
     b_a (0),
     rp (0), // 0: Epidemic, 1: Spray and Wait
     cc (0)  // 0: No congestion control, 1: Static t_c, 2: Dynamic t_c
-{
-}
+{}
 
 DtnApp::~DtnApp(){
   m_socket = 0;
@@ -1171,37 +1527,13 @@ void DtnApp::ReceiveHello (Ptr<Socket> socket){
   }
 }
 
-class Sensor: public DtnApp {
-  public:
-    void StationarySetup(Ptr<Node> node, DtnExample *dtnExample);
-    void BufferSetup(uint32_t numOfEntries, uint32_t entrySize, float secondsIntervalinput);
-    void GenerateData(uint32_t first);
-    void StoreInBuffer(std::string tempor);
-    void CreateBundle();
 
-    void ReceiveHello (Ptr<Socket> socket); //CALLED NG INSTALL APPLICATION
 
-    int bufferCount;
-    int entryLength;
-    int bufferLength;
-    uint32_t secondsInterval;
 
-    QueueStruct buffer;
 
-    float dataSizeInBundle;
-    int dataIDSize;
-    int dataTimeSize;
-    int nextID;
-    int maxID;
-    float dataSum;
-    int largestData;
-    int smallestData;
-    uint32_t destinationNode;
-
-    std::string timeNow;
-
-};
-
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////////SENSOR FUNCTION DEFS//////////////////////////
+////////////////////////////////////////////////////////////////////////////
 void Sensor::StationarySetup(Ptr<Node> node, DtnExample *dtnEx){
   dtnExample = dtnEx;
   dataSum = 0;
@@ -1293,7 +1625,7 @@ void Sensor::StoreInBuffer(std::string tempor){
 
 void Sensor::CreateBundle(){
   std::string payload="";
-	// payload+=Simulator::Now ().GetSeconds ();
+  // payload+=Simulator::Now ().GetSeconds ();
   // payload+=std::to_string(dataSizeInBundle);\n
   for(int y=0; y<dataSizeInBundle; y++){
     payload+=buffer.get(0);
@@ -1440,17 +1772,13 @@ void Sensor::ReceiveHello (Ptr<Socket> socket){
   }
 }
 
-class Mobile: public DtnApp {
-  public:
-    void MobileSetup(Ptr<Node> node, DtnExample *dtnEx);
-    void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
-    void ReceiveHello(Ptr<Socket> socket);
-    int CheckMatch(std::string ichcheck[]);
-    void ReceiveBundle(Ptr<Socket> socket);
 
-    FlowTableMatch flowTableMatch;
-};
 
+
+
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////////MOBILE FUNCTION DEFS//////////////////////////
+////////////////////////////////////////////////////////////////////////////
 void Mobile::ReceiveBundle (Ptr<Socket> socket){
   // std::cout << "SA MOBILE\n ";
   //m_node or GetNode() is yung receiver
@@ -1747,7 +2075,7 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
               // sprintf (ichcheck[2], "%d", bndlHeader.GetDataAverage());
               // ichcheck[2]= std::to_string(bndlHeader.GetDataAverage()); //ave
               ichcheck[2]=ave.str(); //ave
-            	ichcheck[3]=ave.str(); //ave
+              ichcheck[3]=ave.str(); //ave
               ichcheck[4]=ave.str(); //ave
               ichcheck[5]=largest.str(); //smallest
               ichcheck[6]=largest.str(); //smallest
@@ -1806,167 +2134,167 @@ void Mobile::ReceiveBundle (Ptr<Socket> socket){
     }
   }
 }
-//RULES
-//0 ip address ==
-//1 sensor id ==
-//2 data Ave >
-//3 data Ave ==
-//4 data Ave <
-//5 smallest data >
-//6 smallest data ==
-//7 smallest data <
-//8 largest data >
-//9 largest data ==
-//10 largest data <
 
 int Mobile::CheckMatch (std::string ichcheck[]){
+  //RULES
+  //0 ip address ==
+  //1 sensor id ==
+  //2 data Ave >
+  //3 data Ave ==
+  //4 data Ave <
+  //5 smallest data >
+  //6 smallest data ==
+  //7 smallest data <
+  //8 largest data >
+  //9 largest data ==
+  //10 largest data <
   // flowTableMatch.listPrinter();
   std::cout << "IN CHECK MATCH\n";
   // std::cout << "IN CHECK MATCH" << ": [" << ichcheck[0] << ", " << ichcheck[1] << ", " << ichcheck[2] << ", " << ichcheck[3] << ", " << ichcheck[4] << ", " << ichcheck[5] << ", " << ichcheck[6] << ", " << ichcheck[7] << ", " << ichcheck[8] << ", " << ichcheck[9] << ", " << ichcheck[10] << "]\n";
   int matchFlag;
   // std::stringstream ftmEntryStream;
   // std::stringstream ichcheckStream;
-	int ftmEntry;
-	int toCheck;
-	int irereturn;
+  int ftmEntry;
+  int toCheck;
+  int irereturn;
 
   for(int x=0; x<flowTableMatch.getSize(); x++){
     matchFlag=1;
     std::string* flowTableMatchEntry=flowTableMatch.get(x);
-		// std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~INDEX NG FLOW TABLE MATCH: " << x << " \n";
+    // std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~INDEX NG FLOW TABLE MATCH: " << x << " \n";
     
     for(int y=0; y<11; y++){
-    	// "-" means null; I tried na NULL gamitin, magulo
-    	// std::cout <<"Y: "<< y << "\n";
-    	if (flowTableMatchEntry[y]!="-"){
- 		   	//for conditions with int comparables
-	    	if (y>0){
-	    		// std::cout << y << " \n";
-				  std::stringstream ftmEntryStream(flowTableMatchEntry[y]);
-				  ftmEntryStream >> ftmEntry;
+      // "-" means null; I tried na NULL gamitin, magulo
+      // std::cout <<"Y: "<< y << "\n";
+      if (flowTableMatchEntry[y]!="-"){
+        //for conditions with int comparables
+        if (y>0){
+          // std::cout << y << " \n";
+          std::stringstream ftmEntryStream(flowTableMatchEntry[y]);
+          ftmEntryStream >> ftmEntry;
 
-				  std::stringstream ichcheckStream(ichcheck[y]);
-				  ichcheckStream >> toCheck;
+          std::stringstream ichcheckStream(ichcheck[y]);
+          ichcheckStream >> toCheck;
 
-				  // std::cout << "ENTRY: " << ftmEntry << " " << ftmEntry+2 << "\n";
-				  // std::cout << "ICHCHECK: " << toCheck << " " << toCheck+2 << "\n";
-	    	}
-	    	if (y==0){
-	    		if (flowTableMatchEntry[y]==ichcheck[y]){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==1){
-	    		if (ftmEntry==toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==2){
-	    		if (ftmEntry>toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==3){
-	    		if (ftmEntry==toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==4){
-	    		if (ftmEntry<toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==5){
-	    		if (ftmEntry>toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==6){
-	    		if (ftmEntry==toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==7){
-	    		if (ftmEntry<toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==8){
-	    		if (ftmEntry>toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==9){
-	    		if (ftmEntry==toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	else if (y==10){
-	    		if (ftmEntry<toCheck){
-	    			matchFlag=matchFlag*1;
-	    		}
-	    		else{
-	    			matchFlag=0;
-	    		}
-	    	}
-	    	// if (matchFlag==1){
-    		// 	std::cout <<"1 "<< "\n";
+          // std::cout << "ENTRY: " << ftmEntry << " " << ftmEntry+2 << "\n";
+          // std::cout << "ICHCHECK: " << toCheck << " " << toCheck+2 << "\n";
+        }
+        if (y==0){
+          if (flowTableMatchEntry[y]==ichcheck[y]){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==1){
+          if (ftmEntry==toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==2){
+          if (ftmEntry>toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==3){
+          if (ftmEntry==toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==4){
+          if (ftmEntry<toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==5){
+          if (ftmEntry>toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==6){
+          if (ftmEntry==toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==7){
+          if (ftmEntry<toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==8){
+          if (ftmEntry>toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==9){
+          if (ftmEntry==toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        else if (y==10){
+          if (ftmEntry<toCheck){
+            matchFlag=matchFlag*1;
+          }
+          else{
+            matchFlag=0;
+          }
+        }
+        // if (matchFlag==1){
+        //  std::cout <<"1 "<< "\n";
 
-	    	// }
-	    	if (matchFlag==1){
-    			// std::cout <<"0 "<< "\n";
+        // }
+        if (matchFlag==1){
+          // std::cout <<"0 "<< "\n";
 
-	    		break;
-	    	}
-    	}
-    	// else{
-	    // 	std::cout <<"----\n";
-    	// }
+          break;
+        }
+      }
+      // else{
+      //  std::cout <<"----\n";
+      // }
     }
 
 
-	  if (matchFlag==1){
-    	std::string* matchEntry=flowTableMatch.get(x);
-	  	std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
-	  	std::stringstream matchEntryStream(matchEntry[11]);
-			matchEntryStream >> irereturn;
-			return irereturn;
-	  	// break;
-	  }
+    if (matchFlag==1){
+      std::string* matchEntry=flowTableMatch.get(x);
+      std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
+      std::stringstream matchEntryStream(matchEntry[11]);
+      matchEntryStream >> irereturn;
+      return irereturn;
+      // break;
+    }
   }
   if (matchFlag==0){
-  	std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTableMatch.getSize() << " ACTION: something action ng wildcard" << "\n";
-  	return 999;
+    std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTableMatch.getSize() << " ACTION: something action ng wildcard" << "\n";
+    return 999;
   }
   return 000;
 }
@@ -2240,17 +2568,13 @@ void Mobile::ReceiveHello(Ptr<Socket> socket){
   }
 }
 
-class Base: public DtnApp {
-  public:
-    void BaseSetup(Ptr<Node> node, DtnExample *dtnEx);
-    void SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
-    void ReceiveTeleport(Ptr<Packet> packet);
-    void ReceiveHello(Ptr<Socket> socket);
-};
-
-Ptr<Base> basenode;
 
 
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////BASE FUNCTION DEFS//////////////////////////
+//////////////////////////////////////////////////////////////////////////
 void Base::BaseSetup(Ptr<Node> node, DtnExample *dtnEx){
   dtnExample = dtnEx;
   m_node = node;
@@ -2283,8 +2607,6 @@ void Base::ReceiveTeleport(Ptr<Packet> pkt){
   uint32_t seqno = bndlHeader.GetOriginSeqno ();
 
   std::cout<<"Received bundle seqno "<<seqno<<" at the base station\n";
-
-
 }
 
 void Base::ReceiveHello(Ptr<Socket> socket){
@@ -2523,9 +2845,10 @@ void Base::SendHello (Ptr<Socket> socket, double endTime, Time pktInterval, uint
 }
 
 
-
-int main (int argc, char **argv)
-{
+////////////////////////////////////////////////////////////////
+//////////////////////////////MAIN//////////////////////////////
+////////////////////////////////////////////////////////////////
+int main (int argc, char **argv){
   //LogComponentEnable ("Ns2MobilityHelper",LOG_LEVEL_DEBUG);
   DtnExample test;
   if (! test.Configure(argc, argv)) 
@@ -2536,296 +2859,3 @@ int main (int argc, char **argv)
   return 0;
 }
 
-DtnExample::DtnExample () :
-  seed (1),
-  nodeNum (116),
-  duration (3600),
-  pcap (false),
-  printRoutes (true)
-{
-}
-
-bool DtnExample::Configure (int argc, char **argv){
-  CommandLine cmd;
-
-  cmd.AddValue ("seed", "RNG seed.", seed);
-  cmd.AddValue ("pcap", "Write PCAP traces.", pcap);
-  cmd.AddValue ("printRoutes", "Print routing table dumps.", printRoutes);
-  cmd.AddValue ("nodeNum", "Number of nodes.", nodeNum);
-  cmd.AddValue ("duration", "Simulation time, s.", duration);
-  cmd.AddValue ("traceFile", "Ns2 movement trace file", traceFile);
-  cmd.AddValue ("logFile", "Log file", logFile);
-  
-  cmd.Parse (argc, argv);
-  SeedManager::SetSeed(seed); 
-  return true;
-}
-
-void DtnExample::Run (){
-  Config::SetDefault ("ns3::ArpCache::WaitReplyTimeout", StringValue ("100000000ns")); // 0.1 s, default: 1.0 s
-  Config::SetDefault ("ns3::ArpCache::MaxRetries", UintegerValue (10)); // default: 3
-  Config::SetDefault ("ns3::ArpCache::AliveTimeout", StringValue ("5000000000000ns")); // 5000 s, default: 120 s
-  CreateNodes ();
-  // std::cout <<"CN\n";
-  CreateDevices ();
-  // std::cout <<"CD\n";
-  InstallInternetStack ();
-  // std::cout <<"after IIS\n";
-  InstallApplications ();
-  // std::cout <<"after IA\n";
-  PopulateArpCache ();
-  // std::cout <<"YESPopu arp cache \n";
-  std::cout << "Starting simulation for " << duration << " s, " <<
-    "seed value " << seed << "\n";
-  
-  Simulator::Stop (Seconds (duration));
-  // std::cout <<"STOP\n";
-  AnimationInterface anim ("animDTN.xml");
-  anim.SetBackgroundImage  ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  // anim.SetBackgroundImage  ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  // std::cout <<"RUN\n";
-  Simulator::Run ();
-  myos.close (); // close log file
-  Simulator::Destroy ();
-  // std::cout <<"DEST\n";
-}
-
-// void DtnExample::Report (std::ostream &){ 
-// }
-void DtnExample::Teleport(int locx, int locy, Ptr<Packet> pkt){
-  Ptr<Packet> cpkt = pkt->Copy();
-  mypacket::TypeHeader tHeader (mypacket::MYTYPE_BNDL);
-  mypacket::BndlHeader bndlHeader;
-  cpkt->RemoveHeader(tHeader);
-  cpkt->RemoveHeader(bndlHeader);
-  uint32_t seqno = bndlHeader.GetOriginSeqno ();
-  std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
-  // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
-  basenode->ReceiveTeleport(pkt);
-
-}
-
-void DtnExample::CreateNodes (){
-  Ns2MobilityHelper ns2 = Ns2MobilityHelper (traceFile);
-  myos.open (logFile.c_str ());
-  std::cout << "Creating " << nodeNum << " nodes.\n";
-  nodes.Create (nodeNum);
-  // Name nodes
-  for (uint32_t i = 0; i < nodeNum; ++i) {
-    std::ostringstream os;
-    os << "node-" << i;
-    Names::Add (os.str (), nodes.Get (i));
-  }
-  ns2.Install ();
-  Config::Connect ("/NodeList/*/$ns3::MobilityModel/CourseChange",
-  MakeBoundCallback (&CourseChange, &myos));
-}
-
-void DtnExample::CreateDevices (){
-  Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode",StringValue ("ErpOfdmRate6Mbps"));
-  Config::SetDefault ("ns3::WifiRemoteStationManager::RtsCtsThreshold", StringValue ("0"));
-  WifiHelper wifi;
-  wifi.SetStandard (WIFI_PHY_STANDARD_80211g);
-  YansWifiPhyHelper wifiPhy =  YansWifiPhyHelper::Default ();
-  YansWifiChannelHelper wifiChannel;
-  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
-  wifiChannel.AddPropagationLoss ("ns3::FriisPropagationLossModel");
-  wifiPhy.SetChannel (wifiChannel.Create ());
-  QosWifiMacHelper wifiMac = QosWifiMacHelper::Default ();
-  wifi.SetRemoteStationManager ("ns3::IdealWifiManager");
-  wifiPhy.Set ("TxPowerLevels", UintegerValue (1) ); // default: 1
-  wifiPhy.Set ("TxPowerStart",DoubleValue (12.5)); // default: 16.0206
-  wifiPhy.Set ("TxPowerEnd", DoubleValue (12.5)); // default: 16.0206
-  wifiPhy.Set ("EnergyDetectionThreshold", DoubleValue (-74.5) ); // default: -96
-  wifiPhy.Set ("CcaMode1Threshold", DoubleValue (-77.5) ); // default: -99
-  wifiPhy.Set ("RxNoiseFigure", DoubleValue (7) ); // default: 7
-  wifiPhy.Set ("TxGain", DoubleValue (1.0) ); // default: 1.0
-  wifiPhy.Set ("RxGain", DoubleValue (1.0) ); // deafult: 1.0
-  wifiMac.SetType ("ns3::AdhocWifiMac");
-  devices = wifi.Install (wifiPhy, wifiMac, nodes);
-  
-  if (pcap)
-    wifiPhy.EnablePcapAll (std::string ("rtprot"));
-}
-
-void DtnExample::InstallInternetStack () {
-  Ipv4StaticRoutingHelper rtprot;
-  InternetStackHelper stack;
-  stack.SetRoutingHelper (rtprot);
-  stack.Install (nodes);
-  Ipv4AddressHelper address;
-  address.SetBase ("10.0.0.0", "255.0.0.0");
-  interfaces = address.Assign (devices);
-  
-  if (printRoutes) {
-    Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> ("rtprot.routes", std::ios::out);
-    rtprot.PrintRoutingTableAllAt (Seconds (8), routingStream);
-  }
-}
-
-void DtnExample::InstallApplications () {
-  uint32_t node_num;
-  uint32_t numOfEntries;
-  uint32_t entrySize;
-  float secondsIntervalinput;
-
-
-  TypeId udp_tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-
-
-  //set up base
-
-  for (uint32_t i = 0; i < nodeNum; ++i) { 
-    // if(i<=nodeNum-3){
-    if(i==1 || i==2){
-      std::cout<<"SENSOR: "<<"\n";
-      Ptr<Sensor> app;
-      app = CreateObject<Sensor> ();  
-      app->StationarySetup (nodes.Get (i), this);
-      app->destinationNode=3;
-
-      // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      if (bufferInput.is_open()){
-        while (bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
-          if(node_num==i){
-            // app->BufferSetup(numOfEntries, entrySize, secondsIntervalinput);
-            app->bufferCount=0;
-            app->entryLength = entrySize;
-            app->secondsInterval = secondsIntervalinput;
-            app->bufferLength = numOfEntries;
-          std::cout<<"seconds interval" <<secondsIntervalinput<<"\n";
-          }
-        }
-      }
-      else{
-        std::cout<<"Unable to open Sensor Buffer Details\n";
-      }
-      bufferInput.close();
-
-
-      nodes.Get (i)->AddApplication (app);
-      app->SetStartTime (Seconds (0.5 + 0.00001*i));
-      app->SetStopTime (Seconds (5000.));
-      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      char dststring[1024]="";
-      sprintf(dststring,"10.0.0.%d",(i + 1));
-      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-      dst->Bind(dstlocaladdr);
-      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, app));
-      
-      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-      source->SetAllowBroadcast (true);
-      source->Connect (remote);
-      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-
-      app->GenerateData(1);
-
-      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress local (Ipv4Address::GetAny (), 80);
-      recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&Sensor::ReceiveHello, app));
-    }
-    // else if(i==nodeNum-2){
-    else if(i==0){
-      std::cout<<"MOBILE: "<<"\n";
-      Ptr<Mobile> app;
-      app = CreateObject<Mobile> ();  
-      app->MobileSetup (nodes.Get (i), this);
-
-      nodes.Get (i)->AddApplication (app);
-      app->SetStartTime (Seconds (0.5 + 0.00001*i));
-      app->SetStopTime (Seconds (5000.));
-      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      char dststring[1024]="";
-      sprintf(dststring,"10.0.0.%d",(i + 1));
-      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-      dst->Bind(dstlocaladdr);
-      dst->SetRecvCallback (MakeCallback (&Mobile::ReceiveBundle, app));
-      
-      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-      source->SetAllowBroadcast (true);
-      source->Connect (remote);
-      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-      
-      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress local (Ipv4Address::GetAny (), 80);
-      recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&DtnApp::ReceiveHello, app));
-
-      app->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-    }
-    // else if(i==nodeNum-1){
-    else if(i==3){
-      std::cout<<"BASE: "<<"\n";
-      // Ptr<Base> basenode;
-      basenode = CreateObject<Base> ();  
-      basenode->BaseSetup (nodes.Get (i), this);
-
-      nodes.Get (i)->AddApplication (basenode);
-      basenode->SetStartTime (Seconds (0.5 + 0.00001*i));
-      basenode->SetStopTime (Seconds (5000.));
-      Ptr<Socket> dst = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      char dststring[1024]="";
-      sprintf(dststring,"10.0.0.%d",(i + 1));
-      InetSocketAddress dstlocaladdr (Ipv4Address(dststring), 50000);
-      dst->Bind(dstlocaladdr);
-      dst->SetRecvCallback (MakeCallback (&DtnApp::ReceiveBundle, basenode));
-      
-      Ptr<Socket> source = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress remote (Ipv4Address ("255.255.255.255"), 80);
-      source->SetAllowBroadcast (true);
-      source->Connect (remote);
-      std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
-
-      Ptr<Socket> recvSink = Socket::CreateSocket (nodes.Get (i), udp_tid);
-      InetSocketAddress local (Ipv4Address::GetAny (), 80);
-      recvSink->Bind (local);
-      recvSink->SetRecvCallback (MakeCallback (&Base::ReceiveHello, basenode));
-
-      basenode->SendHello (source, duration, Seconds (0.1 + 0.00085*i), 1);
-      // int x = nodes.Get(2)->GetNApplications();
-      // std::cout<<"number of apps "<<x<<"\n";
-
-    }
-  }
-}
-
-void DtnExample::PopulateArpCache () { 
-  Ptr<ArpCache> arp = CreateObject<ArpCache> (); 
-  arp->SetAliveTimeout (Seconds(3600 * 24 * 365)); 
-  for (NodeList::Iterator i = NodeList::Begin(); i != NodeList::End(); ++i) { 
-    Ptr<Ipv4L3Protocol> ip = (*i)->GetObject<Ipv4L3Protocol> (); 
-    NS_ASSERT(ip !=0); 
-    ObjectVectorValue interfaces; 
-    ip->GetAttribute("InterfaceList", interfaces); 
-    for(uint32_t j = 0; j != ip->GetNInterfaces (); j ++) {
-      Ptr<Ipv4Interface> ipIface = ip->GetInterface (j);
-      NS_ASSERT(ipIface != 0); 
-      Ptr<NetDevice> device = ipIface->GetDevice(); 
-      NS_ASSERT(device != 0); 
-      Mac48Address addr = Mac48Address::ConvertFrom(device->GetAddress ()); 
-      for(uint32_t k = 0; k < ipIface->GetNAddresses (); k ++) { 
-        Ipv4Address ipAddr = ipIface->GetAddress (k).GetLocal(); 
-        if(ipAddr == Ipv4Address::GetLoopback()) 
-          continue; 
-        ArpCache::Entry * entry = arp->Add(ipAddr); 
-        entry->MarkWaitReply(0); 
-        entry->MarkAlive(addr); 
-      } 
-    } 
-  } 
-  for (NodeList::Iterator i = NodeList::Begin(); i != NodeList::End(); ++i) { 
-    Ptr<Ipv4L3Protocol> ip = (*i)->GetObject<Ipv4L3Protocol> (); 
-    NS_ASSERT(ip !=0); 
-    ObjectVectorValue interfaces; 
-    ip->GetAttribute("InterfaceList", interfaces);
-    for(uint32_t j = 0; j != ip->GetNInterfaces (); j ++) {
-      Ptr<Ipv4Interface> ipIface = ip->GetInterface (j);
-      ipIface->SetAttribute("ArpCache", PointerValue(arp)); 
-    } 
-  } 
-}
