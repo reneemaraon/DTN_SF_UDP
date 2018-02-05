@@ -70,7 +70,6 @@ private:
   Ipv4InterfaceContainer interfaces;
 };
 
-
 //////////////////////////////DTN APP CLASS DEC//////////////////////////////
 class DtnApp : public Application{
   public:
@@ -136,7 +135,6 @@ class DtnApp : public Application{
     uint32_t          cc;
     uint32_t          stationary;
 };
-
 
 //////////////////////////////SENSOR CLASS DEC//////////////////////////////
 class Sensor: public DtnApp{
@@ -2467,7 +2465,7 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 std::cout<<"DIRECT TO BASE m_queue size: " << m_queue->GetNPackets()<<" m_dtb_queue size: " <<m_dtb_queue->GetNPackets()<<"\n";
 
               }
-              else{
+              else if(result==999){
                 std::cout<<"Spread\n";
                 success = m_queue->Enqueue(qpkt);
                 std::cout<<m_queue->GetNPackets()<<"\n";
@@ -3013,4 +3011,3 @@ int main(int argc, char **argv){
   // test.Report(std::cout);
   return 0;
 }
-
