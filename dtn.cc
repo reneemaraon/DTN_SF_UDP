@@ -97,7 +97,7 @@ class DtnApp : public Application{
     Ptr<Queue>        m_antipacket_queue;
     Ptr<Queue>        m_queue;
     Ptr<Queue>        m_helper_queue;
-    Ptr<Queue>        m_dtb_queue;
+    Ptr<Queue>        m_packetin_queue;
     Ptr<Queue>        m_base_queue;
     Ptr<WifiMacQueue> mac_queue;
     Address           m_peer;
@@ -246,8 +246,8 @@ void DtnExample::Run(){
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN.xml");
-  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
@@ -266,9 +266,10 @@ void DtnExample::Teleport(int locx, int locy, Ptr<Packet> pkt){
   cpkt->RemoveHeader(tHeader);
   cpkt->RemoveHeader(bndlHeader);
   uint32_t seqno = bndlHeader.GetOriginSeqno();
-  std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
+  std::cout<<"received at magical land bundle of sequence "<<seqno<<"\n";
+  // std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
   // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
-  basenode->ReceiveTeleport(pkt);
+  // basenode->ReceiveTeleport(pkt);
 }
 
 void DtnExample::CreateNodes(){
@@ -355,8 +356,8 @@ void DtnExample::InstallApplications(){
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -514,7 +515,7 @@ DtnApp::DtnApp()
     m_antipacket_queue(0),
     m_queue(0),
     m_helper_queue(0),
-    m_dtb_queue(0),
+    m_packetin_queue(0),
     m_base_queue(0),
     mac_queue(0),
     m_peer(),
@@ -1851,11 +1852,11 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   m_antipacket_queue = CreateObject<DropTailQueue>();
   m_queue = CreateObject<DropTailQueue>();
   m_helper_queue = CreateObject<DropTailQueue>();
-  m_dtb_queue = CreateObject<DropTailQueue>();
+  m_packetin_queue = CreateObject<DropTailQueue>();
   m_antipacket_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_helper_queue->SetAttribute("MaxPackets", UintegerValue(1000));
-  m_dtb_queue->SetAttribute("MaxPackets", UintegerValue(1000));
+  m_packetin_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   stationary = 0;
   for(int i = 0; i < 10000; i++){
     firstSendTime[i] = 0;
@@ -1870,7 +1871,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
-  std::string tempArr2[]={"10.0.0.2", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
+  std::string tempArr2[]={"10.0.0.2", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "2"};
   std::string tempArr3[]={"10.0.0.3", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
   // std::string tempArr2[]={"10.0.0.3", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
   // std::string tempArr3[]={"10.0.0.2", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
@@ -2451,6 +2452,9 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
               else if(result == 1){
+
+              }
+              else if (result == 2){
                 qpkt->RemoveHeader(tHeader);
                 qpkt->RemoveHeader(bndlHeader);
                 bndlHeader.SetDTBFlag(1);
@@ -2458,11 +2462,11 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 qpkt->AddHeader(tHeader);
             
                 // success = m_queue->Enqueue(qpkt);
-                success = m_dtb_queue->Enqueue(qpkt);
+                success = m_packetin_queue->Enqueue(qpkt);
                 if(success){
                   std::cout<<"Successfully enqueued packet\n";
                 }
-                std::cout<<"DIRECT TO BASE m_queue size: " << m_queue->GetNPackets()<<" m_dtb_queue size: " <<m_dtb_queue->GetNPackets()<<"\n";
+                std::cout<<"PACKET IN! m_queue size: " << m_queue->GetNPackets()<<" m_packetin_queue size: " <<m_packetin_queue->GetNPackets()<<"\n";
 
               }
               else if(result==999){
@@ -2664,15 +2668,15 @@ void Mobile::CheckDTBQueues(uint32_t bundletype){
   mypacket::APHeader apHeader;
   mypacket::BndlHeader bndlHeader;
 
-  //iterate over contents of m_dtb_queue
-  pkts=m_dtb_queue->GetNPackets();
+  //iterate over contents of m_packetin_queue
+  pkts=m_packetin_queue->GetNPackets();
   n=0;
-  // std::cout <<"CURRENT SIZE OF QUEUE" << m_dtb_queue->GetNPackets() << "\n";
+  // std::cout <<"CURRENT SIZE OF QUEUE" << m_packetin_queue->GetNPackets() << "\n";
   while(n<pkts){
     std::cout <<"\n"<< n << " CHECKDTBQUEUES\n";
     n++;
-    std::cout<<"BEFORE TELEPORT" <<m_dtb_queue->GetNPackets()<<"\n";
-    packet = m_dtb_queue->Dequeue();
+    std::cout<<"BEFORE TELEPORT" <<m_packetin_queue->GetNPackets()<<"\n";
+    packet = m_packetin_queue->Dequeue();
     Ptr<Packet> cpkt = packet->Copy();
     //???
     mypacket::TypeHeader tHeader(mypacket::MYTYPE_AP);
@@ -2680,11 +2684,11 @@ void Mobile::CheckDTBQueues(uint32_t bundletype){
     packet->RemoveHeader(apHeader);
     //teleport packet
     dtnExample->Teleport(1,1,cpkt);
-    std::cout<<"AFTER TELEPORT" <<m_dtb_queue->GetNPackets()<<"\n\n";
+    std::cout<<"AFTER TELEPORT" <<m_packetin_queue->GetNPackets()<<"\n\n";
   }
-  //recalling so it always checks m_dtb_queue
+  //recalling so it always checks m_packetin_queue
   //if queue still contains bundles; teleport na
-  if(m_dtb_queue->GetNPackets()!=0){
+  if(m_packetin_queue->GetNPackets()!=0){
     Simulator::Schedule(Seconds(0.001), &Mobile::CheckDTBQueues, this, 2);
   }
   //if queue is empty; not that urgent to teleport
