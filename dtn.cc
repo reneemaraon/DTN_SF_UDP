@@ -98,6 +98,7 @@ class DtnApp : public Application{
     Ptr<Queue>        m_queue;
     Ptr<Queue>        m_helper_queue;
     Ptr<Queue>        m_packetin_queue;
+    Ptr<Queue>        m_dtb_queue;
     Ptr<Queue>        m_base_queue;
     Ptr<WifiMacQueue> mac_queue;
     Address           m_peer;
@@ -516,6 +517,7 @@ DtnApp::DtnApp()
     m_queue(0),
     m_helper_queue(0),
     m_packetin_queue(0),
+    m_dtb_queue(0),
     m_base_queue(0),
     mac_queue(0),
     m_peer(),
@@ -1853,6 +1855,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   m_queue = CreateObject<DropTailQueue>();
   m_helper_queue = CreateObject<DropTailQueue>();
   m_packetin_queue = CreateObject<DropTailQueue>();
+  m_dtb_queue = CreateObject<DropTailQueue>();
   m_antipacket_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_helper_queue->SetAttribute("MaxPackets", UintegerValue(1000));
@@ -1872,7 +1875,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
 
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
   std::string tempArr2[]={"10.0.0.2", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "2"};
-  std::string tempArr3[]={"10.0.0.3", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
+  std::string tempArr3[]={"10.0.0.3", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
   // std::string tempArr2[]={"10.0.0.3", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
   // std::string tempArr3[]={"10.0.0.2", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
   flowTableMatch.insert(0, tempArr);
@@ -2452,7 +2455,9 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
               else if(result == 1){
-
+                std::cout<<"Direct to Base! Enqueueing to dtb queue\n";
+                m_dtb_queue->Enqueue(qpkt);
+                std::cout<<"Number of packets in dtb_queue:  "<<m_dtb_queue->GetNPackets()<<" \n";
               }
               else if (result == 2){
                 qpkt->RemoveHeader(tHeader);
