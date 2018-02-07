@@ -79,6 +79,7 @@ class DtnApp : public Application{
     void ReceiveHello(Ptr<Socket> socket);
     void Retransmit(InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG SEND HELLO AND CHECK QUEUES AND SEND MORE
     void SendMore(InetSocketAddress sendTo, int32_t id, int32_t retx); //CALLED NG RETRANSMIT AND RECEIVE BUNDLE
+    // void ScheduleTx();
 
   protected:
     virtual void StopApplication(void);
@@ -176,7 +177,8 @@ class Mobile: public DtnApp{
     
     int CheckMatch(std::string ichcheck[]);
     void CheckDTBQueues(); //CALLED NG SELF AND START APPLICATION
-    // void TriggerInsertFlow(flow[12]]); 
+    void TriggerInsertFlow(); 
+    void ScheduleTx();
 
     FlowTable flowTable;
 };
@@ -425,9 +427,14 @@ void DtnExample::InstallApplications(){
       Ptr<Socket> recvSink = Socket::CreateSocket(nodes.Get(i), udp_tid);
       InetSocketAddress local(Ipv4Address::GetAny(), 80);
       recvSink->Bind(local);
-      recvSink->SetRecvCallback(MakeCallback(&DtnApp::ReceiveHello, app));
+      recvSink->SetRecvCallback(MakeCallback(&Mobile::ReceiveHello, app));
 
       app->SendHello(source, duration, Seconds(0.1 + 0.00085*i), 1);
+      // TriggerInsertFlow();
+      std::cout <<"TRIGGERRRRR\n";
+      // Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
+      std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
+      app->ScheduleTx();
     }
     // else if(i==nodeNum-1){
     else if(i==3){
@@ -1015,6 +1022,12 @@ void DtnApp::SendMore(InetSocketAddress sendTo, int32_t id, int32_t retx){
   else
     lastTxBytes[index] = 0;
 }
+
+// void DtnApp::ScheduleTx(){
+//   // m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
+//   m_sendEvent = Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
+//   // m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
+// }
 
 void DtnApp::StopApplication(void){
   std::cout<<"STOP APP\n";
@@ -2703,6 +2716,21 @@ void Mobile::CheckDTBQueues(){
   else{
     Simulator::Schedule(Seconds(0.01), &Mobile::CheckDTBQueues, this);
   }
+}
+
+void Mobile::TriggerInsertFlow(){
+  std::cout << "\nAt time " << Simulator::Now().GetSeconds() << " INSERTING FLOW {\"10.0.0.99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"999\"}\n";
+  std::string tempArr[]={"10.0.0.99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "999"};
+  flowTable.insert(0, tempArr);
+  // flowTable.listPrinter();
+  flowTable.listPrinter();
+  std::cout<<"\n";
+}
+
+void Mobile::ScheduleTx(){
+  // m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
+  m_sendEvent = Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
+  // m_sendEvent = Simulator::Schedule (tNext, &DtnApp::SendBundle, this, dstnode, packetsize);
 }
 
 
