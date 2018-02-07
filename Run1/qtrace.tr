@@ -8,22 +8,22 @@ INSTALLAPP
 MOBILE: 
 DTNAPP
 0: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]
-1: [10.0.0.2, -, 0, -, -, -, -, -, -, -, -, 1]
-2: [10.0.0.3, -, -, -, -, -, -, -, -, -, -, 0]
+1: [10.0.0.2, -, 0, -, -, -, -, -, -, -, -, 2]
+2: [10.0.0.3, -, -, -, -, -, -, -, -, -, -, 1]
 
 
-node 0 getnode 0x1b2ce40 dst-> 0x1c085a0 10.0.0.1 source-> 0x1c08790
+node 0 getnode 0x2098e40 dst-> 0x21748d0 10.0.0.1 source-> 0x2174ae0
 SENSOR: 
 DTNAPP
 seconds interval2
-node 1 getnode 0x1b2d3b0 dst-> 0x1c09e50 10.0.0.2 source-> 0x1c0a270
+node 1 getnode 0x20993b0 dst-> 0x21761a0 10.0.0.2 source-> 0x21765c0
 SENSOR: 
 DTNAPP
 seconds interval1
-node 2 getnode 0x1b2d140 dst-> 0x1c0b4b0 10.0.0.3 source-> 0x1c0bb60
+node 2 getnode 0x2099140 dst-> 0x2177800 10.0.0.3 source-> 0x2177eb0
 BASE: 
 DTNAPP
-node 3 getnode 0x1b2d230 dst-> 0x1c0d230 10.0.0.4 source-> 0x1c0d840
+node 3 getnode 0x2099230 dst-> 0x2179580 10.0.0.4 source-> 0x2179b90
 POPULATEARPCACHE
 MOBILE START APP
 0.5 0 0 0 0 0 863.667 1008.67
@@ -1231,364 +1231,154 @@ BASE START APP
 299.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 4
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 5
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT5
-TELEPORT
-AFTER TELEPORT4
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT4
-TELEPORT
-AFTER TELEPORT3
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-AFTER TELEPORT2
-
-
-3 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-4 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-AFTER TELEPORT2
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 4
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 5
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT5
-TELEPORT
-AFTER TELEPORT4
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT4
-TELEPORT
-AFTER TELEPORT3
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-AFTER TELEPORT2
-
-
-3 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-4 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-AFTER TELEPORT2
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 4
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 5
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT5
-TELEPORT
-AFTER TELEPORT4
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT4
-TELEPORT
-AFTER TELEPORT3
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-AFTER TELEPORT2
-
-
-3 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-4 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-AFTER TELEPORT2
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-AFTER TELEPORT1
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 300.5 0 0 0 0 0 971.25 1053.4
 300.5 0 0 0 0 1 1053.3 952.67
 300.5 0 0 60 5760 0 1100 726
@@ -1631,16 +1421,9 @@ AFTER TELEPORT0
 309.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 310.5 0 0 0 0 0 988.43 1057.4
 310.5 0 0 0 0 1 1053.3 952.67
 310.5 0 0 62 5952 0 1100 726
@@ -1683,16 +1466,9 @@ AFTER TELEPORT0
 319.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 320.5 0 0 0 0 0 999.86 1057.4
 320.5 0 0 0 0 1 1053.3 952.67
 320.5 0 0 64 6144 0 1100 726
@@ -1735,16 +1511,9 @@ AFTER TELEPORT0
 329.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 330.5 0 0 0 0 0 1046.5 1054.1
 330.5 0 0 0 0 1 1053.3 952.67
 330.5 0 0 66 6336 0 1100 726
@@ -1787,16 +1556,9 @@ AFTER TELEPORT0
 339.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 340.5 0 0 0 0 0 1092 1041.8
 340.5 0 0 0 0 1 1053.3 952.67
 340.5 0 0 68 6528 0 1100 726
@@ -1839,16 +1601,9 @@ AFTER TELEPORT0
 349.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 350.5 0 0 0 0 0 1092.4 1041
 350.5 0 0 0 0 1 1053.3 952.67
 350.5 0 0 70 6720 0 1100 726
@@ -1891,16 +1646,9 @@ AFTER TELEPORT0
 359.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 360.5 0 0 0 0 0 1092.5 1040.6
 360.5 0 0 0 0 1 1053.3 952.67
 360.5 0 0 72 6912 0 1100 726
@@ -1943,16 +1691,9 @@ AFTER TELEPORT0
 369.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 370.5 0 0 0 0 0 1092.7 1040.1
 370.5 0 0 0 0 1 1053.3 952.67
 370.5 0 0 74 7104 0 1100 726
@@ -1995,16 +1736,9 @@ AFTER TELEPORT0
 379.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 380.5 0 0 0 0 0 1092.8 1039.7
 380.5 0 0 0 0 1 1053.3 952.67
 380.5 0 0 76 7296 0 1100 726
@@ -2047,16 +1781,9 @@ AFTER TELEPORT0
 389.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 390.5 0 0 0 0 0 1096.9 1005.6
 390.5 0 0 0 0 1 1053.3 952.67
 390.5 0 0 78 7488 0 1100 726
@@ -2099,16 +1826,9 @@ AFTER TELEPORT0
 399.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 400.5 0 0 0 0 0 1100.7 956.72
 400.5 0 0 0 0 1 1053.3 952.67
 400.5 0 0 80 7680 0 1100 726
@@ -2151,16 +1871,9 @@ AFTER TELEPORT0
 409.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 410.5 0 0 0 0 0 1104.2 932.58
 410.5 0 0 0 0 1 1053.3 952.67
 410.5 0 0 82 7872 0 1100 726
@@ -2203,16 +1916,9 @@ AFTER TELEPORT0
 419.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 420.5 0 0 0 0 0 1106.5 927.04
 420.5 0 0 0 0 1 1053.3 952.67
 420.5 0 0 84 8064 0 1100 726
@@ -2255,16 +1961,9 @@ AFTER TELEPORT0
 429.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 430.5 0 0 0 0 0 1103.2 910.46
 430.5 0 0 0 0 1 1053.3 952.67
 430.5 0 0 86 8256 0 1100 726
@@ -2307,16 +2006,9 @@ AFTER TELEPORT0
 439.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 440.5 0 0 0 0 0 1104.8 894.58
 440.5 0 0 0 0 1 1053.3 952.67
 440.5 0 0 88 8448 0 1100 726
@@ -2359,16 +2051,9 @@ AFTER TELEPORT0
 449.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 450.5 0 0 0 0 0 1104.8 894.52
 450.5 0 0 0 0 1 1053.3 952.67
 450.5 0 0 90 8640 0 1100 726
@@ -2411,16 +2096,9 @@ AFTER TELEPORT0
 459.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 460.5 0 0 0 0 0 1104.9 894.47
 460.5 0 0 0 0 1 1053.3 952.67
 460.5 0 0 92 8832 0 1100 726
@@ -2463,16 +2141,9 @@ AFTER TELEPORT0
 469.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 470.5 0 0 0 0 0 1104.9 894.41
 470.5 0 0 0 0 1 1053.3 952.67
 470.5 0 0 94 9024 0 1100 726
@@ -2515,16 +2186,9 @@ AFTER TELEPORT0
 479.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 480.5 0 0 0 0 0 1105 894.35
 480.5 0 0 0 0 1 1053.3 952.67
 480.5 0 0 96 9216 0 1100 726
@@ -2567,16 +2231,9 @@ AFTER TELEPORT0
 489.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 490.5 0 0 0 0 0 1099.9 885.92
 490.5 0 0 0 0 1 1053.3 952.67
 490.5 0 0 98 9408 0 1100 726
@@ -2619,16 +2276,9 @@ AFTER TELEPORT0
 499.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 500.5 0 0 0 0 0 1098.4 876.39
 500.5 0 0 0 0 1 1053.3 952.67
 500.5 0 0 100 9600 0 1100 726
@@ -2671,16 +2321,9 @@ AFTER TELEPORT0
 509.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
 510.5 0 0 0 0 0 1098.9 872.31
 510.5 0 0 0 0 1 1053.3 952.67
 510.5 0 0 102 9792 0 1100 726
@@ -2719,643 +2362,1156 @@ AFTER TELEPORT0
 518.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 519.5 0 0 0 0 1 1093.6 856.09
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 519.5 0 0 0 0 1 1053.3 952.67
 519.5 0 0 73 7008 1 1100 726
 519.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
-
-IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
+MATCH; Flow index: 2 ACTION: 1
 NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
 
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-AFTER TELEPORT0
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  4 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
+IN CHECK MATCH
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+
+IN CHECK MATCH
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
 
 520.5 0 0 0 0 0 1092.8 853.17
 520.5 0 0 0 0 1 1053.3 952.67
@@ -3379,10 +3535,15 @@ AFTER TELEPORT0
 524.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 525.5 0 0 0 0 0 1087.8 839.86
 525.5 0 0 0 0 1 1053.3 952.67
 525.5 0 0 0 0 1 1100 726
@@ -3405,10 +3566,15 @@ dropped
 529.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 530.5 0 0 0 0 0 1079.9 822.25
 530.5 0 0 1 101 0 1053.3 952.67
 530.5 0 0 0 0 1 1100 726
@@ -3431,10 +3597,15 @@ dropped
 534.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 535.5 0 0 0 0 0 1072.2 802.98
 535.5 0 0 1 101 0 1053.3 952.67
 535.5 0 0 0 0 1 1100 726
@@ -3457,10 +3628,15 @@ dropped
 539.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 540.5 0 0 0 0 0 1067.1 793.25
 540.5 0 0 2 202 0 1053.3 952.67
 540.5 0 0 0 0 1 1100 726
@@ -3483,10 +3659,15 @@ dropped
 544.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 545.5 0 0 0 0 0 1067 793.13
 545.5 0 0 2 202 0 1053.3 952.67
 545.5 0 0 0 0 1 1100 726
@@ -3509,10 +3690,15 @@ dropped
 549.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 550.5 0 0 0 0 0 1066.9 793.02
 550.5 0 0 3 303 0 1053.3 952.67
 550.5 0 0 0 0 1 1100 726
@@ -3535,10 +3721,15 @@ dropped
 554.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 555.5 0 0 0 0 0 1066.9 792.9
 555.5 0 0 3 303 0 1053.3 952.67
 555.5 0 0 0 0 1 1100 726
@@ -3561,10 +3752,15 @@ dropped
 559.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 560.5 0 0 0 0 0 1066.8 792.78
 560.5 0 0 4 404 0 1053.3 952.67
 560.5 0 0 0 0 1 1100 726
@@ -3587,10 +3783,15 @@ dropped
 564.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 565.5 0 0 0 0 0 1066.7 792.66
 565.5 0 0 4 404 0 1053.3 952.67
 565.5 0 0 0 0 1 1100 726
@@ -3613,10 +3814,15 @@ dropped
 569.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 570.5 0 0 0 0 0 1066.6 792.54
 570.5 0 0 5 505 0 1053.3 952.67
 570.5 0 0 0 0 1 1100 726
@@ -3639,10 +3845,15 @@ dropped
 574.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 575.5 0 0 0 0 0 1066.5 792.43
 575.5 0 0 5 505 0 1053.3 952.67
 575.5 0 0 0 0 1 1100 726
@@ -3665,10 +3876,15 @@ dropped
 579.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 580.5 0 0 0 0 0 1066.4 792.31
 580.5 0 0 6 606 0 1053.3 952.67
 580.5 0 0 0 0 1 1100 726
@@ -3691,10 +3907,15 @@ dropped
 584.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 585.5 0 0 0 0 0 1063.6 790.54
 585.5 0 0 6 606 0 1053.3 952.67
 585.5 0 0 0 0 1 1100 726
@@ -3717,10 +3938,15 @@ dropped
 589.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 590.5 0 0 0 0 0 1061.9 789.34
 590.5 0 0 7 707 0 1053.3 952.67
 590.5 0 0 0 0 1 1100 726
@@ -3743,10 +3969,15 @@ dropped
 594.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 595.5 0 0 0 0 0 1061.4 784.81
 595.5 0 0 7 707 0 1053.3 952.67
 595.5 0 0 0 0 1 1100 726
@@ -3769,10 +4000,15 @@ dropped
 599.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 600.5 0 0 0 0 0 1056.2 767.28
 600.5 0 0 8 808 0 1053.3 952.67
 600.5 0 0 0 0 1 1100 726
@@ -3795,10 +4031,15 @@ dropped
 604.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 605.5 0 0 0 0 0 1050.7 746.88
 605.5 0 0 8 808 0 1053.3 952.67
 605.5 0 0 0 0 1 1100 726
@@ -3821,10 +4062,15 @@ dropped
 609.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 610.5 0 0 0 0 0 1047.3 725.37
 610.5 0 0 9 909 0 1053.3 952.67
 610.5 0 0 0 0 1 1100 726
@@ -3847,10 +4093,15 @@ dropped
 614.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 615.5 0 0 0 0 0 1045.3 701.13
 615.5 0 0 9 909 0 1053.3 952.67
 615.5 0 0 0 0 1 1100 726
@@ -3873,10 +4124,15 @@ dropped
 619.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 620.5 0 0 0 0 0 1046.3 691.83
 620.5 0 0 10 1010 0 1053.3 952.67
 620.5 0 0 0 0 1 1100 726
@@ -3899,10 +4155,15 @@ dropped
 624.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 625.5 0 0 0 0 0 1047.3 677.3
 625.5 0 0 10 1010 0 1053.3 952.67
 625.5 0 0 0 0 1 1100 726
@@ -3925,10 +4186,15 @@ dropped
 629.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 630.5 0 0 0 0 0 1050.7 657.41
 630.5 0 0 11 1111 0 1053.3 952.67
 630.5 0 0 0 0 1 1100 726
@@ -3951,10 +4217,15 @@ dropped
 634.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 635.5 0 0 0 0 0 1055 629.82
 635.5 0 0 11 1111 0 1053.3 952.67
 635.5 0 0 0 0 1 1100 726
@@ -3977,10 +4248,15 @@ dropped
 639.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 640.5 0 0 0 0 0 1057.9 602.77
 640.5 0 0 12 1212 0 1053.3 952.67
 640.5 0 0 0 0 1 1100 726

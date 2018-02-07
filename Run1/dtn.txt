@@ -9,22 +9,22 @@ INSTALLAPP
 MOBILE: 
 DTNAPP
 0: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]
-1: [10.0.0.2, -, 0, -, -, -, -, -, -, -, -, 1]
-2: [10.0.0.3, -, -, -, -, -, -, -, -, -, -, 0]
+1: [10.0.0.2, -, 0, -, -, -, -, -, -, -, -, 2]
+2: [10.0.0.3, -, -, -, -, -, -, -, -, -, -, 1]
 
 
-node 0 getnode 0x1b2ce40 dst-> 0x1c085a0 10.0.0.1 source-> 0x1c08790
+node 0 getnode 0x2098e40 dst-> 0x21748d0 10.0.0.1 source-> 0x2174ae0
 SENSOR: 
 DTNAPP
 seconds interval2
-node 1 getnode 0x1b2d3b0 dst-> 0x1c09e50 10.0.0.2 source-> 0x1c0a270
+node 1 getnode 0x20993b0 dst-> 0x21761a0 10.0.0.2 source-> 0x21765c0
 SENSOR: 
 DTNAPP
 seconds interval1
-node 2 getnode 0x1b2d140 dst-> 0x1c0b4b0 10.0.0.3 source-> 0x1c0bb60
+node 2 getnode 0x2099140 dst-> 0x2177800 10.0.0.3 source-> 0x2177eb0
 BASE: 
 DTNAPP
-node 3 getnode 0x1b2d230 dst-> 0x1c0d230 10.0.0.4 source-> 0x1c0d840
+node 3 getnode 0x2099230 dst-> 0x2179580 10.0.0.4 source-> 0x2179b90
 POPULATEARPCACHE
 Starting simulation for 800 s, seed value 12345671
 MOBILE START APP
@@ -1321,426 +1321,186 @@ At time 295 created bundle with sequence number 5985 from 10.0.0.3 to 10.0.0.4
 299.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 199
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 402
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 605
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 4
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 808
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 5
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT5
-TELEPORT
-Teleporting bundle of sequence 199 to base station 
-Received bundle seqno 199 at the base station 1
-AFTER TELEPORT4
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT4
-TELEPORT
-Teleporting bundle of sequence 402 to base station 
-Received bundle seqno 402 at the base station 2
-AFTER TELEPORT3
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-Teleporting bundle of sequence 605 to base station 
-Received bundle seqno 605 at the base station 3
-AFTER TELEPORT2
-
-
-3 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 808 to base station 
-Received bundle seqno 808 at the base station 4
-AFTER TELEPORT1
-
-
-4 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 1011 to base station 
-Received bundle seqno 1011 at the base station 5
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 1011
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 1214
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 1417
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-Teleporting bundle of sequence 1214 to base station 
-Received bundle seqno 1214 at the base station 6
-AFTER TELEPORT2
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 1417 to base station 
-Received bundle seqno 1417 at the base station 7
-AFTER TELEPORT1
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 1620 to base station 
-Received bundle seqno 1620 at the base station 8
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 1620
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 1823
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 1823 to base station 
-Received bundle seqno 1823 at the base station 9
-AFTER TELEPORT1
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 2026 to base station 
-Received bundle seqno 2026 at the base station 10
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 2026
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 2229
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 2432
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 2635
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 4
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 2838
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 5
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT5
-TELEPORT
-Teleporting bundle of sequence 2229 to base station 
-Received bundle seqno 2229 at the base station 11
-AFTER TELEPORT4
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT4
-TELEPORT
-Teleporting bundle of sequence 2432 to base station 
-Received bundle seqno 2432 at the base station 12
-AFTER TELEPORT3
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-Teleporting bundle of sequence 2635 to base station 
-Received bundle seqno 2635 at the base station 13
-AFTER TELEPORT2
-
-
-3 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 2838 to base station 
-Received bundle seqno 2838 at the base station 14
-AFTER TELEPORT1
-
-
-4 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 3041 to base station 
-Received bundle seqno 3041 at the base station 15
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 3041
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 3244
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 3447
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-Teleporting bundle of sequence 3244 to base station 
-Received bundle seqno 3244 at the base station 16
-AFTER TELEPORT2
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 3447 to base station 
-Received bundle seqno 3447 at the base station 17
-AFTER TELEPORT1
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 3650 to base station 
-Received bundle seqno 3650 at the base station 18
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 3650
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 3853
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 3853 to base station 
-Received bundle seqno 3853 at the base station 19
-AFTER TELEPORT1
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 4056 to base station 
-Received bundle seqno 4056 at the base station 20
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 4056
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 4259
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 4462
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 4665
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 4
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 4868
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 5
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT5
-TELEPORT
-Teleporting bundle of sequence 4259 to base station 
-Received bundle seqno 4259 at the base station 21
-AFTER TELEPORT4
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT4
-TELEPORT
-Teleporting bundle of sequence 4462 to base station 
-Received bundle seqno 4462 at the base station 22
-AFTER TELEPORT3
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-Teleporting bundle of sequence 4665 to base station 
-Received bundle seqno 4665 at the base station 23
-AFTER TELEPORT2
-
-
-3 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 4868 to base station 
-Received bundle seqno 4868 at the base station 24
-AFTER TELEPORT1
-
-
-4 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 5071 to base station 
-Received bundle seqno 5071 at the base station 25
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 5071
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 5274
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 2
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 5477
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 3
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT3
-TELEPORT
-Teleporting bundle of sequence 5274 to base station 
-Received bundle seqno 5274 at the base station 26
-AFTER TELEPORT2
-
-
-1 CHECKDTBQUEUES
-BEFORE TELEPORT2
-TELEPORT
-Teleporting bundle of sequence 5477 to base station 
-Received bundle seqno 5477 at the base station 27
-AFTER TELEPORT1
-
-
-2 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 5680 to base station 
-Received bundle seqno 5680 at the base station 28
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 5680
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 5883 to base station 
-Received bundle seqno 5883 at the base station 29
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 5883
 At time 300 created bundle with sequence number 6293 from 10.0.0.2 to 10.0.0.4
 At time 300 created bundle with sequence number 6294 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 6293 to base station 
-Received bundle seqno 6293 at the base station 30
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 6293
 300.5 0 0 0 0 0 971.25 1053.4
 300.5 0 0 0 0 1 1053.3 952.67
 300.5 0 0 60 5760 0 1100 726
@@ -1786,18 +1546,10 @@ At time 310 created bundle with sequence number 6503 from 10.0.0.2 to 10.0.0.4
 At time 310 created bundle with sequence number 6504 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 6503 to base station 
-Received bundle seqno 6503 at the base station 31
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 6503
 310.5 0 0 0 0 0 988.43 1057.4
 310.5 0 0 0 0 1 1053.3 952.67
 310.5 0 0 62 5952 0 1100 726
@@ -1843,18 +1595,10 @@ At time 320 created bundle with sequence number 6713 from 10.0.0.2 to 10.0.0.4
 At time 320 created bundle with sequence number 6714 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 6713 to base station 
-Received bundle seqno 6713 at the base station 32
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 6713
 320.5 0 0 0 0 0 999.86 1057.4
 320.5 0 0 0 0 1 1053.3 952.67
 320.5 0 0 64 6144 0 1100 726
@@ -1900,18 +1644,10 @@ At time 330 created bundle with sequence number 6923 from 10.0.0.2 to 10.0.0.4
 At time 330 created bundle with sequence number 6924 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 6923 to base station 
-Received bundle seqno 6923 at the base station 33
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 6923
 330.5 0 0 0 0 0 1046.5 1054.1
 330.5 0 0 0 0 1 1053.3 952.67
 330.5 0 0 66 6336 0 1100 726
@@ -1957,18 +1693,10 @@ At time 340 created bundle with sequence number 7133 from 10.0.0.2 to 10.0.0.4
 At time 340 created bundle with sequence number 7134 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 7133 to base station 
-Received bundle seqno 7133 at the base station 34
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 7133
 340.5 0 0 0 0 0 1092 1041.8
 340.5 0 0 0 0 1 1053.3 952.67
 340.5 0 0 68 6528 0 1100 726
@@ -2014,18 +1742,10 @@ At time 350 created bundle with sequence number 7343 from 10.0.0.2 to 10.0.0.4
 At time 350 created bundle with sequence number 7344 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 7343 to base station 
-Received bundle seqno 7343 at the base station 35
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 7343
 350.5 0 0 0 0 0 1092.4 1041
 350.5 0 0 0 0 1 1053.3 952.67
 350.5 0 0 70 6720 0 1100 726
@@ -2071,18 +1791,10 @@ At time 360 created bundle with sequence number 7553 from 10.0.0.2 to 10.0.0.4
 At time 360 created bundle with sequence number 7554 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 7553 to base station 
-Received bundle seqno 7553 at the base station 36
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 7553
 360.5 0 0 0 0 0 1092.5 1040.6
 360.5 0 0 0 0 1 1053.3 952.67
 360.5 0 0 72 6912 0 1100 726
@@ -2128,18 +1840,10 @@ At time 370 created bundle with sequence number 7763 from 10.0.0.2 to 10.0.0.4
 At time 370 created bundle with sequence number 7764 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 7763 to base station 
-Received bundle seqno 7763 at the base station 37
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 7763
 370.5 0 0 0 0 0 1092.7 1040.1
 370.5 0 0 0 0 1 1053.3 952.67
 370.5 0 0 74 7104 0 1100 726
@@ -2185,18 +1889,10 @@ At time 380 created bundle with sequence number 7973 from 10.0.0.2 to 10.0.0.4
 At time 380 created bundle with sequence number 7974 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 7973 to base station 
-Received bundle seqno 7973 at the base station 38
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 7973
 380.5 0 0 0 0 0 1092.8 1039.7
 380.5 0 0 0 0 1 1053.3 952.67
 380.5 0 0 76 7296 0 1100 726
@@ -2242,18 +1938,10 @@ At time 390 created bundle with sequence number 8183 from 10.0.0.2 to 10.0.0.4
 At time 390 created bundle with sequence number 8184 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 8183 to base station 
-Received bundle seqno 8183 at the base station 39
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 8183
 390.5 0 0 0 0 0 1096.9 1005.6
 390.5 0 0 0 0 1 1053.3 952.67
 390.5 0 0 78 7488 0 1100 726
@@ -2299,18 +1987,10 @@ At time 400 created bundle with sequence number 8393 from 10.0.0.2 to 10.0.0.4
 At time 400 created bundle with sequence number 8394 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 8393 to base station 
-Received bundle seqno 8393 at the base station 40
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 8393
 400.5 0 0 0 0 0 1100.7 956.72
 400.5 0 0 0 0 1 1053.3 952.67
 400.5 0 0 80 7680 0 1100 726
@@ -2356,18 +2036,10 @@ At time 410 created bundle with sequence number 8603 from 10.0.0.2 to 10.0.0.4
 At time 410 created bundle with sequence number 8604 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 8603 to base station 
-Received bundle seqno 8603 at the base station 41
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 8603
 410.5 0 0 0 0 0 1104.2 932.58
 410.5 0 0 0 0 1 1053.3 952.67
 410.5 0 0 82 7872 0 1100 726
@@ -2413,18 +2085,10 @@ At time 420 created bundle with sequence number 8813 from 10.0.0.2 to 10.0.0.4
 At time 420 created bundle with sequence number 8814 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 8813 to base station 
-Received bundle seqno 8813 at the base station 42
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 8813
 420.5 0 0 0 0 0 1106.5 927.04
 420.5 0 0 0 0 1 1053.3 952.67
 420.5 0 0 84 8064 0 1100 726
@@ -2470,18 +2134,10 @@ At time 430 created bundle with sequence number 9023 from 10.0.0.2 to 10.0.0.4
 At time 430 created bundle with sequence number 9024 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 9023 to base station 
-Received bundle seqno 9023 at the base station 43
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 9023
 430.5 0 0 0 0 0 1103.2 910.46
 430.5 0 0 0 0 1 1053.3 952.67
 430.5 0 0 86 8256 0 1100 726
@@ -2527,18 +2183,10 @@ At time 440 created bundle with sequence number 9233 from 10.0.0.2 to 10.0.0.4
 At time 440 created bundle with sequence number 9234 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 9233 to base station 
-Received bundle seqno 9233 at the base station 44
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 9233
 440.5 0 0 0 0 0 1104.8 894.58
 440.5 0 0 0 0 1 1053.3 952.67
 440.5 0 0 88 8448 0 1100 726
@@ -2584,18 +2232,10 @@ At time 450 created bundle with sequence number 9443 from 10.0.0.2 to 10.0.0.4
 At time 450 created bundle with sequence number 9444 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 9443 to base station 
-Received bundle seqno 9443 at the base station 45
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 9443
 450.5 0 0 0 0 0 1104.8 894.52
 450.5 0 0 0 0 1 1053.3 952.67
 450.5 0 0 90 8640 0 1100 726
@@ -2641,18 +2281,10 @@ At time 460 created bundle with sequence number 9653 from 10.0.0.2 to 10.0.0.4
 At time 460 created bundle with sequence number 9654 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 9653 to base station 
-Received bundle seqno 9653 at the base station 46
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 9653
 460.5 0 0 0 0 0 1104.9 894.47
 460.5 0 0 0 0 1 1053.3 952.67
 460.5 0 0 92 8832 0 1100 726
@@ -2698,18 +2330,10 @@ At time 470 created bundle with sequence number 9863 from 10.0.0.2 to 10.0.0.4
 At time 470 created bundle with sequence number 9864 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 9863 to base station 
-Received bundle seqno 9863 at the base station 47
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 9863
 470.5 0 0 0 0 0 1104.9 894.41
 470.5 0 0 0 0 1 1053.3 952.67
 470.5 0 0 94 9024 0 1100 726
@@ -2755,18 +2379,10 @@ At time 480 created bundle with sequence number 10073 from 10.0.0.2 to 10.0.0.4
 At time 480 created bundle with sequence number 10074 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 10073 to base station 
-Received bundle seqno 10073 at the base station 48
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 10073
 480.5 0 0 0 0 0 1105 894.35
 480.5 0 0 0 0 1 1053.3 952.67
 480.5 0 0 96 9216 0 1100 726
@@ -2812,18 +2428,10 @@ At time 490 created bundle with sequence number 10283 from 10.0.0.2 to 10.0.0.4
 At time 490 created bundle with sequence number 10284 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 10283 to base station 
-Received bundle seqno 10283 at the base station 49
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 10283
 490.5 0 0 0 0 0 1099.9 885.92
 490.5 0 0 0 0 1 1053.3 952.67
 490.5 0 0 98 9408 0 1100 726
@@ -2869,18 +2477,10 @@ At time 500 created bundle with sequence number 10493 from 10.0.0.2 to 10.0.0.4
 At time 500 created bundle with sequence number 10494 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 10493 to base station 
-Received bundle seqno 10493 at the base station 50
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 10493
 500.5 0 0 0 0 0 1098.4 876.39
 500.5 0 0 0 0 1 1053.3 952.67
 500.5 0 0 100 9600 0 1100 726
@@ -2926,18 +2526,10 @@ At time 510 created bundle with sequence number 10703 from 10.0.0.2 to 10.0.0.4
 At time 510 created bundle with sequence number 10704 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
-
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 10703 to base station 
-Received bundle seqno 10703 at the base station 51
-AFTER TELEPORT0
-
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 10703
 510.5 0 0 0 0 0 1098.9 872.31
 510.5 0 0 0 0 1 1053.3 952.67
 510.5 0 0 102 9792 0 1100 726
@@ -2977,647 +2569,1263 @@ At time 515 created bundle with sequence number 10812 from 10.0.0.3 to 10.0.0.4
 518.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 519.5 0 0 0 0 1 1093.6 856.09
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 519.5 0 0 0 0 1 1053.3 952.67
 519.5 0 0 73 7008 1 1100 726
 519.5 0 0 0 0 0 1549.3 262.67
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
 
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
 
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
 
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
 
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
 
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
 
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
 
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
 
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
 
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
 
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
 
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
 
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
 
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
 
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
 
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 3
+Number of packets in dtb_queue:  4 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 4
+Number of packets in dtb_queue:  5 
+
+0 CheckDTBQueues
+BEFORE dtb5
+AFTER dtb 4
+
+
+1 CheckDTBQueues
+BEFORE dtb4
+AFTER dtb 3
+
+
+2 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+3 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
 
+
+4 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
+
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 2
+Number of packets in dtb_queue:  3 
 
+0 CheckDTBQueues
+BEFORE dtb3
+AFTER dtb 2
+
+
+1 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+2 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
+
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 1
+Number of packets in dtb_queue:  2 
+
+0 CheckDTBQueues
+BEFORE dtb2
+AFTER dtb 1
+
+
+1 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 At time 520 created bundle with sequence number 11636 from 10.0.0.2 to 10.0.0.4
 At time 520 created bundle with sequence number 11637 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 1 ACTION: 1
-NIRETURN: 1
-Successfully enqueued packet
-DIRECT TO BASE m_queue size: 0 m_dtb_queue size: 1
+MATCH; Flow index: 1 ACTION: 2
+NIRETURN: 2
+ACTION: PACKET IN
+received at magical land bundle of sequence 11636
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
 
-0 CHECKDTBQUEUES
-BEFORE TELEPORT1
-TELEPORT
-Teleporting bundle of sequence 11636 to base station 
-Received bundle seqno 11636 at the base station 52
-AFTER TELEPORT0
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
 
 520.5 0 0 0 0 0 1092.8 853.17
 520.5 0 0 0 0 1 1053.3 952.67
@@ -3642,10 +3850,16 @@ AFTER TELEPORT0
 At time 525 created bundle with sequence number 11752 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 525.5 0 0 0 0 0 1087.8 839.86
 525.5 0 0 0 0 1 1053.3 952.67
 525.5 0 0 0 0 1 1100 726
@@ -3670,10 +3884,16 @@ At time 530 created bundle with sequence number 11860 from 10.0.0.2 to 10.0.0.4
 At time 530 created bundle with sequence number 11861 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 530.5 0 0 0 0 0 1079.9 822.25
 530.5 0 0 1 101 0 1053.3 952.67
 530.5 0 0 0 0 1 1100 726
@@ -3697,10 +3917,16 @@ dropped
 At time 535 created bundle with sequence number 11969 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 535.5 0 0 0 0 0 1072.2 802.98
 535.5 0 0 1 101 0 1053.3 952.67
 535.5 0 0 0 0 1 1100 726
@@ -3725,10 +3951,16 @@ At time 540 created bundle with sequence number 12077 from 10.0.0.2 to 10.0.0.4
 At time 540 created bundle with sequence number 12078 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 540.5 0 0 0 0 0 1067.1 793.25
 540.5 0 0 2 202 0 1053.3 952.67
 540.5 0 0 0 0 1 1100 726
@@ -3752,10 +3984,16 @@ dropped
 At time 545 created bundle with sequence number 12186 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 545.5 0 0 0 0 0 1067 793.13
 545.5 0 0 2 202 0 1053.3 952.67
 545.5 0 0 0 0 1 1100 726
@@ -3780,10 +4018,16 @@ At time 550 created bundle with sequence number 12294 from 10.0.0.2 to 10.0.0.4
 At time 550 created bundle with sequence number 12295 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 550.5 0 0 0 0 0 1066.9 793.02
 550.5 0 0 3 303 0 1053.3 952.67
 550.5 0 0 0 0 1 1100 726
@@ -3807,10 +4051,16 @@ dropped
 At time 555 created bundle with sequence number 12403 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 555.5 0 0 0 0 0 1066.9 792.9
 555.5 0 0 3 303 0 1053.3 952.67
 555.5 0 0 0 0 1 1100 726
@@ -3835,10 +4085,16 @@ At time 560 created bundle with sequence number 12511 from 10.0.0.2 to 10.0.0.4
 At time 560 created bundle with sequence number 12512 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 560.5 0 0 0 0 0 1066.8 792.78
 560.5 0 0 4 404 0 1053.3 952.67
 560.5 0 0 0 0 1 1100 726
@@ -3862,10 +4118,16 @@ dropped
 At time 565 created bundle with sequence number 12622 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 565.5 0 0 0 0 0 1066.7 792.66
 565.5 0 0 4 404 0 1053.3 952.67
 565.5 0 0 0 0 1 1100 726
@@ -3890,10 +4152,16 @@ At time 570 created bundle with sequence number 12730 from 10.0.0.2 to 10.0.0.4
 At time 570 created bundle with sequence number 12731 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 570.5 0 0 0 0 0 1066.6 792.54
 570.5 0 0 5 505 0 1053.3 952.67
 570.5 0 0 0 0 1 1100 726
@@ -3917,10 +4185,16 @@ dropped
 At time 575 created bundle with sequence number 12839 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 575.5 0 0 0 0 0 1066.5 792.43
 575.5 0 0 5 505 0 1053.3 952.67
 575.5 0 0 0 0 1 1100 726
@@ -3945,10 +4219,16 @@ At time 580 created bundle with sequence number 12947 from 10.0.0.2 to 10.0.0.4
 At time 580 created bundle with sequence number 12948 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 580.5 0 0 0 0 0 1066.4 792.31
 580.5 0 0 6 606 0 1053.3 952.67
 580.5 0 0 0 0 1 1100 726
@@ -3972,10 +4252,16 @@ dropped
 At time 585 created bundle with sequence number 13056 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 585.5 0 0 0 0 0 1063.6 790.54
 585.5 0 0 6 606 0 1053.3 952.67
 585.5 0 0 0 0 1 1100 726
@@ -4000,10 +4286,16 @@ At time 590 created bundle with sequence number 13164 from 10.0.0.2 to 10.0.0.4
 At time 590 created bundle with sequence number 13165 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 590.5 0 0 0 0 0 1061.9 789.34
 590.5 0 0 7 707 0 1053.3 952.67
 590.5 0 0 0 0 1 1100 726
@@ -4027,10 +4319,16 @@ dropped
 At time 595 created bundle with sequence number 13273 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 595.5 0 0 0 0 0 1061.4 784.81
 595.5 0 0 7 707 0 1053.3 952.67
 595.5 0 0 0 0 1 1100 726
@@ -4055,10 +4353,16 @@ At time 600 created bundle with sequence number 13381 from 10.0.0.2 to 10.0.0.4
 At time 600 created bundle with sequence number 13382 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 600.5 0 0 0 0 0 1056.2 767.28
 600.5 0 0 8 808 0 1053.3 952.67
 600.5 0 0 0 0 1 1100 726
@@ -4082,10 +4386,16 @@ dropped
 At time 605 created bundle with sequence number 13490 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 605.5 0 0 0 0 0 1050.7 746.88
 605.5 0 0 8 808 0 1053.3 952.67
 605.5 0 0 0 0 1 1100 726
@@ -4110,10 +4420,16 @@ At time 610 created bundle with sequence number 13598 from 10.0.0.2 to 10.0.0.4
 At time 610 created bundle with sequence number 13599 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 610.5 0 0 0 0 0 1047.3 725.37
 610.5 0 0 9 909 0 1053.3 952.67
 610.5 0 0 0 0 1 1100 726
@@ -4137,10 +4453,16 @@ dropped
 At time 615 created bundle with sequence number 13707 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 615.5 0 0 0 0 0 1045.3 701.13
 615.5 0 0 9 909 0 1053.3 952.67
 615.5 0 0 0 0 1 1100 726
@@ -4165,10 +4487,16 @@ At time 620 created bundle with sequence number 13815 from 10.0.0.2 to 10.0.0.4
 At time 620 created bundle with sequence number 13816 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 620.5 0 0 0 0 0 1046.3 691.83
 620.5 0 0 10 1010 0 1053.3 952.67
 620.5 0 0 0 0 1 1100 726
@@ -4192,10 +4520,16 @@ dropped
 At time 625 created bundle with sequence number 13924 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 625.5 0 0 0 0 0 1047.3 677.3
 625.5 0 0 10 1010 0 1053.3 952.67
 625.5 0 0 0 0 1 1100 726
@@ -4220,10 +4554,16 @@ At time 630 created bundle with sequence number 14032 from 10.0.0.2 to 10.0.0.4
 At time 630 created bundle with sequence number 14033 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 630.5 0 0 0 0 0 1050.7 657.41
 630.5 0 0 11 1111 0 1053.3 952.67
 630.5 0 0 0 0 1 1100 726
@@ -4247,10 +4587,16 @@ dropped
 At time 635 created bundle with sequence number 14141 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 635.5 0 0 0 0 0 1055 629.82
 635.5 0 0 11 1111 0 1053.3 952.67
 635.5 0 0 0 0 1 1100 726
@@ -4275,10 +4621,16 @@ At time 640 created bundle with sequence number 14249 from 10.0.0.2 to 10.0.0.4
 At time 640 created bundle with sequence number 14250 from 10.0.0.3 to 10.0.0.4
 
 IN CHECK MATCH
-MATCH; Flow index: 2 ACTION: 0
-NIRETURN: 0
-dropped
-0
+MATCH; Flow index: 2 ACTION: 1
+NIRETURN: 1
+ACTION: DIRECT TO BASE
+Enqueueing to dtb queue. m_dtb_queue size: 0
+Number of packets in dtb_queue:  1 
+
+0 CheckDTBQueues
+BEFORE dtb1
+AFTER dtb 0
+
 640.5 0 0 0 0 0 1057.9 602.77
 640.5 0 0 12 1212 0 1053.3 952.67
 640.5 0 0 0 0 1 1100 726

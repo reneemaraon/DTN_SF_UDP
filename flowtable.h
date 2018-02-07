@@ -38,12 +38,12 @@ public:
 	};
 };
 
-class FlowTableMatch{
+class FlowTable{
 	strArray* start;
 	strArray* end;
 	int size;
 public:
-	FlowTableMatch();
+	FlowTable();
 	void insert(int index, std::string data[]);
 	void remove(int index);
 	std::string* get(int index);
@@ -56,13 +56,13 @@ public:
 	void listPrinter();
 };
 
-FlowTableMatch::FlowTableMatch() {
+FlowTable::FlowTable() {
 	size = 0;
 	start = NULL;
 	end = NULL;
 }
 
-void FlowTableMatch::insert(int index, std::string data[]){
+void FlowTable::insert(int index, std::string data[]){
 	//check if index is valid
 	if(index < 0 || index > size){
 		std::cout << "Error: index is not within the size." << std::endl;
@@ -112,7 +112,7 @@ void FlowTableMatch::insert(int index, std::string data[]){
 	size++;
 }
 
-void FlowTableMatch::remove(int index){
+void FlowTable::remove(int index){
 	if(index < 0 || index >= size){
 		std::cout << "Error: index is not within the size." << std::endl;
 		return;
@@ -159,7 +159,7 @@ void FlowTableMatch::remove(int index){
 	size--;
 }
 
-std::string* FlowTableMatch::get(int index){
+std::string* FlowTable::get(int index){
 	//YSA YSA YSA YSA ASK ASK AYOS AYOS
 	if(index < 0 || index >= size){
 		std::cout << "Error: index is not within the size." << std::endl;
@@ -174,14 +174,14 @@ std::string* FlowTableMatch::get(int index){
 	return ptr->getData();
 }
 
-void FlowTableMatch::clear(){
+void FlowTable::clear(){
 	start = NULL;
 	end = NULL;
 	size = 0;
 	return;
 }
 
-void FlowTableMatch::set(int index, std::string data[]){
+void FlowTable::set(int index, std::string data[]){
 	if(index < 0 || index >= size){
 		std::cout << "Error: index is not within the size." << std::endl;
 		return;
@@ -196,11 +196,11 @@ void FlowTableMatch::set(int index, std::string data[]){
 	return;
 }
 
-int FlowTableMatch::getSize(){
+int FlowTable::getSize(){
 	return size;
 }
 
-bool FlowTableMatch::isEmpty(){
+bool FlowTable::isEmpty(){
 	if(size==0){
 		return 1;
 	}
@@ -209,7 +209,7 @@ bool FlowTableMatch::isEmpty(){
 	}
 }
 
-bool FlowTableMatch::contains(std::string data[]){
+bool FlowTable::contains(std::string data[]){
 	strArray* ptr = start;
 	std::string* temp =ptr->getData();
 
@@ -234,7 +234,7 @@ bool FlowTableMatch::contains(std::string data[]){
 	return 0;
 }
 
-void FlowTableMatch::listPrinter(){
+void FlowTable::listPrinter(){
 	strArray* printer;
 
 	printer = start;

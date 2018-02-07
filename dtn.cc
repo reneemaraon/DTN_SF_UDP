@@ -19,7 +19,7 @@
 #include "ns3/qos-tag.h"
 #include "ns3/netanim-module.h"
 #include "QueueStruct.h"
-#include "flowtablematch.h"
+#include "flowtable.h"
 #include <sstream>
 #include <string.h>
 #include <string>
@@ -45,7 +45,7 @@ public:
   DtnExample();
   bool Configure(int argc, char **argv);
   void Run();
-  void Teleport(int locx, int locy, Ptr<Packet>);
+  void PacketIn(int locx, int locy, Ptr<Packet>);
   // void Report(std::ostream & os);
 
   std::string traceFile;
@@ -175,9 +175,10 @@ class Mobile: public DtnApp{
     void ReceiveBundle(Ptr<Socket> socket);
     
     int CheckMatch(std::string ichcheck[]);
-    void CheckDTBQueues(uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
+    void CheckDTBQueues(); //CALLED NG SELF AND START APPLICATION
+    // void TriggerInsertFlow(flow[12]]); 
 
-    FlowTableMatch flowTableMatch;
+    FlowTable flowTable;
 };
 
 //////////////////////////////BASE CLASS DEC//////////////////////////////
@@ -188,7 +189,7 @@ class Base: public DtnApp{
     void SendHello(Ptr<Socket> socket, double endTime, Time pktInterval, uint32_t first); //CALLED BY SELF AND INSTALL APPLICATION
     void ReceiveHello(Ptr<Socket> socket);
     
-    void ReceiveTeleport(Ptr<Packet> packet);
+    // void ReceiveTeleport(Ptr<Packet> packet);
 };
 Ptr<Base> basenode;
 
@@ -247,8 +248,8 @@ void DtnExample::Run(){
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN.xml");
-  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  // anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
@@ -259,8 +260,7 @@ void DtnExample::Run(){
 // void DtnExample::Report(std::ostream &){ 
 // }
 
-void DtnExample::Teleport(int locx, int locy, Ptr<Packet> pkt){
-  std::cout<<"TELEPORT\n";
+void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt){
   Ptr<Packet> cpkt = pkt->Copy();
   mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
   mypacket::BndlHeader bndlHeader;
@@ -357,8 +357,8 @@ void DtnExample::InstallApplications(){
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -1878,12 +1878,12 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   std::string tempArr3[]={"10.0.0.3", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
   // std::string tempArr2[]={"10.0.0.3", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
   // std::string tempArr3[]={"10.0.0.2", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
-  flowTableMatch.insert(0, tempArr);
+  flowTable.insert(0, tempArr);
   // std::cout <<"NEWNEWNEW\n";
-  // flowTableMatch.listPrinter();
-  flowTableMatch.insert(1, tempArr2);
-  flowTableMatch.insert(2, tempArr3);
-  flowTableMatch.listPrinter();
+  // flowTable.listPrinter();
+  flowTable.insert(1, tempArr2);
+  flowTable.insert(2, tempArr3);
+  flowTable.listPrinter();
 }
 
 void Mobile::StartApplication(void){
@@ -1901,7 +1901,7 @@ void Mobile::StartApplication(void){
   NS_ASSERT(mac_queue != NULL);
   mac_queue->SetAttribute("MaxPacketNumber", UintegerValue(1000));
   CheckQueues(2);
-  CheckDTBQueues(2);
+  CheckDTBQueues();
   PrintBuffers();
 }
 
@@ -2451,38 +2451,41 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               std::cout << "NIRETURN: " << result << "\n";
               bool success;
               if(result ==0){  //drop
-                std::cout << "dropped\n";
+                std::cout << "ACTION: DROP\n";
+                std::cout << "bundle dropped\n";
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
               else if(result == 1){
-                std::cout<<"Direct to Base! Enqueueing to dtb queue\n";
-                m_dtb_queue->Enqueue(qpkt);
-                std::cout<<"Number of packets in dtb_queue:  "<<m_dtb_queue->GetNPackets()<<" \n";
-              }
-              else if (result == 2){
-                qpkt->RemoveHeader(tHeader);
-                qpkt->RemoveHeader(bndlHeader);
-                bndlHeader.SetDTBFlag(1);
-                qpkt->AddHeader(bndlHeader);
-                qpkt->AddHeader(tHeader);
+                // qpkt->RemoveHeader(tHeader);
+                // qpkt->RemoveHeader(bndlHeader);
+                // qpkt->AddHeader(bndlHeader);
+                // qpkt->AddHeader(tHeader);
             
+                // bndlHeader.SetDTBFlag(1);
                 // success = m_queue->Enqueue(qpkt);
-                success = m_packetin_queue->Enqueue(qpkt);
+                // success = m_packetin_queue->Enqueue(qpkt);
+                std::cout << "ACTION: DIRECT TO BASE\n";
+                std::cout << "Enqueueing to dtb queue. m_dtb_queue size: " << m_dtb_queue->GetNPackets() << "\n";
+                m_dtb_queue->Enqueue(qpkt);
                 if(success){
                   std::cout<<"Successfully enqueued packet\n";
                 }
-                std::cout<<"PACKET IN! m_queue size: " << m_queue->GetNPackets()<<" m_packetin_queue size: " <<m_packetin_queue->GetNPackets()<<"\n";
+                std::cout<<"Number of packets in dtb_queue:  "<<m_dtb_queue->GetNPackets()<<" \n";
+              }
+              else if (result == 2){//packet in
+                std::cout << "ACTION: PACKET IN\n";
+                
+                dtnExample->PacketIn(1,1,qpkt);
+
 
               }
               else if(result==999){
-                std::cout<<"Spread\n";
+                std::cout<<"ACTION: SPREAD\n";
                 success = m_queue->Enqueue(qpkt);
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
               // SendAP(bndlHeader.GetDst(), bndlHeader.GetOrigin(), bndlHeader.GetOriginSeqno(), bndlHeader.GetSrcTimestamp());
 
-              if(success){
-              }
             } 
             else{
               drops++;
@@ -2514,7 +2517,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
   //8 largest data >
   //9 largest data ==
   //10 largest data <
-  // flowTableMatch.listPrinter();
+  // flowTable.listPrinter();
   std::cout << "\nIN CHECK MATCH\n";
   // std::cout << "IN CHECK MATCH" << ": [" << ichcheck[0] << ", " << ichcheck[1] << ", " << ichcheck[2] << ", " << ichcheck[3] << ", " << ichcheck[4] << ", " << ichcheck[5] << ", " << ichcheck[6] << ", " << ichcheck[7] << ", " << ichcheck[8] << ", " << ichcheck[9] << ", " << ichcheck[10] << "]\n";
   int matchFlag;
@@ -2524,9 +2527,9 @@ int Mobile::CheckMatch(std::string ichcheck[]){
   int toCheck;
   int irereturn;
 
-  for(int x=0; x<flowTableMatch.getSize(); x++){
+  for(int x=0; x<flowTable.getSize(); x++){
     matchFlag=1;
-    std::string* flowTableMatchEntry=flowTableMatch.get(x);
+    std::string* flowTableMatchEntry=flowTable.get(x);
     // std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~INDEX NG FLOW TABLE MATCH: " << x << " \n";
     
     for(int y=0; y<11; y++){
@@ -2650,7 +2653,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
 
 
     if(matchFlag==1){
-      std::string* matchEntry=flowTableMatch.get(x);
+      std::string* matchEntry=flowTable.get(x);
       std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
       std::stringstream matchEntryStream(matchEntry[11]);
       matchEntryStream >> irereturn;
@@ -2659,46 +2662,46 @@ int Mobile::CheckMatch(std::string ichcheck[]){
     }
   }
   if(matchFlag==0){
-    std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTableMatch.getSize() << " ACTION: something action ng wildcard" << "\n";
+    std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTable.getSize() << " ACTION: something action ng wildcard" << "\n";
     return 999;
   }
   return 000;
 }
 
-void Mobile::CheckDTBQueues(uint32_t bundletype){
-  // std::cout<< "PUMASOK CHECKDTBQUEUES\n";
+void Mobile::CheckDTBQueues(){
+  // std::cout<< "PUMASOK CheckDTBQueues\n";
   Ptr<Packet> packet;
   uint32_t pkts=0, n=0;
   
   mypacket::APHeader apHeader;
   mypacket::BndlHeader bndlHeader;
 
-  //iterate over contents of m_packetin_queue
-  pkts=m_packetin_queue->GetNPackets();
+  //iterate over contents of m_dtb_queue
+  pkts=m_dtb_queue->GetNPackets();
   n=0;
-  // std::cout <<"CURRENT SIZE OF QUEUE" << m_packetin_queue->GetNPackets() << "\n";
+  // std::cout <<"CURRENT SIZE OF QUEUE" << m_dtb_queue->GetNPackets() << "\n";
   while(n<pkts){
-    std::cout <<"\n"<< n << " CHECKDTBQUEUES\n";
+    std::cout <<"\n"<< n << " CheckDTBQueues\n";
     n++;
-    std::cout<<"BEFORE TELEPORT" <<m_packetin_queue->GetNPackets()<<"\n";
-    packet = m_packetin_queue->Dequeue();
+    std::cout<<"BEFORE dtb " <<m_dtb_queue->GetNPackets()<<"\n";
+    packet = m_dtb_queue->Dequeue();
     Ptr<Packet> cpkt = packet->Copy();
     //???
     mypacket::TypeHeader tHeader(mypacket::MYTYPE_AP);
     packet->RemoveHeader(tHeader);
     packet->RemoveHeader(apHeader);
-    //teleport packet
-    dtnExample->Teleport(1,1,cpkt);
-    std::cout<<"AFTER TELEPORT" <<m_packetin_queue->GetNPackets()<<"\n\n";
+    //teleport packet NO DIRECT TO BASE ITO HEHE
+    // dtnExample->PacketIn(1,1,cpkt);
+    std::cout<<"AFTER dtb " <<m_dtb_queue->GetNPackets()<<"\n\n";
   }
   //recalling so it always checks m_packetin_queue
   //if queue still contains bundles; teleport na
   if(m_packetin_queue->GetNPackets()!=0){
-    Simulator::Schedule(Seconds(0.001), &Mobile::CheckDTBQueues, this, 2);
+    Simulator::Schedule(Seconds(0.001), &Mobile::CheckDTBQueues, this);
   }
   //if queue is empty; not that urgent to teleport
   else{
-    Simulator::Schedule(Seconds(0.01), &Mobile::CheckDTBQueues, this, 2);
+    Simulator::Schedule(Seconds(0.01), &Mobile::CheckDTBQueues, this);
   }
 }
 
@@ -2987,21 +2990,21 @@ void Base::ReceiveHello(Ptr<Socket> socket){
   }
 }
 
-void Base::ReceiveTeleport(Ptr<Packet> pkt){
-  Ptr<Packet> cpkt = pkt->Copy();
-  mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
-  mypacket::BndlHeader bndlHeader;
-  cpkt->RemoveHeader(tHeader);
-  cpkt->RemoveHeader(bndlHeader);
-  uint32_t seqno = bndlHeader.GetOriginSeqno();
-  bool success = m_base_queue->Enqueue(cpkt);
-  if(success){
-    std::cout<<"Received bundle seqno "<<seqno<<" at the base station "<<m_base_queue->GetNPackets()<<"\n";
-  }
-  else{
-    std::cout<<"Received FAILED\n";
-  }
-}
+// void Base::ReceiveTeleport(Ptr<Packet> pkt){
+//   Ptr<Packet> cpkt = pkt->Copy();
+//   mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
+//   mypacket::BndlHeader bndlHeader;
+//   cpkt->RemoveHeader(tHeader);
+//   cpkt->RemoveHeader(bndlHeader);
+//   uint32_t seqno = bndlHeader.GetOriginSeqno();
+//   bool success = m_base_queue->Enqueue(cpkt);
+//   if(success){
+//     std::cout<<"Received bundle seqno "<<seqno<<" at the base station "<<m_base_queue->GetNPackets()<<"\n";
+//   }
+//   else{
+//     std::cout<<"Received FAILED\n";
+//   }
+// }
 
 
 
