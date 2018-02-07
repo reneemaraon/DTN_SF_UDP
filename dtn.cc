@@ -2767,27 +2767,30 @@ void Mobile::CheckQueues(uint32_t bundletype){
       pkts = m_dtb_queue->GetNPackets();
       n = 0;
       while (n < pkts){
-        std::cout<<"hi"<<n;
+        n++;
+        // std::cout<<"hi"<<n;
         packet = m_dtb_queue->Dequeue();
         mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
         packet->RemoveHeader(tHeader);
         packet->RemoveHeader(bndlHeader);
+        packet->AddHeader(bndlHeader);
+        packet->AddHeader(tHeader);
         if((Simulator::Now().GetSeconds() - bndlHeader.GetHopTimestamp().GetSeconds()) > 0.2){
- 
+
           Ipv4Address dst = bndlHeader.GetDst();
           i = 0;     
           while ((i < neighbors) && (send_bundle ==0)){
             if ((dst == neighbor_address[i].GetIpv4()) && ((Simulator::Now().GetSeconds() - neighbor_last_seen[i]) < 0.1)){
               send_bundle=1;
-              std::cout<< "HELLO\n";
+              // std::cout<< "HELLO\n";
+              // std::cout<<neighbor_address[i].GetIpv4()<<" "<<i<<"\n";
+              break;
             }
+            i++;
           }
         }
-        packet->AddHeader(bndlHeader);
-        packet->AddHeader(tHeader);
         Ptr<Packet> qp = packet->Copy();        
 
-        n++;
         if (send_bundle==0){
           m_dtb_queue->Enqueue(qp);
         }
@@ -2928,7 +2931,7 @@ void Mobile::CheckQueues(uint32_t bundletype){
     bundletype = 0;
   }
   if(send_bundle == 1){
-    std::cout<<"SENDBUNDLE1\n";
+    // std::cout<<"SENDBUNDLE1\n";
     if(m_socket == 0){
       m_socket = Socket::CreateSocket(GetNode(), TypeId::LookupByName("ns3::UdpSocketFactory"));
       Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4>();
@@ -2937,7 +2940,8 @@ void Mobile::CheckQueues(uint32_t bundletype){
       m_socket->Bind(local);    
     }    
 
-    InetSocketAddress dstremoteaddr(neighbor_address[i].GetIpv4(), 50000);    
+    InetSocketAddress dstremoteaddr(neighbor_address[i].GetIpv4(), 50000);
+    // std::cout<<"retransmitting to i "<<i<<" "<<neighbor_address[i].GetIpv4()<<"\n";    
     if(bundletype < 2){
       packet = firstpacket->Copy();
       mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
@@ -2965,10 +2969,35 @@ void Mobile::CheckQueues(uint32_t bundletype){
       retxpkt.push_back(packet->Copy());
       Simulator::Schedule(Seconds(1.0), &DtnApp::Retransmit, this, sendTos[NumFlows-1], ids[NumFlows-1], retxs[NumFlows-1]);
     } 
-    // else{    
+    else{  
+
+      mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
+      Ptr<Packet> anotherp = packet->Copy();
+
+      anotherp->RemoveHeader(tHeader);
+      anotherp->RemoveHeader(bndlHeader);
+      anotherp->AddHeader(bndlHeader);
+      anotherp->AddHeader(tHeader);
+      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
+      NumFlows++;
+      sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
+      sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
+      ids[NumFlows-1] = bndlHeader.GetOriginSeqno();
+      retxs[NumFlows-1] = bndlHeader.GetNretx();
+      currentTxBytes[NumFlows-1] = std::min((uint32_t)1472, packet->GetSize());
+      lastTxBytes[NumFlows-1] = std::min((uint32_t)1472, packet->GetSize());
+      firstSendTime[NumFlows-1] = Simulator::Now().GetSeconds();
+      lastSendTime[NumFlows-1] = Simulator::Now().GetSeconds();
+      totalTxBytes[NumFlows-1] = packet->GetSize();
+      if(packet->GetSize() > 1472)
+        packet->RemoveAtEnd(packet->GetSize() - 1472);
+      packet->AddPacketTag(FlowIdTag(bndlHeader.GetOriginSeqno()));
+      packet->AddPacketTag(QosTag(bndlHeader.GetNretx()));
+      retxpkt.push_back(packet->Copy());
+      Simulator::Schedule(Seconds(1.0), &DtnApp::Retransmit, this, sendTos[NumFlows-1], ids[NumFlows-1], retxs[NumFlows-1]);  
     //   packet->AddPacketTag(FlowIdTag(-apHeader.GetOriginSeqno()));
     //   packet->AddPacketTag(QosTag(4));
-    // }
+    }
     
     m_socket->SendTo(packet, 0, dstremoteaddr);
     Address ownaddress;
