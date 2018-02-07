@@ -1835,6 +1835,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   m_packetin_queue = CreateObject<DropTailQueue>();
   m_dtb_queue = CreateObject<DropTailQueue>();
   m_antipacket_queue->SetAttribute("MaxPackets", UintegerValue(1000));
+  m_dtb_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_helper_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   m_packetin_queue->SetAttribute("MaxPackets", UintegerValue(1000));
@@ -2426,7 +2427,6 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
               int result=CheckMatch(ichcheck);
               std::cout << "NIRETURN: " << result << "\n";
-              bool success;
               if(result ==0){  //drop
                 std::cout << "ACTION: DROP\n";
                 std::cout << "bundle dropped\n";
@@ -2444,9 +2444,7 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 std::cout << "ACTION: DIRECT TO BASE\n";
                 std::cout << "Enqueueing to dtb queue. m_dtb_queue size: " << m_dtb_queue->GetNPackets() << "\n";
                 m_dtb_queue->Enqueue(qpkt);
-                if(success){
-                  std::cout<<"Successfully enqueued packet\n";
-                }
+   
                 std::cout<<"Number of packets in dtb_queue:  "<<m_dtb_queue->GetNPackets()<<" \n";
               }
               else if (result == 2){//packet in
@@ -2458,7 +2456,7 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               }
               else if(result==999){
                 std::cout<<"ACTION: SPREAD\n";
-                success = m_queue->Enqueue(qpkt);
+                m_queue->Enqueue(qpkt);
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
               // SendAP(bndlHeader.GetDst(), bndlHeader.GetOrigin(), bndlHeader.GetOriginSeqno(), bndlHeader.GetSrcTimestamp());
@@ -2495,7 +2493,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
   //9 largest data ==
   //10 largest data <
   // flowTable.listPrinter();
-  std::cout << "\nIN CHECK MATCH\n";
+  // std::cout << "\nIN CHECK MATCH\n";
   // std::cout << "IN CHECK MATCH" << ": [" << ichcheck[0] << ", " << ichcheck[1] << ", " << ichcheck[2] << ", " << ichcheck[3] << ", " << ichcheck[4] << ", " << ichcheck[5] << ", " << ichcheck[6] << ", " << ichcheck[7] << ", " << ichcheck[8] << ", " << ichcheck[9] << ", " << ichcheck[10] << "]\n";
   int matchFlag;
   // std::stringstream ftmEntryStream;
@@ -2631,7 +2629,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
 
     if(matchFlag==1){
       std::string* matchEntry=flowTable.get(x);
-      std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
+      // std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
       std::stringstream matchEntryStream(matchEntry[11]);
       matchEntryStream >> irereturn;
       return irereturn;
@@ -2654,14 +2652,14 @@ void Mobile::CheckDTBQueues(){
   mypacket::BndlHeader bndlHeader;
 
   //iterate over contents of m_dtb_queue
-  pkts=m_dtb_queue->GetNPackets();
+  pkts=m_packetin_queue->GetNPackets();
   n=0;
   // std::cout <<"CURRENT SIZE OF QUEUE" << m_dtb_queue->GetNPackets() << "\n";
   while(n<pkts){
     std::cout <<"\n"<< n << " CheckDTBQueues\n";
     n++;
-    std::cout<<"BEFORE dtb " <<m_dtb_queue->GetNPackets()<<"\n";
-    packet = m_dtb_queue->Dequeue();
+    std::cout<<"BEFORE dtb " <<m_packetin_queue->GetNPackets()<<"\n";
+    packet = m_packetin_queue->Dequeue();
     Ptr<Packet> cpkt = packet->Copy();
     //???
     mypacket::TypeHeader tHeader(mypacket::MYTYPE_AP);
@@ -2669,7 +2667,7 @@ void Mobile::CheckDTBQueues(){
     packet->RemoveHeader(apHeader);
     //teleport packet NO DIRECT TO BASE ITO HEHE
     // dtnExample->PacketIn(1,1,cpkt);
-    std::cout<<"AFTER dtb " <<m_dtb_queue->GetNPackets()<<"\n\n";
+    std::cout<<"AFTER dtb " <<m_packetin_queue->GetNPackets()<<"\n\n";
   }
   //recalling so it always checks m_packetin_queue
   //if queue still contains bundles; teleport na
@@ -2765,10 +2763,39 @@ void Mobile::CheckQueues(uint32_t bundletype){
 
   //ano meron sa mac_queue
   if(mac_queue->GetSize() < 2){
-    
     if(bundletype == 2){
       pkts = m_dtb_queue->GetNPackets();
       n = 0;
+      while (n < pkts){
+        std::cout<<"hi"<<n;
+        packet = m_dtb_queue->Dequeue();
+        mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
+        packet->RemoveHeader(tHeader);
+        packet->RemoveHeader(bndlHeader);
+        if((Simulator::Now().GetSeconds() - bndlHeader.GetHopTimestamp().GetSeconds()) > 0.2){
+ 
+          Ipv4Address dst = bndlHeader.GetDst();
+          i = 0;     
+          while ((i < neighbors) && (send_bundle ==0)){
+            if ((dst == neighbor_address[i].GetIpv4()) && ((Simulator::Now().GetSeconds() - neighbor_last_seen[i]) < 0.1)){
+              send_bundle=1;
+              std::cout<< "HELLO\n";
+            }
+          }
+        }
+        packet->AddHeader(bndlHeader);
+        packet->AddHeader(tHeader);
+        Ptr<Packet> qp = packet->Copy();        
+
+        n++;
+        if (send_bundle==0){
+          m_dtb_queue->Enqueue(qp);
+        }
+        else{
+          break;
+        }
+      }
+      // std::cout<<"\n";
       
     }
 
@@ -2779,12 +2806,12 @@ void Mobile::CheckQueues(uint32_t bundletype){
       while(n < pkts){
         n++;
         packet = m_queue->Dequeue();
-        // packet = m_queue->Dequeue();
         mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
         packet->RemoveHeader(tHeader);
         packet->RemoveHeader(bndlHeader);
+       
         //if not old ang bundle
-        if((Simulator::Now().GetSeconds() - bndlHeader.GetSrcTimestamp().GetSeconds()) < 10000.0){
+        if((Simulator::Now().GetSeconds() - bndlHeader.GetSrcTimestamp().GetSeconds()) < 1000.0){
           // ano lang basta di pa bago ang bundle narating sa node na itu
           if(n==1){
             if((Simulator::Now().GetSeconds() - bndlHeader.GetHopTimestamp().GetSeconds()) > 0.2){
@@ -2901,6 +2928,7 @@ void Mobile::CheckQueues(uint32_t bundletype){
     bundletype = 0;
   }
   if(send_bundle == 1){
+    std::cout<<"SENDBUNDLE1\n";
     if(m_socket == 0){
       m_socket = Socket::CreateSocket(GetNode(), TypeId::LookupByName("ns3::UdpSocketFactory"));
       Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4>();
@@ -2937,10 +2965,10 @@ void Mobile::CheckQueues(uint32_t bundletype){
       retxpkt.push_back(packet->Copy());
       Simulator::Schedule(Seconds(1.0), &DtnApp::Retransmit, this, sendTos[NumFlows-1], ids[NumFlows-1], retxs[NumFlows-1]);
     } 
-    else{    
-      packet->AddPacketTag(FlowIdTag(-apHeader.GetOriginSeqno()));
-      packet->AddPacketTag(QosTag(4));
-    }
+    // else{    
+    //   packet->AddPacketTag(FlowIdTag(-apHeader.GetOriginSeqno()));
+    //   packet->AddPacketTag(QosTag(4));
+    // }
     
     m_socket->SendTo(packet, 0, dstremoteaddr);
     Address ownaddress;
