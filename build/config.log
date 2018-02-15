@@ -1,0 +1,10 @@
+# project  configured on Thu Feb 15 16:36:02 2018 by
+# waf 1.7.16 (abi 98, python 20706f0 on linux2)
+# using /home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/../../waf configure
+#
+----------------------------------------
+Setting top to
+/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP
+----------------------------------------
+Setting out to
+/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/build

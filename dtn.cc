@@ -23,6 +23,15 @@
 #include <sstream>
 #include <string.h>
 #include <string>
+#include <zmq.hpp>
+#ifndef _WIN32
+#include <unistd.h>
+#else
+#include <windows.h>
+
+#define sleep(n) Sleep(n)
+#endif
+
 
 using namespace ns3;
 
@@ -3333,6 +3342,10 @@ void Base::ReceiveHello(Ptr<Socket> socket){
 ////////////////////////////////////////////////////////////////
 int main(int argc, char **argv){
   //LogComponentEnable("Ns2MobilityHelper",LOG_LEVEL_DEBUG);
+  zmq::context_t context (1);
+  zmq::socket_t socket (context, ZMQ_REP);
+  socket.bind("tcp://*:5555");
+
   DtnExample test;
   if(! test.Configure(argc, argv)) 
     NS_FATAL_ERROR("Configuration failed. Aborted.");
