@@ -3342,9 +3342,29 @@ void Base::ReceiveHello(Ptr<Socket> socket){
 ////////////////////////////////////////////////////////////////
 int main(int argc, char **argv){
   //LogComponentEnable("Ns2MobilityHelper",LOG_LEVEL_DEBUG);
+
+///////////////// ZMQ PART //////////////////////////
+
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
+  // Ptr<Socket> dst = socket;
+
+
   socket.bind("tcp://*:5555");
+  int recvcount = 0;
+  while (recvcount<10){
+    zmq::message_t request;
+    socket.recv(&request);
+    std::cout<<"Received Hello\n";
+
+    sleep(1);
+    zmq::message_t reply (5);
+    memcpy (reply.data(), "World", 5);
+    socket.send(reply);
+    recvcount++;
+  }
+
+//////////////// END OF ZMQ PART ///////////////////////////
 
   DtnExample test;
   if(! test.Configure(argc, argv)) 
