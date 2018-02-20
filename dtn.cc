@@ -23,14 +23,14 @@
 #include <sstream>
 #include <string.h>
 #include <string>
-#include <zmq.hpp>
-#ifndef _WIN32
-#include <unistd.h>
-#else
-#include <windows.h>
+// #include <zmq.hpp>
+// #ifndef _WIN32
+// #include <unistd.h>
+// #else
+// #include <windows.h>
 
-#define sleep(n) Sleep(n)
-#endif
+// #define sleep(n) Sleep(n)
+// #endif
 
 
 using namespace ns3;
@@ -186,7 +186,7 @@ class Mobile: public DtnApp{
     void CheckQueues(uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
     
     int CheckMatch(std::string ichcheck[]);
-    void CheckDTBQueues(); //CALLED NG SELF AND START APPLICATION
+    void CheckPacketInQueues(); //CALLED NG SELF AND START APPLICATION
     void TriggerInsertFlow(); 
     void ScheduleTx();
 
@@ -260,8 +260,8 @@ void DtnExample::Run(){
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN.xml");
-  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  // anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
@@ -369,8 +369,8 @@ void DtnExample::InstallApplications(){
       app->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -1862,15 +1862,15 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
-  std::string tempArr2[]={"10.0.0.2", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "2"};
-  std::string tempArr3[]={"10.0.0.3", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
-  // std::string tempArr2[]={"10.0.0.3", "-", "0", "-", "-", "-", "-", "-", "-", "-", "-", "1"};
-  // std::string tempArr3[]={"10.0.0.2", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "0"};
-  flowTable.insert(0, tempArr);
+  std::string tempArr2[]={"10.0.0.2", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
+  std::string tempArr3[]={"10.0.0.3", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
+  // std::string tempArr2[]={"10.0.0.3", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
+  // std::string tempArr3[]={"10.0.0.2", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "0"};
+  flowTable.insertWithPriority(50, tempArr);
   // std::cout <<"NEWNEWNEW\n";
   // flowTable.listPrinter();
-  flowTable.insert(1, tempArr2);
-  flowTable.insert(2, tempArr3);
+  flowTable.insertWithPriority(100, tempArr2);
+  flowTable.insertWithPriority(150, tempArr3);
   flowTable.listPrinter();
 }
 
@@ -1889,7 +1889,7 @@ void Mobile::StartApplication(void){
   NS_ASSERT(mac_queue != NULL);
   mac_queue->SetAttribute("MaxPacketNumber", UintegerValue(1000));
   CheckQueues(2);
-  CheckDTBQueues();
+  CheckPacketInQueues();
   PrintBuffers();
 }
 
@@ -2436,6 +2436,7 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
              // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
               int result=CheckMatch(ichcheck);
               std::cout << "NIRETURN: " << result << "\n";
+              bool success;
               if(result ==0){  //drop
                 std::cout << "ACTION: DROP\n";
                 std::cout << "bundle dropped\n";
@@ -2458,12 +2459,22 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               }
               else if (result == 2){//packet in
                 std::cout << "ACTION: PACKET IN\n";
-                
-                dtnExample->PacketIn(1,1,qpkt);
+                qpkt->RemoveHeader(tHeader);
+                qpkt->RemoveHeader(bndlHeader);
+                qpkt->AddHeader (bndlHeader);
+                qpkt->AddHeader (tHeader);
+            
+                success = m_packetin_queue->Enqueue (qpkt);
+                if (success){
+                  std::cout<<"Successfully enqueued packet\n";
+                }                
+
+
+                // dtnExample->PacketIn(1,1,qpkt);
 
 
               }
-              else if(result==999){
+              else if(result==255){
                 std::cout<<"ACTION: SPREAD\n";
                 m_queue->Enqueue(qpkt);
                 std::cout<<m_queue->GetNPackets()<<"\n";
@@ -2519,7 +2530,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
     for(int y=0; y<11; y++){
       // "-" means null; I tried na NULL gamitin, magulo
       // std::cout <<"Y: "<< y << "\n";
-      if(flowTableMatchEntry[y]!="-"){
+      if(flowTableMatchEntry[y]!="*"){
         //for conditions with int comparables
         if(y>0){
           // std::cout << y << " \n";
@@ -2647,52 +2658,51 @@ int Mobile::CheckMatch(std::string ichcheck[]){
   }
   if(matchFlag==0){
     std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTable.getSize() << " ACTION: something action ng wildcard" << "\n";
-    return 999;
+    return 255;
   }
   return 000;
 }
 
-void Mobile::CheckDTBQueues(){
-  // std::cout<< "PUMASOK CheckDTBQueues\n";
+void Mobile::CheckPacketInQueues(){
+  // std::cout<< "PUMASOK CheckPacketInQueues\n";
   Ptr<Packet> packet;
   uint32_t pkts=0, n=0;
   
   mypacket::APHeader apHeader;
   mypacket::BndlHeader bndlHeader;
 
-  //iterate over contents of m_dtb_queue
+  //iterate over contents of m_packetin_queue
   pkts=m_packetin_queue->GetNPackets();
   n=0;
-  // std::cout <<"CURRENT SIZE OF QUEUE" << m_dtb_queue->GetNPackets() << "\n";
+  // std::cout <<"CURRENT SIZE OF QUEUE" << m_packetin_queue->GetNPackets() << "\n";
   while(n<pkts){
-    std::cout <<"\n"<< n << " CheckDTBQueues\n";
+    std::cout <<"\n"<< n << " CheckPacketInQueues\n";
     n++;
-    std::cout<<"BEFORE dtb " <<m_packetin_queue->GetNPackets()<<"\n";
+    std::cout<<"BEFORE packetIn " <<m_packetin_queue->GetNPackets()<<"\n";
     packet = m_packetin_queue->Dequeue();
     Ptr<Packet> cpkt = packet->Copy();
     //???
     mypacket::TypeHeader tHeader(mypacket::MYTYPE_AP);
     packet->RemoveHeader(tHeader);
     packet->RemoveHeader(apHeader);
-    //teleport packet NO DIRECT TO BASE ITO HEHE
-    // dtnExample->PacketIn(1,1,cpkt);
-    std::cout<<"AFTER dtb " <<m_packetin_queue->GetNPackets()<<"\n\n";
+    dtnExample->PacketIn(1,1,cpkt);
+    std::cout<<"AFTER packetIn " <<m_packetin_queue->GetNPackets()<<"\n\n";
   }
   //recalling so it always checks m_packetin_queue
-  //if queue still contains bundles; teleport na
+  //if queue still contains bundles; packetIn na
   if(m_packetin_queue->GetNPackets()!=0){
-    Simulator::Schedule(Seconds(0.001), &Mobile::CheckDTBQueues, this);
+    Simulator::Schedule(Seconds(0.001), &Mobile::CheckPacketInQueues, this);
   }
-  //if queue is empty; not that urgent to teleport
+  //if queue is empty; not that urgent to packetIn
   else{
-    Simulator::Schedule(Seconds(0.01), &Mobile::CheckDTBQueues, this);
+    Simulator::Schedule(Seconds(0.01), &Mobile::CheckPacketInQueues, this);
   }
 }
 
 void Mobile::TriggerInsertFlow(){
-  std::cout << "\nAt time " << Simulator::Now().GetSeconds() << " INSERTING FLOW {\"10.0.0.99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"999\"}\n";
-  std::string tempArr[]={"10.0.0.99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "999"};
-  flowTable.insert(0, tempArr);
+  std::cout << "\nAt time " << Simulator::Now().GetSeconds() << " INSERTING FLOW {\"10.0.0.99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"255\"}\n";
+  std::string tempArr[]={"10.0.0.99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "255"};
+  flowTable.insertWithPriority(25, tempArr);
   // flowTable.listPrinter();
   flowTable.listPrinter();
   std::cout<<"\n";
@@ -3345,24 +3355,24 @@ int main(int argc, char **argv){
 
 ///////////////// ZMQ PART //////////////////////////
 
-  zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REP);
-  // Ptr<Socket> dst = socket;
+  // zmq::context_t context (1);
+  // zmq::socket_t socket (context, ZMQ_REP);
+  // // Ptr<Socket> dst = socket;
 
 
-  socket.bind("tcp://*:5555");
-  int recvcount = 0;
-  while (recvcount<10){
-    zmq::message_t request;
-    socket.recv(&request);
-    std::cout<<"Received Hello\n";
+  // socket.bind("tcp://*:5555");
+  // int recvcount = 0;
+  // while (recvcount<10){
+  //   zmq::message_t request;
+  //   socket.recv(&request);
+  //   std::cout<<"Received Hello\n";
 
-    sleep(1);
-    zmq::message_t reply (5);
-    memcpy (reply.data(), "World", 5);
-    socket.send(reply);
-    recvcount++;
-  }
+  //   sleep(1);
+  //   zmq::message_t reply (5);
+  //   memcpy (reply.data(), "World", 5);
+  //   socket.send(reply);
+  //   recvcount++;
+  // }
 
 //////////////// END OF ZMQ PART ///////////////////////////
 

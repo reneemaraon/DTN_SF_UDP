@@ -6,6 +6,7 @@ class strArray{
 	std::string data[12];
 	strArray* prev = NULL;
 	strArray* next = NULL;
+	int priority;
 public:
 	strArray * getNext(){
 		return next;
@@ -15,6 +16,9 @@ public:
 	};
 	std::string* getData(){
 		return data;
+	};
+	int getPriority(){
+		return priority;
 	};
 	void setNext(strArray * node){
 		next = node;
@@ -36,6 +40,9 @@ public:
 		this->data[10] = data[10];
 		this->data[11] = data[11];
 	};
+	void setPriority(int priority){
+		this->priority = priority;
+	};
 };
 
 class FlowTable{
@@ -44,7 +51,8 @@ class FlowTable{
 	int size;
 public:
 	FlowTable();
-	void insert(int index, std::string data[]);
+	// void insert(int index, std::string data[]);
+	void insert(int index, strArray* handler);
 	void remove(int index);
 	std::string* get(int index);
 	void clear();
@@ -54,6 +62,7 @@ public:
 	bool contains(std::string data[]);
 
 	void listPrinter();
+	void insertWithPriority(int priority, std::string data[]);
 };
 
 FlowTable::FlowTable() {
@@ -62,14 +71,14 @@ FlowTable::FlowTable() {
 	end = NULL;
 }
 
-void FlowTable::insert(int index, std::string data[]){
+void FlowTable::insert(int index, strArray* handler){
 	//check if index is valid
 	if(index < 0 || index > size){
 		std::cout << "Error: index is not within the size." << std::endl;
 		return;
 	}
-	strArray* handler = new strArray ;
-	handler->setData(data);
+	// strArray* handler = new strArray ;
+	// handler->setData(data);
 	if(size==0){
 
 		start = handler;
@@ -110,6 +119,43 @@ void FlowTable::insert(int index, std::string data[]){
 		handler->getNext()->setPrev(handler);
 	}
 	size++;
+}
+
+void FlowTable::insertWithPriority(int priority, std::string data[]){
+	if(priority<0){
+		std::cout << "Error: priority is negative." << std::endl;
+		return;
+	}
+	strArray* handler = new strArray ;
+	handler->setData(data);
+	handler->setPriority(priority);
+	int tempPrio;
+	//walang laman
+	if(size==0){
+		//lagay sa index 0
+		insert(0, handler);
+	}
+	//may laman
+	else{
+		strArray* looper;
+
+		looper = start;
+		int counter=0;
+		while(looper){
+			tempPrio=looper->getPriority();
+			if(priority<tempPrio){
+				insert(counter, handler);
+				break;
+			}
+			else if(counter==size-1){
+				insert(size, handler);
+				break;
+			}
+			counter++;
+			looper = looper->getNext();
+		}
+		std::cout << std::endl << std::endl;		
+	}
 }
 
 void FlowTable::remove(int index){
@@ -241,7 +287,8 @@ void FlowTable::listPrinter(){
 	int counter=0;
 	while(printer){
 		std::string* temp=printer->getData();
-		std::cout << counter << ": [" << temp[0] << ", " << temp[1] << ", " << temp[2] << ", " << temp[3] << ", " << temp[4] << ", " << temp[5] << ", " << temp[6] << ", " << temp[7] << ", " << temp[8] << ", " << temp[9] << ", " << temp[10] << ", " << temp[11] << "]\n";
+		int prio=printer->getPriority();
+		std::cout << counter << ": [" << temp[0] << ", " << temp[1] << ", " << temp[2] << ", " << temp[3] << ", " << temp[4] << ", " << temp[5] << ", " << temp[6] << ", " << temp[7] << ", " << temp[8] << ", " << temp[9] << ", " << temp[10] << ", " << temp[11] << "]; Priority: "<< prio <<"\n";
 		counter++;
 		printer = printer->getNext();
 	}

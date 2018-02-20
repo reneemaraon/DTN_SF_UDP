@@ -1,12 +1,3 @@
-Received Hello
-Received Hello
-Received Hello
-Received Hello
-Received Hello
-Received Hello
-Received Hello
-Received Hello
-Received Hello
 DTNEX
 CONFIG
 RUN
@@ -16,25 +7,29 @@ INSTALLINTERNETSTACK
 INSTALLAPP
 MOBILE: 
 DTNAPP
-0: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]
-1: [10.0.0.2, -, 0, -, -, -, -, -, -, -, -, 2]
-2: [10.0.0.3, -, -, -, -, -, -, -, -, -, -, 1]
 
 
-node 0 getnode 0x183b100 dst-> 0x1916970 10.0.0.1 source-> 0x1916b80
+
+
+0: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+1: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+2: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
+node 0 getnode 0x21a8e40 dst-> 0x22848d0 10.0.0.1 source-> 0x2284ae0
 TRIGGERRRRR
 At time 0 scheduled insert of flow
 SENSOR: 
 DTNAPP
 seconds interval10
-node 1 getnode 0x183b4d0 dst-> 0x19182b0 10.0.0.2 source-> 0x19186d0
+node 1 getnode 0x21a93b0 dst-> 0x2286210 10.0.0.2 source-> 0x2286630
 SENSOR: 
 DTNAPP
 seconds interval5
-node 2 getnode 0x183ae70 dst-> 0x19198b0 10.0.0.3 source-> 0x1919fa0
+node 2 getnode 0x21a9140 dst-> 0x2287870 10.0.0.3 source-> 0x2287f20
 BASE: 
 DTNAPP
-node 3 getnode 0x183af60 dst-> 0x191b670 10.0.0.4 source-> 0x191bc80
+node 3 getnode 0x21a9230 dst-> 0x22895f0 10.0.0.4 source-> 0x2289c00
 POPULATEARPCACHE
 MOBILE START APP
 0.5 0: 0 0 863.667 1008.67
@@ -45,11 +40,13 @@ SENSOR START APP
 BASE START APP
 0.50003 3: 0 0 1249.33 542.667
 
-At time 1 INSERTING FLOW {"10.0.0.99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "999"}
-0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 999]
-1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]
-2: [10.0.0.2, -, 0, -, -, -, -, -, -, -, -, 2]
-3: [10.0.0.3, -, -, -, -, -, -, -, -, -, -, 1]
+At time 1 INSERTING FLOW {"10.0.0.99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "255"}
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+3: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
 
 
 
@@ -1251,16 +1248,52 @@ At time 1 INSERTING FLOW {"10.0.0.99", "99", "99", "99", "99", "99", "99", "99",
 299.5 3: 0 0 1249.3 542.67
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
+
+0 CheckPacketInQueues
+BEFORE packetIn 5
+AFTER packetIn 4
+
+
+1 CheckPacketInQueues
+BEFORE packetIn 4
+AFTER packetIn 3
+
+
+2 CheckPacketInQueues
+BEFORE packetIn 3
+AFTER packetIn 2
+
+
+3 CheckPacketInQueues
+BEFORE packetIn 2
+AFTER packetIn 1
+
+
+4 CheckPacketInQueues
+BEFORE packetIn 1
+AFTER packetIn 0
+
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
+
+0 CheckPacketInQueues
+BEFORE packetIn 1
+AFTER packetIn 0
+
 300.5 0: 0 0 971.25 1053.4
 300.5 1: 0 1 1053.3 952.67
 300.5 2: 12 0 1100 726
@@ -1463,6 +1496,12 @@ ACTION: PACKET IN
 349.5 3: 0 0 1249.3 542.67
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
+
+0 CheckPacketInQueues
+BEFORE packetIn 1
+AFTER packetIn 0
+
 350.5 0: 0 0 1092.4 1041
 350.5 1: 0 1 1053.3 952.67
 350.5 2: 14 0 1100 726
@@ -1665,6 +1704,12 @@ ACTION: PACKET IN
 399.5 3: 0 0 1249.3 542.67
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
+
+0 CheckPacketInQueues
+BEFORE packetIn 1
+AFTER packetIn 0
+
 400.5 0: 0 0 1100.7 956.72
 400.5 1: 0 1 1053.3 952.67
 400.5 2: 16 0 1100 726
@@ -1867,6 +1912,12 @@ ACTION: PACKET IN
 449.5 3: 0 0 1249.3 542.67
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
+
+0 CheckPacketInQueues
+BEFORE packetIn 1
+AFTER packetIn 0
+
 450.5 0: 0 0 1104.8 894.52
 450.5 1: 0 1 1053.3 952.67
 450.5 2: 18 0 1100 726
@@ -2069,6 +2120,12 @@ ACTION: PACKET IN
 499.5 3: 0 0 1249.3 542.67
 NIRETURN: 2
 ACTION: PACKET IN
+Successfully enqueued packet
+
+0 CheckPacketInQueues
+BEFORE packetIn 1
+AFTER packetIn 0
+
 500.5 0: 0 0 1098.4 876.39
 500.5 1: 0 1 1053.3 952.67
 500.5 2: 20 0 1100 726
