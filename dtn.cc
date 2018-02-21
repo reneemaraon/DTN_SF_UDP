@@ -356,7 +356,12 @@ void DtnExample::InstallApplications(){
 
   TypeId udp_tid = TypeId::LookupByName("ns3::UdpSocketFactory");
 
+  zmq::context_t context (1);
+  zmq::socket_t socket (context, ZMQ_REP);
+  // Ptr<Socket> dst = socket;
 
+
+  socket.bind("tcp://*:5555");
   //set up base
 
   for(uint32_t i = 0; i < nodeNum; ++i){ 
@@ -445,6 +450,11 @@ void DtnExample::InstallApplications(){
       // Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
       std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
       app->ScheduleTx();
+
+
+
+    
+
     }
     // else if(i==nodeNum-1){
     else if(i==3){
@@ -480,6 +490,23 @@ void DtnExample::InstallApplications(){
 
     }
   }
+          ///////////////// ZMQ PART //////////////////////////
+
+
+  int recvcount = 1;
+  while (recvcount<10){
+    zmq::message_t request;
+    socket.recv(&request);
+    std::cout<<"Received Hello\n";
+
+    sleep(1);
+    zmq::message_t reply (5);
+    memcpy (reply.data(), "World", 5);
+    socket.send(reply);
+    recvcount++;
+  }
+
+  //////////////// END OF ZMQ PART ///////////////////////////
 }
 
 void DtnExample::PopulateArpCache(){ 
@@ -3343,28 +3370,7 @@ void Base::ReceiveHello(Ptr<Socket> socket){
 int main(int argc, char **argv){
   //LogComponentEnable("Ns2MobilityHelper",LOG_LEVEL_DEBUG);
 
-///////////////// ZMQ PART //////////////////////////
 
-  zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REP);
-  // Ptr<Socket> dst = socket;
-
-
-  socket.bind("tcp://*:5555");
-  int recvcount = 0;
-  while (recvcount<10){
-    zmq::message_t request;
-    socket.recv(&request);
-    std::cout<<"Received Hello\n";
-
-    sleep(1);
-    zmq::message_t reply (5);
-    memcpy (reply.data(), "World", 5);
-    socket.send(reply);
-    recvcount++;
-  }
-
-//////////////// END OF ZMQ PART ///////////////////////////
 
   DtnExample test;
   if(! test.Configure(argc, argv)) 

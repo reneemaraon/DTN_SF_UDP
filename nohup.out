@@ -1,0 +1,25 @@
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[660/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (5.296s)
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[  3/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (5.475s)
+terminate called after throwing an instance of 'zmq::error_t'
+  what():  Address already in use
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=4', '--duration=800.0'] terminated with signal SIGIOT. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+awk: line 1: syntax error at or near }
+Command ['/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '--seed=12345671', '--traceFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/newdst.tcl', '--logFile=/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/ns-2.log', '--nodeNum=4', '--duration=800.0'] terminated with signal SIGKILL. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+grep: dtn.txt: No such file or directory
+awk: line 1: syntax error at or near }
+grep: dtn.txt: No such file or directory
+mv: cannot stat ‘dtn.txt’: No such file or directory
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[658/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (5.338s)
+awk: line 1: syntax error at or near }
