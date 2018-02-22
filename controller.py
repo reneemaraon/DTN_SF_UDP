@@ -13,7 +13,7 @@ while True:
 	print ("Received flow request: %s" % message)
 	
 	time.sleep(1)
-	flow = {"priority": "134","ipAdd":"10.0.0.2", "rule1":"*", "rule2":"*", "rule3":"*", "rule4":"*", "rule5":"*", "rule6":"*", "rule7":"*", "rule8":"*", "rule9":"*", "rule10":"*", "rule11":"*"}
+	flow = {"priority": "134","ipAdd":"10.0.0.99", "rule1":"*", "rule2":"*", "rule3":"*", "rule4":"*", "rule5":"*", "rule6":"*", "rule7":"*", "rule8":"*", "rule9":"*", "rule10":"*", "action":"1"}
 	flow["rule1"] = str(count)
 	socket.send_json(flow)
 	count+=1;

@@ -458,7 +458,7 @@ void DtnExample::InstallApplications(){
       app->ScheduleTx();
 
       int recvcount = 1;
-      while (recvcount<2){
+      while (recvcount<3){
         zmq::message_t request(5);
         memcpy(request.data(), "Hello", 5);
         std::cout <<"Sending Hello "<<recvcount<<"...\n";
@@ -471,7 +471,22 @@ void DtnExample::InstallApplications(){
         // std::cout<<rpl<<"\n";
         json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
         std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
-        
+
+        std::string tempArr[] = { json_object_get_string(json_object_object_get(jstring,"ipAdd")),
+            json_object_get_string(json_object_object_get(jstring,"rule1")),
+            json_object_get_string(json_object_object_get(jstring,"rule2")),
+            json_object_get_string(json_object_object_get(jstring,"rule3")),
+            json_object_get_string(json_object_object_get(jstring,"rule4")),
+            json_object_get_string(json_object_object_get(jstring,"rule5")),
+            json_object_get_string(json_object_object_get(jstring,"rule6")),
+            json_object_get_string(json_object_object_get(jstring,"rule7")),
+            json_object_get_string(json_object_object_get(jstring,"rule8")),
+            json_object_get_string(json_object_object_get(jstring,"rule9")),
+            json_object_get_string(json_object_object_get(jstring,"rule10")),
+            json_object_get_string(json_object_object_get(jstring,"action"))
+          };
+        app->flowTable.insertWithPriority(50+recvcount, tempArr);
+
 
         recvcount++;
       }
@@ -530,7 +545,7 @@ void DtnExample::InstallApplications(){
     // std::cout<<rpl<<"\n";
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
     std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
-    
+
 
     recvcount++;
   }
