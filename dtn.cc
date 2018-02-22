@@ -360,11 +360,14 @@ void DtnExample::InstallApplications(){
   TypeId udp_tid = TypeId::LookupByName("ns3::UdpSocketFactory");
 
   zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REP);
+  zmq::socket_t socket (context, ZMQ_REQ);
   // Ptr<Socket> dst = socket;
 
 
-  socket.bind("tcp://*:5555");
+  socket.connect("tcp://localhost:5555");
+  
+
+
   //set up base
 
   for(uint32_t i = 0; i < nodeNum; ++i){ 
@@ -454,7 +457,24 @@ void DtnExample::InstallApplications(){
       std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
       app->ScheduleTx();
 
+      int recvcount = 1;
+      while (recvcount<2){
+        zmq::message_t request(5);
+        memcpy(request.data(), "Hello", 5);
+        std::cout <<"Sending Hello "<<recvcount<<"...\n";
+        socket.send(request);
 
+        zmq::message_t reply;
+        socket.recv(&reply);
+        // // std::cout<<reply<<"Received World \n";    
+        // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
+        // std::cout<<rpl<<"\n";
+        json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+        std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
+        
+
+        recvcount++;
+      }
 
     
 
@@ -497,15 +517,21 @@ void DtnExample::InstallApplications(){
 
 
   int recvcount = 1;
-  while (recvcount<10){
-    zmq::message_t request;
-    socket.recv(&request);
-    std::cout<<"Received Hello\n";
+  while (recvcount<2){
+    zmq::message_t request(5);
+    memcpy(request.data(), "Hello", 5);
+    std::cout <<"Sending Hello "<<recvcount<<"...\n";
+    socket.send(request);
 
-    sleep(1);
-    zmq::message_t reply (5);
-    memcpy (reply.data(), "World", 5);
-    socket.send(reply);
+    zmq::message_t reply;
+    socket.recv(&reply);
+    // // std::cout<<reply<<"Received World \n";    
+    // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
+    // std::cout<<rpl<<"\n";
+    json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+    std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
+    
+
     recvcount++;
   }
 

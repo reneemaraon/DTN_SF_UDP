@@ -7,4 +7,4 @@ def build(bld):
     obj.source = ['dtn.cc','mypacket.cc']
     obj.env.append_value("CXXFLAGS","-I/usr/include")
     obj.env.append_value("LINKFLAGS", ["-L/usr/lib"])
-    obj.env.append_value("LIB",["zmq"])
+    obj.env.append_value("LIB",["zmq","json"])
