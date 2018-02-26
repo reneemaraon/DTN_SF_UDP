@@ -17,38 +17,20 @@ DTNAPP
 2: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
 
 
-node 0 getnode 0xa20590 dst-> 0xb05970 10.0.0.1 source-> 0xb05b60
+node 0 getnode 0x17f4590 dst-> 0x18cf8c0 10.0.0.1 source-> 0x18cfad0
 TRIGGERRRRR
 At time 0 scheduled insert of flow
 SENSOR: 
 DTNAPP
 seconds interval10
-node 1 getnode 0xa20430 dst-> 0xb07290 10.0.0.2 source-> 0xb076b0
+node 1 getnode 0x17f4430 dst-> 0x18d1200 10.0.0.2 source-> 0x18d1620
 SENSOR: 
 DTNAPP
 seconds interval5
-node 2 getnode 0xa20140 dst-> 0xb08890 10.0.0.3 source-> 0xb08f80
+node 2 getnode 0x17f4140 dst-> 0x18d2860 10.0.0.3 source-> 0x18d2f10
 BASE: 
 DTNAPP
-node 3 getnode 0xa20260 dst-> 0xb0a650 10.0.0.4 source-> 0xb0ac60
-Sending Hello 1...
-28
-Sending Hello 2...
-29
-Sending Hello 3...
-30
-Sending Hello 4...
-31
-Sending Hello 5...
-32
-Sending Hello 6...
-33
-Sending Hello 7...
-34
-Sending Hello 8...
-35
-Sending Hello 9...
-36
+node 3 getnode 0x17f4260 dst-> 0x18d45e0 10.0.0.4 source-> 0x18d4bf0
 POPULATEARPCACHE
 Starting simulation for 800 s, seed value 12345671
 MOBILE START APP
@@ -1301,30 +1283,95 @@ Successfully enqueued packet
 0 CheckPacketInQueues
 BEFORE packetIn 5
 received at magical land bundle of sequence 999
+Sending Bundle... 
+21
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+4: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 4
 
 
 1 CheckPacketInQueues
 BEFORE packetIn 4
 received at magical land bundle of sequence 2002
+Sending Bundle... 
+22
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+5: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 3
 
 
 2 CheckPacketInQueues
 BEFORE packetIn 3
 received at magical land bundle of sequence 3005
+Sending Bundle... 
+23
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+6: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 2
 
 
 3 CheckPacketInQueues
 BEFORE packetIn 2
 received at magical land bundle of sequence 4008
+Sending Bundle... 
+24
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+7: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 1
 
 
 4 CheckPacketInQueues
 BEFORE packetIn 1
 received at magical land bundle of sequence 5011
+Sending Bundle... 
+25
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.99, 25, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+7: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+8: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 0
 
 At time 300 created bundle with sequence number 6051 from 10.0.0.2 to 10.0.0.4
@@ -1336,6 +1383,22 @@ Successfully enqueued packet
 0 CheckPacketInQueues
 BEFORE packetIn 1
 received at magical land bundle of sequence 6051
+Sending Bundle... 
+26
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.99, 25, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+7: [10.0.0.99, 26, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+8: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+9: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 0
 
 300.5 0: 0 0 971.25 1053.4
@@ -1548,6 +1611,23 @@ Successfully enqueued packet
 0 CheckPacketInQueues
 BEFORE packetIn 1
 received at magical land bundle of sequence 7061
+Sending Bundle... 
+27
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.99, 25, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+7: [10.0.0.99, 26, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+8: [10.0.0.99, 27, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+9: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+10: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 0
 
 350.5 0: 0 0 1092.4 1041
@@ -1760,6 +1840,24 @@ Successfully enqueued packet
 0 CheckPacketInQueues
 BEFORE packetIn 1
 received at magical land bundle of sequence 8071
+Sending Bundle... 
+28
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.99, 25, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+7: [10.0.0.99, 26, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+8: [10.0.0.99, 27, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+9: [10.0.0.99, 28, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+10: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+11: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 0
 
 400.5 0: 0 0 1100.7 956.72
@@ -1972,6 +2070,25 @@ Successfully enqueued packet
 0 CheckPacketInQueues
 BEFORE packetIn 1
 received at magical land bundle of sequence 9081
+Sending Bundle... 
+29
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.99, 25, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+7: [10.0.0.99, 26, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+8: [10.0.0.99, 27, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+9: [10.0.0.99, 28, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+10: [10.0.0.99, 29, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+11: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+12: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 0
 
 450.5 0: 0 0 1104.8 894.52
@@ -2184,6 +2301,26 @@ Successfully enqueued packet
 0 CheckPacketInQueues
 BEFORE packetIn 1
 received at magical land bundle of sequence 10091
+Sending Bundle... 
+30
+
+
+0: [10.0.0.99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 255]; Priority: 25
+1: [10.0.0.8, 50, 300, 101, 102, 101, 102, 101, 102, 101, 102, 0]; Priority: 50
+2: [10.0.0.99, 21, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+3: [10.0.0.99, 22, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+4: [10.0.0.99, 23, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+5: [10.0.0.99, 24, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+6: [10.0.0.99, 25, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+7: [10.0.0.99, 26, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+8: [10.0.0.99, 27, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+9: [10.0.0.99, 28, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+10: [10.0.0.99, 29, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+11: [10.0.0.99, 30, *, *, *, *, *, *, *, *, *, 1]; Priority: 51
+12: [10.0.0.2, *, 0, *, *, *, *, *, *, *, *, 2]; Priority: 100
+13: [10.0.0.3, *, *, *, *, *, *, *, *, *, *, 1]; Priority: 150
+
+
 AFTER packetIn 0
 
 500.5 0: 0 0 1098.4 876.39

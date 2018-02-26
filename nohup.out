@@ -1,30 +1,51 @@
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
-examples/DTN_SF_UDP/dtn.cc.1.o: In function `DtnExample::InstallApplications()':
-/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/../examples/DTN_SF_UDP/dtn.cc:514: undefined reference to `json_tokener_parse'
-/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/../examples/DTN_SF_UDP/dtn.cc:515: undefined reference to `json_object_object_get'
-/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/../examples/DTN_SF_UDP/dtn.cc:515: undefined reference to `json_object_get_string'
-collect2: error: ld returned 1 exit status
+[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+../examples/DTN_SF_UDP/dtn.cc: In member function ‘void DtnExample::InstallApplications()’:
+../examples/DTN_SF_UDP/dtn.cc:412:7: error: ‘app1’ was not declared in this scope
+       app1 = CreateObject<Sensor>();  
+       ^
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
 Build failed
  -> task in 'dtn_sf_udp' failed (exit status 1): 
-	{task 140464022294096: cxxprogram dtn.cc.1.o,mypacket.cc.1.o -> ns3.22-dtn_sf_udp-debug}
-['/usr/bin/g++', '-L/usr/lib', '-pthread', '-pthread', 'examples/DTN_SF_UDP/dtn.cc.1.o', 'examples/DTN_SF_UDP/mypacket.cc.1.o', '-o', '/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug', '-Wl,-Bstatic', '-Wl,-Bdynamic', '-Wl,--no-as-needed', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-L.', '-lzmq', '-lns3.22-netanim-debug', '-lns3.22-uan-debug', '-lns3.22-energy-debug', '-lns3.22-wifi-debug', '-lns3.22-wimax-debug', '-lns3.22-lte-debug', '-lns3.22-spectrum-debug', '-lns3.22-buildings-debug', '-lns3.22-propagation-debug', '-lns3.22-mobility-debug', '-lns3.22-applications-debug', '-lns3.22-internet-debug', '-lns3.22-bridge-debug', '-lns3.22-point-to-point-debug', '-lns3.22-mpi-debug', '-lns3.22-csma-debug', '-lns3.22-config-store-debug', '-lns3.22-virtual-net-device-debug', '-lns3.22-fd-net-device-debug', '-lns3.22-network-debug', '-lns3.22-stats-debug', '-lns3.22-antenna-debug', '-lns3.22-core-debug', '-lrt', '-lgsl', '-lgslcblas', '-lm', '-lsqlite3', '-lgtk-x11-2.0', '-lgdk-x11-2.0', '-latk-1.0', '-lgio-2.0', '-lpangoft2-1.0', '-lpangocairo-1.0', '-lgdk_pixbuf-2.0', '-lcairo', '-lpango-1.0', '-lfontconfig', '-lgobject-2.0', '-lglib-2.0', '-lfreetype', '-lxml2']
+	{task 139848433499536: cxx dtn.cc -> dtn.cc.1.o}
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-Wstrict-aliasing', '-I/usr/include', '-pthread', '-pthread', '-I.', '-I..', '-I/usr/include/gtk-2.0', '-I/usr/lib/x86_64-linux-gnu/gtk-2.0/include', '-I/usr/include/atk-1.0', '-I/usr/include/cairo', '-I/usr/include/gdk-pixbuf-2.0', '-I/usr/include/pango-1.0', '-I/usr/include/gio-unix-2.0', '-I/usr/include/freetype2', '-I/usr/include/glib-2.0', '-I/usr/lib/x86_64-linux-gnu/glib-2.0/include', '-I/usr/include/pixman-1', '-I/usr/include/libpng12', '-I/usr/include/harfbuzz', '-I/usr/include/libxml2', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../examples/DTN_SF_UDP/dtn.cc', '-c', '-o', 'examples/DTN_SF_UDP/dtn.cc.1.o']
 awk: line 1: syntax error at or near }
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[658/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
 [682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (1.161s)
+'build' finished successfully (7.842s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[659/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (7.401s)
 awk: line 1: syntax error at or near }
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
 [  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
 [682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (4.808s)
+'build' finished successfully (4.871s)
 awk: line 1: syntax error at or near }
 Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[657/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+../examples/DTN_SF_UDP/dtn.cc: In member function ‘void DtnExample::PacketIn(int, int, ns3::Ptr<ns3::Packet>)’:
+../examples/DTN_SF_UDP/dtn.cc:296:32: error: ‘class ns3::Ptr<ns3::Packet>’ has no member named ‘GetSize’
+     zmq::message_t request(pkt.GetSize());
+                                ^
+../examples/DTN_SF_UDP/dtn.cc:297:37: error: ‘class ns3::Ptr<ns3::Packet>’ has no member named ‘GetSize’
+     memcpy(request.data(), pkt, pkt.GetSize());
+                                     ^
+Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+Build failed
+ -> task in 'dtn_sf_udp' failed (exit status 1): 
+	{task 140700990369168: cxx dtn.cc -> dtn.cc.1.o}
+['/usr/bin/g++', '-O0', '-ggdb', '-g3', '-Wall', '-Werror', '-Wno-error=deprecated-declarations', '-fstrict-aliasing', '-Wstrict-aliasing', '-I/usr/include', '-pthread', '-pthread', '-I.', '-I..', '-I/usr/include/gtk-2.0', '-I/usr/lib/x86_64-linux-gnu/gtk-2.0/include', '-I/usr/include/atk-1.0', '-I/usr/include/cairo', '-I/usr/include/gdk-pixbuf-2.0', '-I/usr/include/pango-1.0', '-I/usr/include/gio-unix-2.0', '-I/usr/include/freetype2', '-I/usr/include/glib-2.0', '-I/usr/lib/x86_64-linux-gnu/glib-2.0/include', '-I/usr/include/pixman-1', '-I/usr/include/libpng12', '-I/usr/include/harfbuzz', '-I/usr/include/libxml2', '-DNS3_ASSERT_ENABLE', '-DNS3_LOG_ENABLE', '-DHAVE_SYS_IOCTL_H=1', '-DHAVE_IF_NETS_H=1', '-DHAVE_NET_ETHERNET_H=1', '-DHAVE_PACKET_H=1', '-DHAVE_SQLITE3=1', '-DHAVE_IF_TUN_H=1', '-DHAVE_GSL=1', '../examples/DTN_SF_UDP/dtn.cc', '-c', '-o', 'examples/DTN_SF_UDP/dtn.cc.1.o']
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
+[658/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
 [682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
 Waf: Leaving directory `/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/build'
-'build' finished successfully (5.113s)
+'build' finished successfully (4.810s)
 awk: line 1: syntax error at or near }

@@ -195,6 +195,7 @@ class Mobile: public DtnApp{
 
     FlowTable flowTable;
 };
+Ptr<Mobile> app;
 
 //////////////////////////////BASE CLASS DEC//////////////////////////////
 class Base: public DtnApp{
@@ -283,6 +284,46 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt){
   cpkt->RemoveHeader(bndlHeader);
   uint32_t seqno = bndlHeader.GetOriginSeqno();
   std::cout<<"received at magical land bundle of sequence "<<seqno<<"\n";
+
+  zmq::context_t context (1);
+  zmq::socket_t socket (context, ZMQ_REQ);
+  // Ptr<Socket> dst = socket;
+
+////WORKING HERE
+  socket.connect("tcp://localhost:5555");
+  int recvcount = 1;
+  while (recvcount<2){
+    zmq::message_t request(pkt->GetSize());
+    memcpy(request.data(), pkt, pkt->GetSize());
+    std::cout <<"Sending Bundle... \n";
+    socket.send(request);
+
+    zmq::message_t reply;
+    socket.recv(&reply);
+    // // std::cout<<reply<<"Received World \n";    
+    // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
+    // std::cout<<rpl<<"\n";
+    json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+    std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
+
+    std::string tempArr[] = { json_object_get_string(json_object_object_get(jstring,"ipAdd")),
+        json_object_get_string(json_object_object_get(jstring,"rule1")),
+        json_object_get_string(json_object_object_get(jstring,"rule2")),
+        json_object_get_string(json_object_object_get(jstring,"rule3")),
+        json_object_get_string(json_object_object_get(jstring,"rule4")),
+        json_object_get_string(json_object_object_get(jstring,"rule5")),
+        json_object_get_string(json_object_object_get(jstring,"rule6")),
+        json_object_get_string(json_object_object_get(jstring,"rule7")),
+        json_object_get_string(json_object_object_get(jstring,"rule8")),
+        json_object_get_string(json_object_object_get(jstring,"rule9")),
+        json_object_get_string(json_object_object_get(jstring,"rule10")),
+        json_object_get_string(json_object_object_get(jstring,"action"))
+      };
+    app->flowTable.insertWithPriority(50+recvcount, tempArr);
+    app->flowTable.listPrinter();
+
+    recvcount++;
+  }
   // std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
   // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
   // basenode->ReceiveTeleport(pkt);
@@ -359,13 +400,6 @@ void DtnExample::InstallApplications(){
 
   TypeId udp_tid = TypeId::LookupByName("ns3::UdpSocketFactory");
 
-  zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REQ);
-  // Ptr<Socket> dst = socket;
-
-
-  socket.connect("tcp://localhost:5555");
-  
 
 
   //set up base
@@ -374,10 +408,10 @@ void DtnExample::InstallApplications(){
     // if(i<=nodeNum-3){
     if(i==1 || i==2){
       std::cout<<"SENSOR: "<<"\n";
-      Ptr<Sensor> app;
-      app = CreateObject<Sensor>();  
-      app->SensorSetup(nodes.Get(i), this);
-      app->destinationNode=3;
+      Ptr<Sensor> app1;
+      app1 = CreateObject<Sensor>();  
+      app1->SensorSetup(nodes.Get(i), this);
+      app1->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
       bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
@@ -385,10 +419,10 @@ void DtnExample::InstallApplications(){
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
-            app->bufferCount=0;
-            app->entryLength = entrySize;
-            app->secondsInterval = secondsIntervalinput;
-            app->bufferLength = numOfEntries;
+            app1->bufferCount=0;
+            app1->entryLength = entrySize;
+            app1->secondsInterval = secondsIntervalinput;
+            app1->bufferLength = numOfEntries;
           std::cout<<"seconds interval" <<secondsIntervalinput<<"\n";
           }
         }
@@ -399,15 +433,15 @@ void DtnExample::InstallApplications(){
       bufferInput.close();
 
 
-      nodes.Get(i)->AddApplication(app);
-      app->SetStartTime(Seconds(0.5 + 0.00001*i));
-      app->SetStopTime(Seconds(5000.));
+      nodes.Get(i)->AddApplication(app1);
+      app1->SetStartTime(Seconds(0.5 + 0.00001*i));
+      app1->SetStopTime(Seconds(5000.));
       Ptr<Socket> dst = Socket::CreateSocket(nodes.Get(i), udp_tid);
       char dststring[1024]="";
       sprintf(dststring,"10.0.0.%d",(i + 1));
       InetSocketAddress dstlocaladdr(Ipv4Address(dststring), 50000);
       dst->Bind(dstlocaladdr);
-      dst->SetRecvCallback(MakeCallback(&DtnApp::ReceiveBundle, app));
+      dst->SetRecvCallback(MakeCallback(&DtnApp::ReceiveBundle, app1));
       
       Ptr<Socket> source = Socket::CreateSocket(nodes.Get(i), udp_tid);
       InetSocketAddress remote(Ipv4Address("255.255.255.255"), 80);
@@ -415,17 +449,17 @@ void DtnExample::InstallApplications(){
       source->Connect(remote);
       std::cout<< "node "<< i <<" getnode "<< dst->GetNode()<< " dst-> "<< dst <<" "<< dststring<< " source-> " <<source<<"\n";
 
-      app->GenerateData(1);
+      app1->GenerateData(1);
 
       Ptr<Socket> recvSink = Socket::CreateSocket(nodes.Get(i), udp_tid);
       InetSocketAddress local(Ipv4Address::GetAny(), 80);
       recvSink->Bind(local);
-      recvSink->SetRecvCallback(MakeCallback(&Sensor::ReceiveHello, app));
+      recvSink->SetRecvCallback(MakeCallback(&Sensor::ReceiveHello, app1));
     }
     // else if(i==nodeNum-2){
     else if(i==0){
       std::cout<<"MOBILE: "<<"\n";
-      Ptr<Mobile> app;
+      // Ptr<Mobile> app;
       app = CreateObject<Mobile>();  
       app->MobileSetup(nodes.Get(i), this);
 
@@ -457,39 +491,7 @@ void DtnExample::InstallApplications(){
       std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
       app->ScheduleTx();
 
-      int recvcount = 1;
-      while (recvcount<3){
-        zmq::message_t request(5);
-        memcpy(request.data(), "Hello", 5);
-        std::cout <<"Sending Hello "<<recvcount<<"...\n";
-        socket.send(request);
-
-        zmq::message_t reply;
-        socket.recv(&reply);
-        // // std::cout<<reply<<"Received World \n";    
-        // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
-        // std::cout<<rpl<<"\n";
-        json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
-        std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
-
-        std::string tempArr[] = { json_object_get_string(json_object_object_get(jstring,"ipAdd")),
-            json_object_get_string(json_object_object_get(jstring,"rule1")),
-            json_object_get_string(json_object_object_get(jstring,"rule2")),
-            json_object_get_string(json_object_object_get(jstring,"rule3")),
-            json_object_get_string(json_object_object_get(jstring,"rule4")),
-            json_object_get_string(json_object_object_get(jstring,"rule5")),
-            json_object_get_string(json_object_object_get(jstring,"rule6")),
-            json_object_get_string(json_object_object_get(jstring,"rule7")),
-            json_object_get_string(json_object_object_get(jstring,"rule8")),
-            json_object_get_string(json_object_object_get(jstring,"rule9")),
-            json_object_get_string(json_object_object_get(jstring,"rule10")),
-            json_object_get_string(json_object_object_get(jstring,"action"))
-          };
-        app->flowTable.insertWithPriority(50+recvcount, tempArr);
-
-
-        recvcount++;
-      }
+      
 
     
 
@@ -531,26 +533,26 @@ void DtnExample::InstallApplications(){
           ///////////////// ZMQ PART //////////////////////////
 
 
-  int recvcount = 1;
-  while (recvcount<2){
-    zmq::message_t request(5);
-    memcpy(request.data(), "Hello", 5);
-    std::cout <<"Sending Hello "<<recvcount<<"...\n";
-    socket.send(request);
+  // int recvcount = 1;
+  // while (recvcount<2){
+  //   zmq::message_t request(5);
+  //   memcpy(request.data(), "Hello", 5);
+  //   std::cout <<"Sending Hello "<<recvcount<<"...\n";
+  //   socket.send(request);
 
-    zmq::message_t reply;
-    socket.recv(&reply);
-    // // std::cout<<reply<<"Received World \n";    
-    // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
-    // std::cout<<rpl<<"\n";
-    json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
-    std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
+  //   zmq::message_t reply;
+  //   socket.recv(&reply);
+  //   // // std::cout<<reply<<"Received World \n";    
+  //   // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
+  //   // std::cout<<rpl<<"\n";
+  //   json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+  //   std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
 
 
-    recvcount++;
-  }
+  //   recvcount++;
+  // }
 
-  //////////////// END OF ZMQ PART ///////////////////////////
+  // //////////////// END OF ZMQ PART ///////////////////////////
 }
 
 void DtnExample::PopulateArpCache(){ 
