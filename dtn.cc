@@ -58,7 +58,7 @@ public:
   bool Configure(int argc, char **argv);
   void Run();
   uint32_t GetNodeNum();
-  void PacketIn(int locx, int locy, Ptr<Packet>);
+  void PacketIn(int locx, int locy, Ptr<Packet>, int nodeId);
   // void Report(std::ostream & os);
 
   std::string traceFile;
@@ -277,7 +277,7 @@ void DtnExample::Run(){
 // void DtnExample::Report(std::ostream &){ 
 // }
 
-void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt){
+void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   Ptr<Packet> cpkt = pkt->Copy();
   mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
   mypacket::BndlHeader bndlHeader;
@@ -320,8 +320,8 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt){
         json_object_get_string(json_object_object_get(jstring,"rule10")),
         json_object_get_string(json_object_object_get(jstring,"action"))
       };
-    app[0]->flowTable.insertWithPriority(50+recvcount, tempArr);
-    app[0]->flowTable.listPrinter();
+    app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
+    app[nodeId]->flowTable.listPrinter();
 
     recvcount++;
   }
@@ -2763,7 +2763,7 @@ void Mobile::CheckPacketInQueues(){
     mypacket::TypeHeader tHeader(mypacket::MYTYPE_AP);
     packet->RemoveHeader(tHeader);
     packet->RemoveHeader(apHeader);
-    dtnExample->PacketIn(1,1,cpkt);
+    dtnExample->PacketIn(1,1,cpkt,m_node->GetId());
     std::cout<<"AFTER packetIn " <<m_packetin_queue->GetNPackets()<<"\n\n";
   }
   //recalling so it always checks m_packetin_queue
