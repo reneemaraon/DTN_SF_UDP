@@ -57,6 +57,7 @@ public:
   DtnExample();
   bool Configure(int argc, char **argv);
   void Run();
+  uint32_t GetNodeNum();
   void PacketIn(int locx, int locy, Ptr<Packet>);
   // void Report(std::ostream & os);
 
@@ -195,7 +196,7 @@ class Mobile: public DtnApp{
 
     FlowTable flowTable;
 };
-Ptr<Mobile> app;
+Ptr<Mobile> *app;
 
 //////////////////////////////BASE CLASS DEC//////////////////////////////
 class Base: public DtnApp{
@@ -289,7 +290,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt){
   zmq::socket_t socket (context, ZMQ_REQ);
   // Ptr<Socket> dst = socket;
 
-////WORKING HERE
+  ////WORKING HERE
   socket.connect("tcp://localhost:5555");
   int recvcount = 1;
   while (recvcount<2){
@@ -319,14 +320,18 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt){
         json_object_get_string(json_object_object_get(jstring,"rule10")),
         json_object_get_string(json_object_object_get(jstring,"action"))
       };
-    app->flowTable.insertWithPriority(50+recvcount, tempArr);
-    app->flowTable.listPrinter();
+    app[0]->flowTable.insertWithPriority(50+recvcount, tempArr);
+    app[0]->flowTable.listPrinter();
 
     recvcount++;
   }
   // std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
   // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
   // basenode->ReceiveTeleport(pkt);
+}
+
+uint32_t DtnExample::GetNodeNum(){
+  return nodeNum;
 }
 
 void DtnExample::CreateNodes(){
@@ -397,7 +402,7 @@ void DtnExample::InstallApplications(){
   uint32_t entrySize;
   float secondsIntervalinput;
 
-
+  app = new Ptr<Mobile>[nodeNum];
   TypeId udp_tid = TypeId::LookupByName("ns3::UdpSocketFactory");
 
 
@@ -460,18 +465,18 @@ void DtnExample::InstallApplications(){
     else if(i==0){
       std::cout<<"MOBILE: "<<"\n";
       // Ptr<Mobile> app;
-      app = CreateObject<Mobile>();  
-      app->MobileSetup(nodes.Get(i), this);
+      app[i] = CreateObject<Mobile>();  
+      app[i]->MobileSetup(nodes.Get(i), this);
 
-      nodes.Get(i)->AddApplication(app);
-      app->SetStartTime(Seconds(0.5 + 0.00001*i));
-      app->SetStopTime(Seconds(5000.));
+      nodes.Get(i)->AddApplication(app[i]);
+      app[i]->SetStartTime(Seconds(0.5 + 0.00001*i));
+      app[i]->SetStopTime(Seconds(5000.));
       Ptr<Socket> dst = Socket::CreateSocket(nodes.Get(i), udp_tid);
       char dststring[1024]="";
       sprintf(dststring,"10.0.0.%d",(i + 1));
       InetSocketAddress dstlocaladdr(Ipv4Address(dststring), 50000);
       dst->Bind(dstlocaladdr);
-      dst->SetRecvCallback(MakeCallback(&Mobile::ReceiveBundle, app));
+      dst->SetRecvCallback(MakeCallback(&Mobile::ReceiveBundle, app[i]));
       
       Ptr<Socket> source = Socket::CreateSocket(nodes.Get(i), udp_tid);
       InetSocketAddress remote(Ipv4Address("255.255.255.255"), 80);
@@ -482,14 +487,14 @@ void DtnExample::InstallApplications(){
       Ptr<Socket> recvSink = Socket::CreateSocket(nodes.Get(i), udp_tid);
       InetSocketAddress local(Ipv4Address::GetAny(), 80);
       recvSink->Bind(local);
-      recvSink->SetRecvCallback(MakeCallback(&Mobile::ReceiveHello, app));
+      recvSink->SetRecvCallback(MakeCallback(&Mobile::ReceiveHello, app[i]));
 
-      app->SendHello(source, duration, Seconds(0.1 + 0.00085*i), 1);
+      app[i]->SendHello(source, duration, Seconds(0.1 + 0.00085*i), 1);
       // TriggerInsertFlow();
       std::cout <<"TRIGGERRRRR\n";
       // Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
       std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
-      app->ScheduleTx();
+      app[i]->ScheduleTx();
 
       
 
@@ -3435,5 +3440,9 @@ int main(int argc, char **argv){
   
   test.Run();
   // test.Report(std::cout);
+  // for (uint32_t i=0; i<test.GetNodeNum(); i++){
+  //   delete app[i];
+  // }
+  // delete[] app;
   return 0;
 }
