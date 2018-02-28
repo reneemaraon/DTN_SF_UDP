@@ -264,8 +264,10 @@ void DtnExample::Run(){
   
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
-  AnimationInterface anim("animDTN.xml");
-  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  AnimationInterface anim("animDTN2.xml");
+  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run();
@@ -411,7 +413,7 @@ void DtnExample::InstallApplications(){
 
   for(uint32_t i = 0; i < nodeNum; ++i){ 
     // if(i<=nodeNum-3){
-    if(i==1 || i==2){
+    if(i==1){
       std::cout<<"SENSOR: "<<"\n";
       Ptr<Sensor> app1;
       app1 = CreateObject<Sensor>();  
@@ -419,7 +421,8 @@ void DtnExample::InstallApplications(){
       app1->destinationNode=3;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
@@ -502,7 +505,7 @@ void DtnExample::InstallApplications(){
 
     }
     // else if(i==nodeNum-1){
-    else if(i==3){
+    else if(i==2){
       std::cout<<"BASE: "<<"\n";
       // Ptr<Base> basenode;
       basenode = CreateObject<Base>();  
