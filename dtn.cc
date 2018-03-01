@@ -267,8 +267,8 @@ void DtnExample::Run(){
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN2.xml");
-  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
-  anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
   // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // anim.SetBackgroundImage ("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-26,2.11,2.11,1);
   // std::cout <<"RUN\n";
@@ -372,8 +372,8 @@ void DtnExample::CreateDevices(){
   QosWifiMacHelper wifiMac = QosWifiMacHelper::Default();
   wifi.SetRemoteStationManager("ns3::IdealWifiManager");
   wifiPhy.Set("TxPowerLevels", UintegerValue(1) ); // default: 1
-  wifiPhy.Set("TxPowerStart",DoubleValue(12.5)); // default: 16.0206
-  wifiPhy.Set("TxPowerEnd", DoubleValue(12.5)); // default: 16.0206
+  wifiPhy.Set("TxPowerStart",DoubleValue(9.3)); // default: 16.0206
+  wifiPhy.Set("TxPowerEnd", DoubleValue(9.3)); // default: 16.0206
   wifiPhy.Set("EnergyDetectionThreshold", DoubleValue(-74.5) ); // default: -96
   wifiPhy.Set("CcaMode1Threshold", DoubleValue(-77.5) ); // default: -99
   wifiPhy.Set("RxNoiseFigure", DoubleValue(7) ); // default: 7
@@ -423,11 +423,11 @@ void DtnExample::InstallApplications(){
       Ptr<Sensor> app1;
       app1 = CreateObject<Sensor>();  
       app1->SensorSetup(nodes.Get(i), this);
-      app1->destinationNode=3;
+      app1->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       // bufferInput.open("/home/dtn2/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
@@ -902,7 +902,7 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
               
               std::string s = std::string(buffer1, buffer1+newpkt[i]->GetSize());
 
-              // std::cout<<"string is :"<<s<<"\n";
+              std::cout<<"string is :"<<s<<"\n";
               // std::ofstream datapoints;
               // datapoints.open("datapoints.txt",std::ios_base::app);
               // if(datapoints.is_open()){
@@ -913,15 +913,17 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
               // datapoints.close();
             
 
-              // std::string delimiter = ",";
-              // std::string::size_type sz;
-              // size_t pos = 0;
-              // std::string token;
-              // while((pos = s.find(delimiter)) != std::string::npos){
-              //     token = s.substr(0, pos);
-              //     std::cout << token.substr(0,3) <<","<< time<<","<<delay<<std::endl;
-              //     s.erase(0, pos + delimiter.length());
-              // }
+              std::string delimiter = ",";
+              std::string::size_type sz;
+              size_t pos = 0;
+              std::string token;
+              while((pos = s.find(delimiter)) != std::string::npos){
+                  token = s.substr(0, pos);
+
+
+                  std::cout <<"p"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<std::endl;
+                  s.erase(0, pos + delimiter.length());
+              }
 
 
               // SendAP(bndlHeader.GetDst(), bndlHeader.GetOrigin(), bndlHeader.GetOriginSeqno(), bndlHeader.GetSrcTimestamp());
@@ -1948,8 +1950,8 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
-  std::string tempArr2[]={"10.0.0.2", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
-  std::string tempArr3[]={"10.0.0.3", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
+  std::string tempArr2[]={"10.0.0.5", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
+  std::string tempArr3[]={"10.0.0.5", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
   // std::string tempArr2[]={"10.0.0.3", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
   // std::string tempArr3[]={"10.0.0.2", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "0"};
   flowTable.insertWithPriority(50, tempArr);
