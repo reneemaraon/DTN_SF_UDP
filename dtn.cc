@@ -174,6 +174,7 @@ class Sensor: public DtnApp{
     int dataTimeSize;
     int nextID;
     int maxID;
+    int bundleCount;
     float dataSum;
     int largestData;
     int smallestData;
@@ -912,6 +913,7 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
               // }
               // datapoints.close();
             
+              std::cout<<"y"<<bndlHeader.GetOriginSeqno()<<","<<time<<","<<delay<<std::endl;
 
               std::string delimiter = ",";
               std::string::size_type sz;
@@ -921,7 +923,7 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
                   token = s.substr(0, pos);
 
 
-                  std::cout <<"p"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<std::endl;
+                  std::cout <<"x"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<std::endl;
                   s.erase(0, pos + delimiter.length());
               }
 
@@ -1673,6 +1675,7 @@ void Sensor::SensorSetup(Ptr<Node> node, DtnExample *dtnEx){
   m_helper_queue->SetAttribute("MaxPackets", UintegerValue(1000));
   stationary = 1;
   dataSizeInBundle=5;
+  bundleCount =0;
   dataTimeSize=4;
   dataIDSize=dataSizeInBundle-2;
   nextID=000;
@@ -1880,7 +1883,7 @@ void Sensor::CreateBundle(){
   sprintf(dststring,"10.0.0.%d",(destinationNode+1));
   bndlHeader.SetOrigin(srcstring);
   bndlHeader.SetDst(dststring);
-  bndlHeader.SetOriginSeqno(packet->GetUid());
+  bndlHeader.SetOriginSeqno(bundleCount);
   bndlHeader.SetHopCount(0);
   bndlHeader.SetSpray(4);
   bndlHeader.SetNretx(0);
@@ -1894,7 +1897,7 @@ void Sensor::CreateBundle(){
   packet->AddHeader(bndlHeader);
   mypacket::TypeHeader tHeader(mypacket::MYTYPE_BNDL);
   packet->AddHeader(tHeader);
-
+  bundleCount++;
   dataSum=0;
   largestData=0;
   smallestData =2000000;

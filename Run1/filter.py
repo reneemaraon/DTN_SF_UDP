@@ -1,10 +1,17 @@
 
 
 dtnfile = open("dtn.txt","r")
-outfile = open("out.csv","w")
-for line in dtnfile:
-	if line[0]=="p":
-		outfile.write(line[1:])
+seqfile = open("seq.csv","w")
+bndlfile = open("bndl.csv","w")
 
-outfile.close()
+seqfile.write("seqno,timeGenerated,timeReceived\n")
+bndlfile.write("bndlseqno,timerecvd,delay\n")
+
+for line in dtnfile:
+	if line[0]=="x":
+		seqfile.write(line[1:])
+	elif line[0] =="y":
+		bndlfile.write(line[1:])
+seqfile.close()
+bndlfile.close()
 dtnfile.close()
