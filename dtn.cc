@@ -65,6 +65,7 @@ public:
   std::string traceFile;
   std::string logFile;
   std::ofstream myos;
+  std::ofstream ysaout;
   std::ifstream bufferInput;
 
 private:
@@ -273,6 +274,7 @@ void DtnExample::Run(){
   // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
+  ysaout.close();
   Simulator::Destroy();
   // std::cout <<"DEST\n";
 }
@@ -341,6 +343,8 @@ void DtnExample::CreateNodes(){
   std::cout<<"CREATENODES\n";
   Ns2MobilityHelper ns2 = Ns2MobilityHelper(traceFile);
   myos.open(logFile.c_str());
+  ysaout.open("ysaout.txt");
+  ysaout<<"YSAOUT\n";
   std::cout << "Creating " << nodeNum << " nodes.\n";
   nodes.Create(nodeNum);
   // Name nodes

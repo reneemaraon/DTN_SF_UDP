@@ -22,3 +22,9 @@ Waf: Entering directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
 Waf: Leaving directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
 'build' finished successfully (3.965s)
 awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
+[  2/682] cxx: dtn.cc -> ../../build/examples/DTN_SF_UDP/dtn.cc.1.o
+[682/682] cxxprogram: ../../build/examples/DTN_SF_UDP/dtn.cc.1.o ../../build/examples/DTN_SF_UDP/mypacket.cc.1.o -> ../../build/examples/DTN_SF_UDP/ns3.22-dtn_sf_udp-debug
+Waf: Leaving directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (1m37.259s)
+awk: line 1: syntax error at or near }
