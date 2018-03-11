@@ -143,11 +143,38 @@ void FlowTable::insertWithPriority(int priority, std::string data[]){
 		int counter=0;
 		while(looper){
 			tempPrio=looper->getPriority();
-			if(priority<tempPrio){
+			if(priority==tempPrio){
+				insert(counter, handler);
+				listPrinter();
+				strArray* inserted=start;
+				int traverser=0;
+				while(traverser!=counter){
+					traverser++;
+					inserted=inserted->getNext();
+				}
+				strArray* looper2=inserted;
+				while(looper2){
+					tempPrio=looper2->getNext()->getPriority();
+					if(tempPrio==priority){
+						remove(counter+1);
+					}
+					else{
+						break;
+					}
+
+					looper2=inserted;
+					if(looper2->getNext()==NULL){
+						break;
+					}
+				}
+				break;
+			}
+			else if(priority<tempPrio){
 				insert(counter, handler);
 				break;
 			}
 			else if(counter==size-1){
+				// std::cout<<"2nd\n";
 				insert(size, handler);
 				break;
 			}
@@ -160,7 +187,7 @@ void FlowTable::insertWithPriority(int priority, std::string data[]){
 
 void FlowTable::remove(int index){
 	if(index < 0 || index >= size){
-		std::cout << "Error: index is not within the size." << std::endl;
+		std::cout << "YESError: index is not within the size." << std::endl;
 		return;
 	}
 
