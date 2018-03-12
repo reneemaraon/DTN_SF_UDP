@@ -74,7 +74,7 @@ private:
   void InstallInternetStack();
   void InstallApplications();
   void PopulateArpCache();
-
+  void InsertToMobile(int nodeId, std::string flow[], int priority);
   uint32_t seed;
   uint32_t nodeNum;
   double duration;
@@ -268,8 +268,8 @@ void DtnExample::Run(){
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN2.xml");
-  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
-  anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
@@ -288,7 +288,8 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   cpkt->RemoveHeader(tHeader);
   cpkt->RemoveHeader(bndlHeader);
   uint32_t seqno = bndlHeader.GetOriginSeqno();
-  std::cout<<"received at magical land bundle of sequence "<<seqno<<"\n";
+  std::string tempArr[12];
+
 
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REQ);
@@ -300,7 +301,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   while (recvcount<2){
     zmq::message_t request(pkt->GetSize());
     memcpy(request.data(), pkt, pkt->GetSize());
-    std::cout <<"Sending Bundle... \n";
+    // std::cout <<"Sending Bundle... \n";
     socket.send(request);
 
     zmq::message_t reply;
@@ -311,27 +312,37 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
     std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
 
-    std::string tempArr[] = { json_object_get_string(json_object_object_get(jstring,"ipAdd")),
-        json_object_get_string(json_object_object_get(jstring,"rule1")),
-        json_object_get_string(json_object_object_get(jstring,"rule2")),
-        json_object_get_string(json_object_object_get(jstring,"rule3")),
-        json_object_get_string(json_object_object_get(jstring,"rule4")),
-        json_object_get_string(json_object_object_get(jstring,"rule5")),
-        json_object_get_string(json_object_object_get(jstring,"rule6")),
-        json_object_get_string(json_object_object_get(jstring,"rule7")),
-        json_object_get_string(json_object_object_get(jstring,"rule8")),
-        json_object_get_string(json_object_object_get(jstring,"rule9")),
-        json_object_get_string(json_object_object_get(jstring,"rule10")),
-        json_object_get_string(json_object_object_get(jstring,"action"))
-      };
+    tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
+    tempArr[1]=   json_object_get_string(json_object_object_get(jstring,"rule1"));
+    tempArr[2]=    json_object_get_string(json_object_object_get(jstring,"rule2"));
+    tempArr[3]=    json_object_get_string(json_object_object_get(jstring,"rule3"));
+    tempArr[4]=    json_object_get_string(json_object_object_get(jstring,"rule4"));
+    tempArr[5]=    json_object_get_string(json_object_object_get(jstring,"rule5"));
+    tempArr[6]=    json_object_get_string(json_object_object_get(jstring,"rule6"));
+    tempArr[7]=    json_object_get_string(json_object_object_get(jstring,"rule7"));
+    tempArr[8]=    json_object_get_string(json_object_object_get(jstring,"rule8"));
+    tempArr[9]=    json_object_get_string(json_object_object_get(jstring,"rule9"));
+    tempArr[10]=    json_object_get_string(json_object_object_get(jstring,"rule10"));
+    tempArr[11]=    json_object_get_string(json_object_object_get(jstring,"action"));
+    
     app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
+    std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
+    
     app[nodeId]->flowTable.listPrinter();
+    
 
+    // Simulator::Schedule(Seconds(3), &DtnExample::InsertToMobile, this, nodeId, tempArr, 51);
     recvcount++;
   }
   // std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
   // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
   // basenode->ReceiveTeleport(pkt);
+}
+
+void DtnExample::InsertToMobile(int nodeId, std::string flow[], int priority){
+  std::cout<<"HIIIIIIIIIIIIIIIIIIIII\n";  
+  app[nodeId]->flowTable.insertWithPriority(priority,flow);
+  app[nodeId]->flowTable.listPrinter();
 }
 
 uint32_t DtnExample::GetNodeNum(){
@@ -425,8 +436,8 @@ void DtnExample::InstallApplications(){
       app1->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -2766,15 +2777,16 @@ void Mobile::CheckPacketInQueues(){
   while(n<pkts){
     std::cout <<"\n"<< n << " CheckPacketInQueues\n";
     n++;
-    std::cout<<"BEFORE packetIn " <<m_packetin_queue->GetNPackets()<<"\n";
+    // std::cout<<"BEFORE packetIn " <<m_packetin_queue->GetNPackets()<<"\n";
     packet = m_packetin_queue->Dequeue();
     Ptr<Packet> cpkt = packet->Copy();
     //???
     mypacket::TypeHeader tHeader(mypacket::MYTYPE_AP);
     packet->RemoveHeader(tHeader);
     packet->RemoveHeader(apHeader);
-    dtnExample->PacketIn(1,1,cpkt,m_node->GetId());
-    std::cout<<"AFTER packetIn " <<m_packetin_queue->GetNPackets()<<"\n\n";
+    Simulator::Schedule(Seconds(3.0), &DtnExample::PacketIn, dtnExample, 1,1,cpkt,m_node->GetId());
+    // dtnExample->PacketIn(1,1,cpkt,m_node->GetId());
+    // std::cout<<"AFTER packetIn " <<m_packetin_queue->GetNPackets()<<"\n\n";
   }
   //recalling so it always checks m_packetin_queue
   //if queue still contains bundles; packetIn na
