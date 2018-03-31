@@ -386,7 +386,7 @@ void DtnExample::CreateDevices(){
   wifiPhy.Set("TxPowerEnd", DoubleValue(9.3)); // default: 16.0206
   wifiPhy.Set("EnergyDetectionThreshold", DoubleValue(-74.5) ); // default: -96
   wifiPhy.Set("CcaMode1Threshold", DoubleValue(-77.5) ); // default: -99
-  wifiPhy.Set("RxNoiseFigure", DoubleValue(7) ); // default: 7
+  wifiPhy.Set("RxNoiseFigure", DoubleValue(40) ); // default: 7
   wifiPhy.Set("TxGain", DoubleValue(1.0) ); // default: 1.0
   wifiPhy.Set("RxGain", DoubleValue(1.0) ); // deafult: 1.0
   wifiMac.SetType("ns3::AdhocWifiMac");
@@ -1490,19 +1490,19 @@ void DtnApp::CheckQueues(uint32_t bundletype){
     if(send_bundle == 0)
       CheckQueues(1);
     else //pag may sinend 
-      Simulator::Schedule(Seconds(0.001), &DtnApp::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(0.5), &DtnApp::CheckQueues, this, 2);
   }
   if(bundletype == 1){
     if(send_bundle == 0)
       CheckQueues(0);
     else
-      Simulator::Schedule(Seconds(0.001), &DtnApp::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(0.5), &DtnApp::CheckQueues, this, 2);
   }
   if(bundletype == 0){
     if(send_bundle == 0)
       Simulator::Schedule(Seconds(0.01), &DtnApp::CheckQueues, this, 2);
     else
-      Simulator::Schedule(Seconds(0.001), &DtnApp::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(0.5), &DtnApp::CheckQueues, this, 2);
   }
 }
 
@@ -1964,7 +1964,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   // std::string tempArr2[]={"10.0.0.5", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
   // std::string tempArr3[]={"10.0.0.5", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
   std::string tempArr2[]={"10.0.0.3", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
-  std::string tempArr3[]={"10.0.0.2", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
+  std::string tempArr3[]={"10.0.0.12", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
   flowTable.insertWithPriority(50, tempArr);
   // std::cout <<"NEWNEWNEW\n";
   // flowTable.listPrinter();
@@ -3127,19 +3127,19 @@ void Mobile::CheckQueues(uint32_t bundletype){
     if(send_bundle == 0)
       CheckQueues(1);
     else //pag may sinend 
-      Simulator::Schedule(Seconds(0.001), &Mobile::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(1.0), &Mobile::CheckQueues, this, 2);
   }
   if(bundletype == 1){
     if(send_bundle == 0)
       CheckQueues(0);
     else
-      Simulator::Schedule(Seconds(0.001), &Mobile::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(1.0), &Mobile::CheckQueues, this, 2);
   }
   if(bundletype == 0){
     if(send_bundle == 0)
       Simulator::Schedule(Seconds(0.01), &Mobile::CheckQueues, this, 2);
     else
-      Simulator::Schedule(Seconds(0.001), &Mobile::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(1.0), &Mobile::CheckQueues, this, 2);
   }
 }
 
