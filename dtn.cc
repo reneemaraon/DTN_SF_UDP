@@ -268,8 +268,8 @@ void DtnExample::Run(){
   Simulator::Stop(Seconds(duration));
   // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN2.xml");
-  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
-  anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
   // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
@@ -382,16 +382,24 @@ void DtnExample::CreateDevices(){
   QosWifiMacHelper wifiMac = QosWifiMacHelper::Default();
   wifi.SetRemoteStationManager("ns3::IdealWifiManager");
   wifiPhy.Set("TxPowerLevels", UintegerValue(1) ); // default: 1
-  wifiPhy.Set("TxPowerStart",DoubleValue(9.3)); // default: 16.0206
-  wifiPhy.Set("TxPowerEnd", DoubleValue(9.3)); // default: 16.0206
+  wifiPhy.Set("TxPowerStart",DoubleValue(9.1)); // default: 16.0206
+  wifiPhy.Set("TxPowerEnd", DoubleValue(9.1)); // default: 16.0206
   wifiPhy.Set("EnergyDetectionThreshold", DoubleValue(-74.5) ); // default: -96
   wifiPhy.Set("CcaMode1Threshold", DoubleValue(-77.5) ); // default: -99
-  wifiPhy.Set("RxNoiseFigure", DoubleValue(40) ); // default: 7
+  wifiPhy.Set("RxNoiseFigure", DoubleValue(7) ); // default: 7
   wifiPhy.Set("TxGain", DoubleValue(1.0) ); // default: 1.0
   wifiPhy.Set("RxGain", DoubleValue(1.0) ); // deafult: 1.0
   wifiMac.SetType("ns3::AdhocWifiMac");
   devices = wifi.Install(wifiPhy, wifiMac, nodes);
   
+  NetDeviceContainer aps;
+  Ptr<NetDevice> sensor1 = devices.Get(1);
+  Ptr<WifiNetDevice> wifiDevice = DynamicCast<WifiNetDevice> (sensor1);
+  Ptr<YansWifiPhy> phy = DynamicCast<YansWifiPhy>(wifiDevice->GetPhy());
+  phy->SetTxPowerStart(3.2);
+  phy->SetTxPowerEnd(3.2);
+
+
   if(pcap)
     wifiPhy.EnablePcapAll(std::string("rtprot"));
 }
@@ -436,8 +444,8 @@ void DtnExample::InstallApplications(){
       app1->destinationNode=2;
 
       // std::cout << "Opening Sensor Buffer Details"<< " \n";
-      bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -1490,19 +1498,19 @@ void DtnApp::CheckQueues(uint32_t bundletype){
     if(send_bundle == 0)
       CheckQueues(1);
     else //pag may sinend 
-      Simulator::Schedule(Seconds(0.5), &DtnApp::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(2.0), &DtnApp::CheckQueues, this, 2);
   }
   if(bundletype == 1){
     if(send_bundle == 0)
       CheckQueues(0);
     else
-      Simulator::Schedule(Seconds(0.5), &DtnApp::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(2.0), &DtnApp::CheckQueues, this, 2);
   }
   if(bundletype == 0){
     if(send_bundle == 0)
       Simulator::Schedule(Seconds(0.01), &DtnApp::CheckQueues, this, 2);
     else
-      Simulator::Schedule(Seconds(0.5), &DtnApp::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(2.0), &DtnApp::CheckQueues, this, 2);
   }
 }
 
@@ -3127,19 +3135,19 @@ void Mobile::CheckQueues(uint32_t bundletype){
     if(send_bundle == 0)
       CheckQueues(1);
     else //pag may sinend 
-      Simulator::Schedule(Seconds(1.0), &Mobile::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(2.0), &Mobile::CheckQueues, this, 2);
   }
   if(bundletype == 1){
     if(send_bundle == 0)
       CheckQueues(0);
     else
-      Simulator::Schedule(Seconds(1.0), &Mobile::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(2.0), &Mobile::CheckQueues, this, 2);
   }
   if(bundletype == 0){
     if(send_bundle == 0)
       Simulator::Schedule(Seconds(0.01), &Mobile::CheckQueues, this, 2);
     else
-      Simulator::Schedule(Seconds(1.0), &Mobile::CheckQueues, this, 2);
+      Simulator::Schedule(Seconds(2.0), &Mobile::CheckQueues, this, 2);
   }
 }
 
