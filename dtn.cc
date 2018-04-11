@@ -1469,7 +1469,7 @@ void DtnApp::CheckQueues(uint32_t bundletype){
       anotherp->RemoveHeader(bndlHeader);
       anotherp->AddHeader(bndlHeader);
       anotherp->AddHeader(tHeader);
-      std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
+      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<" size:"<<packet->GetSize()<< "bytes\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
@@ -2601,6 +2601,8 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               }
               else if(result==255){
                 std::cout<<"ACTION: SPREAD\n";
+
+                std::cout<<"Received bundle of sequence number: "<<bndlHeader.GetOriginSeqno()<<" and size "<<qpkt->GetSize()<<" bytes."<<"\n";
                 // HERE IS TO COMMENT OUT IF BACK TO 1000 SI MOBILE
                 if (m_queue->GetNPackets()==10){
                   Ptr<Packet> pkt = m_queue->Dequeue();
@@ -3107,7 +3109,6 @@ void Mobile::CheckQueues(uint32_t bundletype){
       anotherp->RemoveHeader(bndlHeader);
       anotherp->AddHeader(bndlHeader);
       anotherp->AddHeader(tHeader);
-      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
@@ -3134,7 +3135,8 @@ void Mobile::CheckQueues(uint32_t bundletype){
       anotherp->RemoveHeader(bndlHeader);
       anotherp->AddHeader(bndlHeader);
       anotherp->AddHeader(tHeader);
-      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
+      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<" size: "<<packet->GetSize()<< "bytes\n";
+
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
