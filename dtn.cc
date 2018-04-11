@@ -1137,6 +1137,9 @@ void DtnApp::SendMore(InetSocketAddress sendTo, int32_t id, int32_t retx){
   } 
   else
     lastTxBytes[index] = 0;
+    std::cout<<"hi\n";
+    m_queue->Dequeue();
+    //dito lang ako mag dedequeue
 }
 
 // void DtnApp::ScheduleTx(){
@@ -1395,9 +1398,9 @@ void DtnApp::CheckQueues(uint32_t bundletype){
           Ptr<Packet> qp = packet->Copy();
           if(n==1){
             firstpacket= packet->Copy();
-            if(send_bundle!=1){
-              m_queue->Enqueue(qp);
-            }
+            // if(send_bundle!=1){
+            m_queue->Enqueue(qp);
+            // }
           }
           else{
             bool success = m_queue->Enqueue(qp);
@@ -1466,7 +1469,7 @@ void DtnApp::CheckQueues(uint32_t bundletype){
       anotherp->RemoveHeader(bndlHeader);
       anotherp->AddHeader(bndlHeader);
       anotherp->AddHeader(tHeader);
-      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
+      std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<"\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
@@ -1918,6 +1921,19 @@ void Sensor::CreateBundle(){
   largestData=0;
   smallestData =2000000;
   if((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s){
+
+    // HERE IS TO COMMENT OUT IF BACK TO 1000 PACKET SENSOR
+    if (m_queue->GetNPackets()==10){
+      Ptr<Packet> pkt = m_queue->Dequeue();
+      mypacket::TypeHeader tHeader2(mypacket::MYTYPE_BNDL);
+      mypacket::BndlHeader bndlHeader2;
+      pkt->RemoveHeader(tHeader2);
+      pkt->RemoveHeader(bndlHeader2);
+      std::cout<<"Dropped bundle of sequence number: "<<bndlHeader2.GetOriginSeqno()<<" because queue is full.\n";
+
+    }
+    // END HERE
+
     bool success = m_queue->Enqueue(packet);
     if(success){
       std::cout << "At time " << Simulator::Now().GetSeconds() <<
@@ -2285,6 +2301,8 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
     int packet_type = 0;
     if(p->PeekPacketTag(tag))
       packet_type = tag.GetTid();
+    
+
     if(packet_type == 5){ // Ack
       p->RemoveAllByteTags();
       p->RemoveAllPacketTags();
@@ -2583,6 +2601,17 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               }
               else if(result==255){
                 std::cout<<"ACTION: SPREAD\n";
+                // HERE IS TO COMMENT OUT IF BACK TO 1000 SI MOBILE
+                if (m_queue->GetNPackets()==10){
+                  Ptr<Packet> pkt = m_queue->Dequeue();
+                  mypacket::TypeHeader tHeader2(mypacket::MYTYPE_BNDL);
+                  mypacket::BndlHeader bndlHeader2;
+                  pkt->RemoveHeader(tHeader2);
+                  pkt->RemoveHeader(bndlHeader2);
+                  std::cout<<"Dropped bundle of sequence number: "<<bndlHeader2.GetOriginSeqno()<<" because queue is full.\n";
+
+                }
+                // // END HERE
                 m_queue->Enqueue(qpkt);
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
