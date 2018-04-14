@@ -191,7 +191,8 @@ class Mobile: public DtnApp{
     void ReceiveHello(Ptr<Socket> socket);
     void ReceiveBundle(Ptr<Socket> socket);
     void CheckQueues(uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
-    
+    void Alive(int first);
+
     int CheckMatch(std::string ichcheck[]);
     void CheckPacketInQueues(); //CALLED NG SELF AND START APPLICATION
     void TriggerInsertFlow(); 
@@ -520,6 +521,7 @@ void DtnExample::InstallApplications(){
       // Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
       std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
       app[i]->ScheduleTx();
+      app[i]->Alive(1);
 
       
 
@@ -3182,6 +3184,24 @@ void Mobile::CheckQueues(uint32_t bundletype){
   }
 }
 
+
+void Mobile::Alive(int first){
+  //boot
+  if (first == 0){
+    std::cout<<"BOOT\n";
+    Simulator::Schedule(Seconds(300.0),&Mobile::Alive, this, 2);
+  }
+  //pagtawag ng boot
+  else if (first ==1){
+    std::cout<<"SCHEDULING BOOT 1 MIN FROM NOW.\n";
+    Simulator::Schedule(Seconds(100.0),&Mobile::Alive, this, 0);
+  }
+  // alive every five minutes
+  else{
+    std::cout<<"ALIVE\n";
+    Simulator::Schedule(Seconds(300.0), &Mobile::Alive, this, 2);
+  }
+}
 
 
 
