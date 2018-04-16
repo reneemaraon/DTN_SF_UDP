@@ -10,9 +10,10 @@ socket.bind("tcp://*:5555")
 count = 1
 while True:
 	json_str = socket.recv()
-	print ("Received packet in %s" % json_str)
-	# data_print = json.loads(json_str)
-	# print(data_print['message'])
+	# print ("Received packet in %s" % json_str)
+	data_print = json.loads(json_str.decode("utf-8"))
+	print ("Received message: ")
+	print(data_print['message'])
 
 	
 
