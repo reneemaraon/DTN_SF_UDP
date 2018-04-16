@@ -294,22 +294,41 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
 
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REQ);
-  // Ptr<Socket> dst = socket;
 
-  ////WORKING HERE
   socket.connect("tcp://localhost:5555");
   int recvcount = 1;
   while (recvcount<2){
-    zmq::message_t request(pkt->GetSize());
-    memcpy(request.data(), pkt, pkt->GetSize());
-    // std::cout <<"Sending Bundle... \n";
+
+    //WORKING ON PACKET IN
+    
+    struct json_object *object, *tmp;
+
+    object = json_object_new_object();
+    tmp = json_object_new_string("Renren gwapa");
+    json_object_object_add(object, "message", tmp);
+    printf("%s\n", json_object_to_json_string(object));
+    printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
+
+  
+
+
+    zmq::message_t request(strlen(json_object_to_json_string(object)));
+
+    memcpy(request.data(), json_object_to_json_string(object), strlen(json_object_to_json_string(object)));
+
+    
     socket.send(request);
+
+
+
+
+
+
+    //REPLY HANDLING
 
     zmq::message_t reply;
     socket.recv(&reply);
-    // // std::cout<<reply<<"Received World \n";    
-    // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
-    // std::cout<<rpl<<"\n";
+
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
     std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
 
@@ -1989,7 +2008,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
   // std::string tempArr2[]={"10.0.0.5", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
   // std::string tempArr3[]={"10.0.0.5", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
-  std::string tempArr2[]={"10.0.0.3", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
+  std::string tempArr2[]={"10.0.0.2", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
   std::string tempArr3[]={"10.0.0.12", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
   flowTable.insertWithPriority(50, tempArr);
   // std::cout <<"NEWNEWNEW\n";
