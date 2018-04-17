@@ -288,6 +288,8 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   mypacket::BndlHeader bndlHeader;
   cpkt->RemoveHeader(tHeader);
   cpkt->RemoveHeader(bndlHeader);
+  // cpkt->AddHeader(bndlHeader);
+  // cpkt->AddHeader(tHeader);
   uint32_t seqno = bndlHeader.GetOriginSeqno();
   std::string tempArr[12];
 
@@ -341,6 +343,22 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     //smallestVal
     tmp = json_object_new_int(bndlHeader.GetSmallestVal());
     json_object_object_add(object, "smallestVal", tmp);
+
+    //timestamp
+    tmp = json_object_new_int(Simulator::Now().GetSeconds()-2);
+    json_object_object_add(object, "timereceived", tmp);
+
+
+    uint8_t *buffer1 = new uint8_t[cpkt->GetSize()+1];
+    cpkt->CopyData(buffer1, cpkt->GetSize());
+    buffer1[cpkt->GetSize()]='\0';
+            
+    std::string s = std::string(buffer1, buffer1+cpkt->GetSize());
+
+    tmp = json_object_new_string(s.c_str());
+
+    std::cout<<"string is :"<<s<<"\n";
+    json_object_object_add(object, "datapoints", tmp);
 
     //writing 
     printf("%s\n", json_object_to_json_string(object));
