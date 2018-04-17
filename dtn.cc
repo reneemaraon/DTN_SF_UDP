@@ -304,8 +304,45 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     struct json_object *object, *tmp;
 
     object = json_object_new_object();
-    tmp = json_object_new_string("Renren gwapa");
+    tmp = json_object_new_string("Sample Message");
     json_object_object_add(object, "message", tmp);
+
+
+    //MOBILE ID
+    tmp = json_object_new_int(nodeId);
+    json_object_object_add(object, "mobileId", tmp);
+
+
+    //MOBILE IP ADDRESS
+    char mobileIpAddress[1024]="";
+    sprintf(mobileIpAddress,"10.0.0.%d",(nodeId + 1));
+    tmp = json_object_new_string(mobileIpAddress);
+    json_object_object_add(object, "mobileIPAdd", tmp);
+
+
+    //SENSOR ID
+    tmp = json_object_new_int(bndlHeader.GetSensorID());
+    json_object_object_add(object, "sensorID", tmp);
+
+
+    std::stringstream sensorIP;
+    bndlHeader.GetDst().Print(sensorIP);
+    tmp = json_object_new_string(sensorIP.str().c_str());
+    json_object_object_add(object, "sensorIPAdd", tmp);
+
+    //dataAve
+    tmp = json_object_new_int(bndlHeader.GetDataAverage());
+    json_object_object_add(object, "dataAve", tmp);
+
+    //largestVal
+    tmp = json_object_new_int(bndlHeader.GetLargestVal());
+    json_object_object_add(object, "largestVal", tmp);
+
+    //smallestVal
+    tmp = json_object_new_int(bndlHeader.GetSmallestVal());
+    json_object_object_add(object, "smallestVal", tmp);
+
+    //writing 
     printf("%s\n", json_object_to_json_string(object));
     printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
 
@@ -1916,7 +1953,7 @@ void Sensor::CreateBundle(){
   // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
   mypacket::BndlHeader bndlHeader;
-  uint8_t cnt =(uint8_t)0;
+  uint8_t cnt =(uint8_t)m_node->GetId();
   char srcstring[1024]="";
   sprintf(srcstring,"10.0.0.%d",(m_node->GetId() + 1));
   char dststring[1024]="";
@@ -1930,7 +1967,7 @@ void Sensor::CreateBundle(){
   bndlHeader.SetBundleSize(bndlSize);
   bndlHeader.SetSrcTimestamp(Simulator::Now());
   bndlHeader.SetHopTimestamp(Simulator::Now());
-  bndlHeader.SetDTBFlag(cnt);
+  bndlHeader.SetSensorID(cnt);
   bndlHeader.SetDataAverage((float)dataAve);
   bndlHeader.SetLargestVal(largestData);
   bndlHeader.SetSmallestVal(smallestData);
