@@ -306,8 +306,11 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     struct json_object *object, *tmp;
 
     object = json_object_new_object();
-    tmp = json_object_new_string("Sample Message");
-    json_object_object_add(object, "message", tmp);
+
+
+   //EVENT TYPE
+    tmp = json_object_new_int(0);
+    json_object_object_add(object, "eventType", tmp);
 
 
     //MOBILE ID
@@ -3263,6 +3266,59 @@ void Mobile::Alive(int first){
   //boot
   if (first == 0){
     std::cout<<"BOOT\n";
+
+    zmq::context_t context (1);
+    zmq::socket_t socket (context, ZMQ_REQ);
+
+    socket.connect("tcp://localhost:5555");
+    int recvcount = 1;
+    while(recvcount<2){
+
+      struct json_object *object, *tmp;
+
+      object = json_object_new_object();
+
+
+     //EVENT TYPE
+      tmp = json_object_new_int(2);
+      json_object_object_add(object, "eventType", tmp);
+
+
+      //MOBILE ID
+      tmp = json_object_new_int(m_node->GetId());
+      json_object_object_add(object, "mobileId", tmp);
+
+
+      //MOBILE IP ADDRESS
+      char mobileIpAddress[1024]="";
+      sprintf(mobileIpAddress,"10.0.0.%d",(m_node->GetId() + 1));
+      tmp = json_object_new_string(mobileIpAddress);
+      json_object_object_add(object, "mobileIPAdd", tmp);
+
+
+      //writing 
+      printf("%s\n", json_object_to_json_string(object));
+      printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
+
+
+      zmq::message_t request(strlen(json_object_to_json_string(object)));
+
+      memcpy(request.data(), json_object_to_json_string(object), strlen(json_object_to_json_string(object)));
+
+      
+      socket.send(request);
+
+
+
+      //REPLY HANDLING
+
+      zmq::message_t reply;
+      socket.recv(&reply);
+      recvcount++;
+    }
+
+
+
     Simulator::Schedule(Seconds(300.0),&Mobile::Alive, this, 2);
   }
   //pagtawag ng boot
@@ -3273,6 +3329,58 @@ void Mobile::Alive(int first){
   // alive every five minutes
   else{
     std::cout<<"ALIVE\n";
+
+    zmq::context_t context (1);
+    zmq::socket_t socket (context, ZMQ_REQ);
+
+    socket.connect("tcp://localhost:5555");
+    int recvcount = 1;
+    while(recvcount<2){
+
+      struct json_object *object, *tmp;
+
+      object = json_object_new_object();
+
+
+     //EVENT TYPE
+      tmp = json_object_new_int(1);
+      json_object_object_add(object, "eventType", tmp);
+
+
+      //MOBILE ID
+      tmp = json_object_new_int(m_node->GetId());
+      json_object_object_add(object, "mobileId", tmp);
+
+
+      //MOBILE IP ADDRESS
+      char mobileIpAddress[1024]="";
+      sprintf(mobileIpAddress,"10.0.0.%d",(m_node->GetId() + 1));
+      tmp = json_object_new_string(mobileIpAddress);
+      json_object_object_add(object, "mobileIPAdd", tmp);
+
+
+      //writing 
+      printf("%s\n", json_object_to_json_string(object));
+      printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
+
+
+      zmq::message_t request(strlen(json_object_to_json_string(object)));
+
+      memcpy(request.data(), json_object_to_json_string(object), strlen(json_object_to_json_string(object)));
+
+      
+      socket.send(request);
+
+
+
+      //REPLY HANDLING
+
+      zmq::message_t reply;
+      socket.recv(&reply);
+      recvcount++;
+    }
+
+
     Simulator::Schedule(Seconds(300.0), &Mobile::Alive, this, 2);
   }
 }
