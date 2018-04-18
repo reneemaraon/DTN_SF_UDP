@@ -167,7 +167,7 @@ class Sensor: public DtnApp{
     int bufferCount;
     int entryLength;
     int bufferLength;
-    uint32_t secondsInterval;
+    float secondsInterval;
     QueueStruct buffer;
     float dataSizeInBundle;
     int dataIDSize;
@@ -192,6 +192,7 @@ class Mobile: public DtnApp{
     void ReceiveBundle(Ptr<Socket> socket);
     void CheckQueues(uint32_t bundletype); //CALLED NG SELF AND START APPLICATION
     void Alive(int first);
+    void HandleReply(json_object *jsonreply);
 
     int CheckMatch(std::string ichcheck[]);
     void CheckPacketInQueues(); //CALLED NG SELF AND START APPLICATION
@@ -291,6 +292,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   // cpkt->AddHeader(bndlHeader);
   // cpkt->AddHeader(tHeader);
   uint32_t seqno = bndlHeader.GetOriginSeqno();
+
   std::string tempArr[12];
 
 
@@ -388,6 +390,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     socket.recv(&reply);
 
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+
     std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
 
     tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
@@ -409,7 +412,6 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     app[nodeId]->flowTable.listPrinter();
     
 
-    // Simulator::Schedule(Seconds(3), &DtnExample::InsertToMobile, this, nodeId, tempArr, 51);
     recvcount++;
   }
   // std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
@@ -3266,6 +3268,41 @@ void Mobile::CheckQueues(uint32_t bundletype){
 }
 
 
+void Mobile::HandleReply(json_object *jsonreply){
+
+
+  struct json_object *install;
+  struct json_object *toDelete;
+
+  install = json_object_object_get(jsonreply, "install");
+  toDelete = json_object_object_get(jsonreply, "delete");
+
+  // std::cout<<json_object_get_string(json_object_object_get(install,"priority"))<<"\n";
+  std::cout<<json_object_get_string(json_object_array_get_idx(install,0))<<"\n";
+  std::cout<<json_object_get_string(json_object_array_get_idx(toDelete,0))<<"\n";
+  // std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
+
+  // tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
+  // tempArr[1]=   json_object_get_string(json_object_object_get(jstring,"rule1"));
+  // tempArr[2]=    json_object_get_string(json_object_object_get(jstring,"rule2"));
+  // tempArr[3]=    json_object_get_string(json_object_object_get(jstring,"rule3"));
+  // tempArr[4]=    json_object_get_string(json_object_object_get(jstring,"rule4"));
+  // tempArr[5]=    json_object_get_string(json_object_object_get(jstring,"rule5"));
+  // tempArr[6]=    json_object_get_string(json_object_object_get(jstring,"rule6"));
+  // tempArr[7]=    json_object_get_string(json_object_object_get(jstring,"rule7"));
+  // tempArr[8]=    json_object_get_string(json_object_object_get(jstring,"rule8"));
+  // tempArr[9]=    json_object_get_string(json_object_object_get(jstring,"rule9"));
+  // tempArr[10]=    json_object_get_string(json_object_object_get(jstring,"rule10"));
+  // tempArr[11]=    json_object_get_string(json_object_object_get(jstring,"action"));
+  
+  // app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
+  // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
+  
+  // app[nodeId]->flowTable.listPrinter();
+
+}
+
+
 void Mobile::Alive(int first){
   //boot
   if (first == 0){
@@ -3318,7 +3355,12 @@ void Mobile::Alive(int first){
 
       zmq::message_t reply;
       socket.recv(&reply);
+
+      json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+      HandleReply(jstring);
+
       recvcount++;
+
     }
 
 
