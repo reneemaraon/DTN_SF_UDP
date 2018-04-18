@@ -2002,15 +2002,15 @@ void Sensor::CreateBundle(){
   if((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + packet->GetSize()) <= b_s){
 
     // HERE IS TO COMMENT OUT IF BACK TO 1000 PACKET SENSOR
-    if (m_queue->GetNPackets()==10){
-      Ptr<Packet> pkt = m_queue->Dequeue();
-      mypacket::TypeHeader tHeader2(mypacket::MYTYPE_BNDL);
-      mypacket::BndlHeader bndlHeader2;
-      pkt->RemoveHeader(tHeader2);
-      pkt->RemoveHeader(bndlHeader2);
-      std::cout<<"Dropped bundle of sequence number: "<<bndlHeader2.GetOriginSeqno()<<" because queue is full.\n";
+    // if (m_queue->GetNPackets()==10){
+    //   Ptr<Packet> pkt = m_queue->Dequeue();
+    //   mypacket::TypeHeader tHeader2(mypacket::MYTYPE_BNDL);
+    //   mypacket::BndlHeader bndlHeader2;
+    //   pkt->RemoveHeader(tHeader2);
+    //   pkt->RemoveHeader(bndlHeader2);
+    //   std::cout<<"Dropped bundle of sequence number: "<<bndlHeader2.GetOriginSeqno()<<" because queue is full.\n";
 
-    }
+    // }
     // END HERE
 
     bool success = m_queue->Enqueue(packet);
@@ -2066,7 +2066,7 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
   // std::string tempArr2[]={"10.0.0.5", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
   // std::string tempArr3[]={"10.0.0.5", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
-  std::string tempArr2[]={"10.0.0.2", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
+  std::string tempArr2[]={"10.0.0.22", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
   std::string tempArr3[]={"10.0.0.12", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
   flowTable.insertWithPriority(50, tempArr);
   // std::cout <<"NEWNEWNEW\n";
@@ -2683,15 +2683,15 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
 
                 std::cout<<"Received bundle of sequence number: "<<bndlHeader.GetOriginSeqno()<<" and size "<<qpkt->GetSize()<<" bytes."<<"\n";
                 // HERE IS TO COMMENT OUT IF BACK TO 1000 SI MOBILE
-                if (m_queue->GetNPackets()==10){
-                  Ptr<Packet> pkt = m_queue->Dequeue();
-                  mypacket::TypeHeader tHeader2(mypacket::MYTYPE_BNDL);
-                  mypacket::BndlHeader bndlHeader2;
-                  pkt->RemoveHeader(tHeader2);
-                  pkt->RemoveHeader(bndlHeader2);
-                  std::cout<<"Dropped bundle of sequence number: "<<bndlHeader2.GetOriginSeqno()<<" because queue is full.\n";
+                // if (m_queue->GetNPackets()==10){
+                //   Ptr<Packet> pkt = m_queue->Dequeue();
+                //   mypacket::TypeHeader tHeader2(mypacket::MYTYPE_BNDL);
+                //   mypacket::BndlHeader bndlHeader2;
+                //   pkt->RemoveHeader(tHeader2);
+                //   pkt->RemoveHeader(bndlHeader2);
+                //   std::cout<<"Dropped bundle of sequence number: "<<bndlHeader2.GetOriginSeqno()<<" because queue is full.\n";
 
-                }
+                // }
                 // // END HERE
                 m_queue->Enqueue(qpkt);
                 std::cout<<m_queue->GetNPackets()<<"\n";
@@ -3115,9 +3115,9 @@ void Mobile::CheckQueues(uint32_t bundletype){
           Ptr<Packet> qp = packet->Copy();
           if(n==1){
             firstpacket= packet->Copy();
-            if(send_bundle!=1){
+            // if(send_bundle!=1){
               m_queue->Enqueue(qp);
-            }
+            // }
           }
           else{
             bool success = m_queue->Enqueue(qp);
