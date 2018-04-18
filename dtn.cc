@@ -470,12 +470,12 @@ void DtnExample::CreateDevices(){
   wifiMac.SetType("ns3::AdhocWifiMac");
   devices = wifi.Install(wifiPhy, wifiMac, nodes);
   
-  NetDeviceContainer aps;
-  Ptr<NetDevice> sensor1 = devices.Get(1);
-  Ptr<WifiNetDevice> wifiDevice = DynamicCast<WifiNetDevice> (sensor1);
-  Ptr<YansWifiPhy> phy = DynamicCast<YansWifiPhy>(wifiDevice->GetPhy());
-  phy->SetTxPowerStart(3.2);
-  phy->SetTxPowerEnd(3.2);
+  // NetDeviceContainer aps;
+  // Ptr<NetDevice> sensor1 = devices.Get(1);
+  // Ptr<WifiNetDevice> wifiDevice = DynamicCast<WifiNetDevice> (sensor1);
+  // Ptr<YansWifiPhy> phy = DynamicCast<YansWifiPhy>(wifiDevice->GetPhy());
+  // phy->SetTxPowerStart(3.2);
+  // phy->SetTxPowerEnd(3.2);
 
 
   if(pcap)
@@ -1217,7 +1217,7 @@ void DtnApp::SendMore(InetSocketAddress sendTo, int32_t id, int32_t retx){
   else
     lastTxBytes[index] = 0;
     std::cout<<"hi\n";
-    m_queue->Dequeue();
+    // m_queue->Dequeue();
     //dito lang ako mag dedequeue
 }
 
@@ -1428,6 +1428,9 @@ void DtnApp::CheckQueues(uint32_t bundletype){
                  ((Simulator::Now().GetSeconds() - neighbor_last_seen[i]) < 0.1) &&(neighbor_address[i].GetIpv4() != bndlHeader.GetOrigin())){
                   int neighbor_has_bundle = 0, bundle_sent = 0, j=0;
                   //check kung meron ba siya nung bundle
+                  if ((Simulator::Now().GetSeconds()>700)&&(m_node->GetId()==1)){
+                   std::cout<<"HEllo\n";
+                  }
                   while((neighbor_has_bundle == 0) &&(neighbor_hello_bundles[i][j] != 0) &&(j < 1000)){
                     if((unsigned)neighbor_hello_bundles[i][j] == bndlHeader.GetOriginSeqno())
                       neighbor_has_bundle = 1;
@@ -1477,9 +1480,9 @@ void DtnApp::CheckQueues(uint32_t bundletype){
           Ptr<Packet> qp = packet->Copy();
           if(n==1){
             firstpacket= packet->Copy();
-            // if(send_bundle!=1){
+            if(send_bundle!=1){
             m_queue->Enqueue(qp);
-            // }
+            }
           }
           else{
             bool success = m_queue->Enqueue(qp);
@@ -1583,6 +1586,7 @@ void DtnApp::CheckQueues(uint32_t bundletype){
       Simulator::Schedule(Seconds(2.0), &DtnApp::CheckQueues, this, 2);
   }
   if(bundletype == 1){
+
     if(send_bundle == 0)
       CheckQueues(0);
     else
@@ -3115,9 +3119,9 @@ void Mobile::CheckQueues(uint32_t bundletype){
           Ptr<Packet> qp = packet->Copy();
           if(n==1){
             firstpacket= packet->Copy();
-            // if(send_bundle!=1){
+            if(send_bundle!=1){
               m_queue->Enqueue(qp);
-            // }
+            }
           }
           else{
             bool success = m_queue->Enqueue(qp);
