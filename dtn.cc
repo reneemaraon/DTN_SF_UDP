@@ -3290,7 +3290,7 @@ void Mobile::HandleReply(json_object *jsonreply){
   for (int i=0; i<numToInstall; i++){
     struct json_object *iterate;
     iterate = json_object_array_get_idx(install,i);
-
+    std::cout<<json_object_get_string(iterate)<<" laman ng iterate\n";
     tempArr[0]= json_object_get_string(json_object_object_get(iterate,"ipAdd"));
     tempArr[1]=   json_object_get_string(json_object_object_get(iterate,"sensorId"));
     tempArr[2]=    json_object_get_string(json_object_object_get(iterate,"dataAveGT"));
@@ -3305,9 +3305,12 @@ void Mobile::HandleReply(json_object *jsonreply){
     tempArr[11]=    json_object_get_string(json_object_object_get(iterate,"action"));
     
     for (int j=0; j<12;j++){
-      std::cout<<tempArr[i]<<"\n";
+      std::cout<<tempArr[j]<<"\n";
     }
+    std::cout<<"priority is "<<json_object_get_int(json_object_object_get(iterate,"priority"))<<"\n";
+    //HERE IS THE PROBLEM
     // flowTable.insertWithPriority(json_object_get_int(json_object_object_get(iterate,"priority")), tempArr);
+    flowTable.listPrinter();
     // std::cout << tempArr;
 
 // [{"priority": "100","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*",
@@ -3317,7 +3320,6 @@ void Mobile::HandleReply(json_object *jsonreply){
 
   // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
   
-  // app[nodeId]->flowTable.listPrinter();
 
 }
 

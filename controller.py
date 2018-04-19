@@ -1,7 +1,7 @@
 # import time
 import zmq
 import time
-import json
+import json 
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
@@ -17,8 +17,7 @@ while True:
 
 	
 
-	flow = {"priority": "134","ipAdd":"10.0.0.99", "rule1":"*", "rule2":"*", "rule3":"*", "rule4":"*", "rule5":"*", "rule6":"*", "rule7":"*", "rule8":"*", "rule9":"*", "rule10":"*", "action":"1"}
-	flow["rule1"] = str(count)
+	# DITO MO IPROCESS ANG NARECEIVE NA JSON
 
 
 	jsonreply = {"install": [{"priority": "100","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*","dataAveET": "*","smallestValGT": "*","smallestValLT": "4","smallestValET": "*","largestValGT": "*","largestValLT": "*","largestValET": "*", "action":"1"}, {"priority": "200","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*","dataAveET": "*","smallestValGT": "*","smallestValLT": "4","smallestValET": "*","largestValGT": "*","largestValLT": "*","largestValET": "*", "action":"0"}],"delete": [{"priority": "100","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*","dataAveET": "*","smallestValGT": "*","smallestValLT": "4","smallestValET": "*","largestValGT": "*","largestValLT": "*","largestValET": "*", "action":"1"}, {"priority": "100","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*","dataAveET": "*","smallestValGT": "*","smallestValLT": "4","smallestValET": "*","largestValGT": "*","largestValLT": "*","largestValET": "*", "action":"2"}]}
