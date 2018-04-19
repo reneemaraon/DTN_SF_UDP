@@ -3277,25 +3277,44 @@ void Mobile::HandleReply(json_object *jsonreply){
   install = json_object_object_get(jsonreply, "install");
   toDelete = json_object_object_get(jsonreply, "delete");
 
-  // std::cout<<json_object_get_string(json_object_object_get(install,"priority"))<<"\n";
   std::cout<<json_object_get_string(json_object_array_get_idx(install,0))<<"\n";
   std::cout<<json_object_get_string(json_object_array_get_idx(toDelete,0))<<"\n";
-  // std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
 
-  // tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
-  // tempArr[1]=   json_object_get_string(json_object_object_get(jstring,"rule1"));
-  // tempArr[2]=    json_object_get_string(json_object_object_get(jstring,"rule2"));
-  // tempArr[3]=    json_object_get_string(json_object_object_get(jstring,"rule3"));
-  // tempArr[4]=    json_object_get_string(json_object_object_get(jstring,"rule4"));
-  // tempArr[5]=    json_object_get_string(json_object_object_get(jstring,"rule5"));
-  // tempArr[6]=    json_object_get_string(json_object_object_get(jstring,"rule6"));
-  // tempArr[7]=    json_object_get_string(json_object_object_get(jstring,"rule7"));
-  // tempArr[8]=    json_object_get_string(json_object_object_get(jstring,"rule8"));
-  // tempArr[9]=    json_object_get_string(json_object_object_get(jstring,"rule9"));
-  // tempArr[10]=    json_object_get_string(json_object_object_get(jstring,"rule10"));
-  // tempArr[11]=    json_object_get_string(json_object_object_get(jstring,"action"));
-  
-  // app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
+  std::cout<<json_object_array_length(install)<<" is the number of flows to be installed. \n";
+  std::cout<<json_object_array_length(toDelete)<<" is the number of flows to be deleted. \n";
+
+  int numToInstall = json_object_array_length(install);
+  // int numToDelete = json_object_array_length(toDelete);
+
+  std::string tempArr[12];
+  for (int i=0; i<numToInstall; i++){
+    struct json_object *iterate;
+    iterate = json_object_array_get_idx(install,i);
+
+    tempArr[0]= json_object_get_string(json_object_object_get(iterate,"ipAdd"));
+    tempArr[1]=   json_object_get_string(json_object_object_get(iterate,"sensorId"));
+    tempArr[2]=    json_object_get_string(json_object_object_get(iterate,"dataAveGT"));
+    tempArr[3]=    json_object_get_string(json_object_object_get(iterate,"dataAveLT"));
+    tempArr[4]=    json_object_get_string(json_object_object_get(iterate,"dataAveET"));
+    tempArr[5]=    json_object_get_string(json_object_object_get(iterate,"smallestValGT"));
+    tempArr[6]=    json_object_get_string(json_object_object_get(iterate,"smallestValLT"));
+    tempArr[7]=    json_object_get_string(json_object_object_get(iterate,"smallestValET"));
+    tempArr[8]=    json_object_get_string(json_object_object_get(iterate,"largestValGT"));
+    tempArr[9]=    json_object_get_string(json_object_object_get(iterate,"largestValLT"));
+    tempArr[10]=    json_object_get_string(json_object_object_get(iterate,"largestValET"));
+    tempArr[11]=    json_object_get_string(json_object_object_get(iterate,"action"));
+    
+    for (int j=0; j<12;j++){
+      std::cout<<tempArr[i]<<"\n";
+    }
+    // flowTable.insertWithPriority(json_object_get_int(json_object_object_get(iterate,"priority")), tempArr);
+    // std::cout << tempArr;
+
+// [{"priority": "100","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*",
+//   "dataAveET": "*","smallestValGT": "*","smallestValLT": "4","smallestValET": "*","largestValGT"
+//   : "*","largestValLT": "*","largestValET": "*"}
+  }
+
   // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
   
   // app[nodeId]->flowTable.listPrinter();
@@ -3370,7 +3389,7 @@ void Mobile::Alive(int first){
   //pagtawag ng boot
   else if (first ==1){
     std::cout<<"SCHEDULING BOOT 1 MIN FROM NOW.\n";
-    Simulator::Schedule(Seconds(100.0),&Mobile::Alive, this, 0);
+    Simulator::Schedule(Seconds(60.0),&Mobile::Alive, this, 0);
   }
   // alive every five minutes
   else{
@@ -3423,6 +3442,10 @@ void Mobile::Alive(int first){
 
       zmq::message_t reply;
       socket.recv(&reply);
+
+      json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
+      HandleReply(jstring);
+ 
       recvcount++;
     }
 
