@@ -309,49 +309,48 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
 
     object = json_object_new_object();
 
-
    //EVENT TYPE
     tmp = json_object_new_int(0);
-    json_object_object_add(object, "eventType", tmp);
+    json_object_object_add(object, "event_type", tmp);
 
 
     //MOBILE ID
     tmp = json_object_new_int(nodeId);
-    json_object_object_add(object, "mobileId", tmp);
+    json_object_object_add(object, "mobile_id", tmp);
 
 
     //MOBILE IP ADDRESS
     char mobileIpAddress[1024]="";
     sprintf(mobileIpAddress,"10.0.0.%d",(nodeId + 1));
     tmp = json_object_new_string(mobileIpAddress);
-    json_object_object_add(object, "mobileIPAdd", tmp);
+    json_object_object_add(object, "ip_address", tmp);
 
 
     //SENSOR ID
     tmp = json_object_new_int(bndlHeader.GetSensorID());
-    json_object_object_add(object, "sensorID", tmp);
+    json_object_object_add(object, "sensor_id", tmp);
 
 
     std::stringstream sensorIP;
     bndlHeader.GetDst().Print(sensorIP);
     tmp = json_object_new_string(sensorIP.str().c_str());
-    json_object_object_add(object, "sensorIPAdd", tmp);
+    json_object_object_add(object, "sensor_ip_address", tmp);
 
     //dataAve
     tmp = json_object_new_int(bndlHeader.GetDataAverage());
-    json_object_object_add(object, "dataAve", tmp);
+    json_object_object_add(object, "data_ave", tmp);
 
     //largestVal
     tmp = json_object_new_int(bndlHeader.GetLargestVal());
-    json_object_object_add(object, "largestVal", tmp);
+    json_object_object_add(object, "largest_val", tmp);
 
     //smallestVal
     tmp = json_object_new_int(bndlHeader.GetSmallestVal());
-    json_object_object_add(object, "smallestVal", tmp);
+    json_object_object_add(object, "smallest_val", tmp);
 
     //timestamp
     tmp = json_object_new_int(Simulator::Now().GetSeconds()-2);
-    json_object_object_add(object, "timereceived", tmp);
+    json_object_object_add(object, "time_received", tmp);
 
 
     uint8_t *buffer1 = new uint8_t[cpkt->GetSize()+1];
@@ -1927,9 +1926,16 @@ void Sensor::GenerateData(uint32_t first){
     float currentSum =0;
     for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
       int randnum = rand() % 10;
-      tempor += alphanum[randnum];
-      // std::cout<<alphanum[randnum]<<"=="<<(int)alphanum[randnum]-48<<" "<<"\n";
-      currentSum +=((int)alphanum[randnum]-48)*(pow(10,(numOfDigits-i-1)));
+
+      //fixing entry to be less than 10 always
+      if (i < (entryLength-dataIDSize-dataTimeSize-3)){
+        tempor+= alphanum[0];
+      }
+
+      else{
+        tempor += alphanum[randnum];
+        currentSum +=((int)alphanum[randnum]-48)*(pow(10,(numOfDigits-i-1)));
+      }
     }
     // std::cout<<"\n"<<currentSum<<"\n";
     if(currentSum<smallestData){
@@ -3343,19 +3349,19 @@ void Mobile::Alive(int first){
 
      //EVENT TYPE
       tmp = json_object_new_int(2);
-      json_object_object_add(object, "eventType", tmp);
+      json_object_object_add(object, "event_type", tmp);
 
 
       //MOBILE ID
       tmp = json_object_new_int(m_node->GetId());
-      json_object_object_add(object, "mobileId", tmp);
+      json_object_object_add(object, "mobile_id", tmp);
 
 
       //MOBILE IP ADDRESS
       char mobileIpAddress[1024]="";
       sprintf(mobileIpAddress,"10.0.0.%d",(m_node->GetId() + 1));
       tmp = json_object_new_string(mobileIpAddress);
-      json_object_object_add(object, "mobileIPAdd", tmp);
+      json_object_object_add(object, "ip_address", tmp);
 
 
       //writing 
@@ -3411,19 +3417,19 @@ void Mobile::Alive(int first){
 
      //EVENT TYPE
       tmp = json_object_new_int(1);
-      json_object_object_add(object, "eventType", tmp);
+      json_object_object_add(object, "event_type", tmp);
 
 
       //MOBILE ID
       tmp = json_object_new_int(m_node->GetId());
-      json_object_object_add(object, "mobileId", tmp);
+      json_object_object_add(object, "mobile_id", tmp);
 
 
       //MOBILE IP ADDRESS
       char mobileIpAddress[1024]="";
       sprintf(mobileIpAddress,"10.0.0.%d",(m_node->GetId() + 1));
       tmp = json_object_new_string(mobileIpAddress);
-      json_object_object_add(object, "mobileIPAdd", tmp);
+      json_object_object_add(object, "ip_address", tmp);
 
 
       //writing 
