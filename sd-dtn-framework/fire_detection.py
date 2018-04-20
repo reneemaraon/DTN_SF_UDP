@@ -2,6 +2,16 @@ import pprint
 from SDDTN import SDDTN
 
 class FireDetection(SDDTN):
+    def __init__(self, mode):
+        if mode == 2:
+            self.flow_tables = {}
+            self.to_be_deleted = {}
+        elif mode == 1:
+            self.flow_tables = {}
+            self.to_be_deleted = {}
+        self.emergency_sensor = -99
+        self.emergency_mode = 0
+
     def boot(self, request):
         # DROP IF LESS THAN 7 ANG DATA AVERAGE
         flow = {
@@ -10,14 +20,14 @@ class FireDetection(SDDTN):
             'sensor_id': '*',
             'gt_data_ave': '*',
             'eq_data_ave': '*',
-            'lt_data_ave': '7',
+            'lt_data_ave': '4',
             'gt_smallest_val': '*',
             'eq_smallest_val': '*',
             'lt_smallest_val': '*',
             'gt_largest_val': '*',
             'eq_largest_val': '*',
             'lt_largest_val': '*',
-            'action': 0,
+            'action': '0',
             'expiration': 3000
         }
         # PACKET IN IF MORE THAN 10 ANG DATA AVERAGE
@@ -25,7 +35,7 @@ class FireDetection(SDDTN):
             'priority': 20,
             'ip_address': '*',
             'sensor_id': '*',
-            'gt_data_ave': '10',
+            'gt_data_ave': '6',
             'eq_data_ave': '*',
             'lt_data_ave': '*',
             'gt_smallest_val': '*',
@@ -34,7 +44,7 @@ class FireDetection(SDDTN):
             'gt_largest_val': '*',
             'eq_largest_val': '*',
             'lt_largest_val': '*',
-            'action': 2,
+            'action': '2',
             'expiration': 3000
         }
 
@@ -52,7 +62,7 @@ class FireDetection(SDDTN):
             'gt_largest_val': '*',
             'eq_largest_val': '*',
             'lt_largest_val': '*',
-            'action': 255,
+            'action': '255',
             'expiration': 3000
         }
         self.install_flow(str(request['ip_address']), flow) # lacks flow
@@ -62,29 +72,36 @@ class FireDetection(SDDTN):
         return response
     
     def packet_in(self, request):
-        if (request['data_ave'] > 7):
-            flow = {
-                'priority': 1,
-                'ip_address': '*',
-                'sensor_id': 12,
-                'gt_data_ave': 1,
-                'eq_data_ave': 1,
-                'lt_data_ave': 1,
-                'gt_smallest_val': 1,
-                'eq_smallest_val': 1,
-                'lt_smallest_val': 1,
-                'gt_largest_val': 1,
-                'eq_largest_val': 1,
-                'lt_largest_val': 1,
-                'action': 2,
-                'expiration': 3000
-            }
-            self.install_flow_to_all(flow)
-            self.emergency_sensor = request['sensor_id']
-            print "Entering Emergency Mode"
-        if (request['data_ave'] < 7 and request['sensor_id'] == self.emergency_sensor):
-            print "Exiting Emergency Mode"
-            self.delete_flow_from_all(1)
+        if self.emergency_mode == 0:
+            if (request['data_ave'] > 6):
+                flow = {
+                    'priority': 1,
+                    'ip_address': '*',
+                    'sensor_id': '*',
+                    'gt_data_ave': '*',
+                    'eq_data_ave': '*',
+                    'lt_data_ave': '*',
+                    'gt_smallest_val': '*',
+                    'eq_smallest_val': '*',
+                    'lt_smallest_val': '*',
+                    'gt_largest_val': '*',
+                    'eq_largest_val': '*',
+                    'lt_largest_val': '*',
+                    'action': '2',
+                    'expiration': 3000
+                }
+                flow['sensor_id'] = str(request['sensor_id'])
+                self.install_flow_to_all(flow)
+                self.emergency_sensor = request['sensor_id']
+                print "Entering Emergency Mode"
+                self.emergency_mode =1
+
+        elif self.emergency_mode ==1:
+            if (request['data_ave'] < 6 and request['sensor_id'] == self.emergency_sensor):
+                print "Exiting Emergency Mode"
+                self.emergency_mode=0
+                self.delete_flow_from_all(1)
+    
         response = self.sync_flows(request['ip_address'])
         return response
     

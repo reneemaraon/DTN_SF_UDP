@@ -291,9 +291,9 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   cpkt->RemoveHeader(bndlHeader);
   // cpkt->AddHeader(bndlHeader);
   // cpkt->AddHeader(tHeader);
-  uint32_t seqno = bndlHeader.GetOriginSeqno();
+  // uint32_t seqno = bndlHeader.GetOriginSeqno();
 
-  std::string tempArr[12];
+  // std::string tempArr[12];
 
 
   zmq::context_t context (1);
@@ -327,7 +327,8 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
 
 
     //SENSOR ID
-    tmp = json_object_new_int(bndlHeader.GetSensorID());
+    tmp = json_object_new_int((int)bndlHeader.GetSensorID());
+    std::cout<<"sensor id of sensor being packet in "<<(int)bndlHeader.GetSensorID()<<"\n";
     json_object_object_add(object, "sensor_id", tmp);
 
 
@@ -390,23 +391,24 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
 
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
 
-    std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
+    app[nodeId]->HandleReply(jstring);
+    // std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
 
-    tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
-    tempArr[1]=   json_object_get_string(json_object_object_get(jstring,"rule1"));
-    tempArr[2]=    json_object_get_string(json_object_object_get(jstring,"rule2"));
-    tempArr[3]=    json_object_get_string(json_object_object_get(jstring,"rule3"));
-    tempArr[4]=    json_object_get_string(json_object_object_get(jstring,"rule4"));
-    tempArr[5]=    json_object_get_string(json_object_object_get(jstring,"rule5"));
-    tempArr[6]=    json_object_get_string(json_object_object_get(jstring,"rule6"));
-    tempArr[7]=    json_object_get_string(json_object_object_get(jstring,"rule7"));
-    tempArr[8]=    json_object_get_string(json_object_object_get(jstring,"rule8"));
-    tempArr[9]=    json_object_get_string(json_object_object_get(jstring,"rule9"));
-    tempArr[10]=    json_object_get_string(json_object_object_get(jstring,"rule10"));
-    tempArr[11]=    json_object_get_string(json_object_object_get(jstring,"action"));
+    // tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
+    // tempArr[1]=   json_object_get_string(json_object_object_get(jstring,"rule1"));
+    // tempArr[2]=    json_object_get_string(json_object_object_get(jstring,"rule2"));
+    // tempArr[3]=    json_object_get_string(json_object_object_get(jstring,"rule3"));
+    // tempArr[4]=    json_object_get_string(json_object_object_get(jstring,"rule4"));
+    // tempArr[5]=    json_object_get_string(json_object_object_get(jstring,"rule5"));
+    // tempArr[6]=    json_object_get_string(json_object_object_get(jstring,"rule6"));
+    // tempArr[7]=    json_object_get_string(json_object_object_get(jstring,"rule7"));
+    // tempArr[8]=    json_object_get_string(json_object_object_get(jstring,"rule8"));
+    // tempArr[9]=    json_object_get_string(json_object_object_get(jstring,"rule9"));
+    // tempArr[10]=    json_object_get_string(json_object_object_get(jstring,"rule10"));
+    // tempArr[11]=    json_object_get_string(json_object_object_get(jstring,"action"));
     
-    app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
-    std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
+    // app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
+    // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
     
     app[nodeId]->flowTable.listPrinter();
     
@@ -2075,17 +2077,17 @@ void Mobile::MobileSetup(Ptr<Node> node, DtnExample *dtnEx){
   Ptr<UniformRandomVariable> y = CreateObject<UniformRandomVariable>();
   b_s = 1375000 + y->GetInteger(0, 1)*9625000;
 
-  std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
+  // std::string tempArr[]={"10.0.0.8", "50", "300", "101", "102", "101", "102", "101", "102", "101", "102", "0"};
   // std::string tempArr2[]={"10.0.0.5", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
   // std::string tempArr3[]={"10.0.0.5", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
-  std::string tempArr2[]={"10.0.0.22", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
-  std::string tempArr3[]={"10.0.0.12", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
-  flowTable.insertWithPriority(50, tempArr);
+  // std::string tempArr2[]={"10.0.0.22", "*", "0", "*", "*", "*", "*", "*", "*", "*", "*", "2"};
+  // std::string tempArr3[]={"10.0.0.12", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "1"};
+  // flowTable.insertWithPriority(50, tempArr);
   // std::cout <<"NEWNEWNEW\n";
   // flowTable.listPrinter();
-  flowTable.insertWithPriority(100, tempArr2);
-  flowTable.insertWithPriority(150, tempArr3);
-  flowTable.listPrinter();
+  // flowTable.insertWithPriority(100, tempArr2);
+  // flowTable.insertWithPriority(150, tempArr3);
+  // flowTable.listPrinter();
 }
 
 void Mobile::StartApplication(void){
@@ -2630,12 +2632,15 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               std::ostringstream ave;
               std::ostringstream largest;
               std::ostringstream smallest;
+              std::ostringstream sensorid;
               ave << bndlHeader.GetDataAverage();
               largest << bndlHeader.GetLargestVal();
               smallest << bndlHeader.GetSmallestVal();
+              sensorid << (int)bndlHeader.GetSensorID();
+              std::cout<<"sensor id is "<<sensorid.str()<<"\n";
               std::string ichcheck[11];
               ichcheck[0]=forcheck.str();
-              ichcheck[1]=ave.str();
+              ichcheck[1]=sensorid.str();
               // sprintf(ichcheck[2], "%d", bndlHeader.GetDataAverage());
               // ichcheck[2]= std::to_string(bndlHeader.GetDataAverage()); //ave
               ichcheck[2]=ave.str(); //ave
@@ -2679,15 +2684,11 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 qpkt->RemoveHeader(bndlHeader);
                 qpkt->AddHeader (bndlHeader);
                 qpkt->AddHeader (tHeader);
-            
+                std::cout<<bndlHeader.GetDataAverage()<<" is the data average\n";
                 success = m_packetin_queue->Enqueue (qpkt);
                 if (success){
                   std::cout<<"Successfully enqueued packet\n";
                 }                
-
-
-                // dtnExample->PacketIn(1,1,qpkt);
-
 
               }
               else if(result==255){
@@ -2769,11 +2770,12 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           std::stringstream ichcheckStream(ichcheck[y]);
           ichcheckStream >> toCheck;
 
-          // std::cout << "ENTRY: " << ftmEntry << " " << ftmEntry+2 << "\n";
-          // std::cout << "ICHCHECK: " << toCheck << " " << toCheck+2 << "\n";
+          std::cout << "ENTRY: " << ftmEntry << "\n";
+          std::cout << "ICHCHECK: " << toCheck << "\n";
+          std::cout<< "At flow index "<<x<<"\n";
         }
         if(y==0){
-          if(flowTableMatchEntry[y]==ichcheck[y]){
+          if(ichcheck[y]==flowTableMatchEntry[y]){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2789,7 +2791,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           }
         }
         else if(y==2){
-          if(ftmEntry>toCheck){
+          if(toCheck>ftmEntry){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2805,7 +2807,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           }
         }
         else if(y==4){
-          if(ftmEntry<toCheck){
+          if(toCheck<ftmEntry){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2813,7 +2815,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           }
         }
         else if(y==5){
-          if(ftmEntry>toCheck){
+          if(toCheck>ftmEntry){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2829,7 +2831,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           }
         }
         else if(y==7){
-          if(ftmEntry<toCheck){
+          if(toCheck<ftmEntry){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2837,7 +2839,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           }
         }
         else if(y==8){
-          if(ftmEntry>toCheck){
+          if(toCheck>ftmEntry){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2853,7 +2855,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           }
         }
         else if(y==10){
-          if(ftmEntry<toCheck){
+          if(toCheck<ftmEntry){
             matchFlag=matchFlag*1;
           }
           else{
@@ -2878,7 +2880,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
 
     if(matchFlag==1){
       std::string* matchEntry=flowTable.get(x);
-      // std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
+      std::cout << "MATCH; Flow index: " << x << " ACTION: " << matchEntry[11] << "\n";
       std::stringstream matchEntryStream(matchEntry[11]);
       matchEntryStream >> irereturn;
       return irereturn;
@@ -2931,7 +2933,7 @@ void Mobile::CheckPacketInQueues(){
 
 void Mobile::TriggerInsertFlow(){
   std::cout << "\nAt time " << Simulator::Now().GetSeconds() << " INSERTING FLOW {\"10.0.0.99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"99\", \"255\"}\n";
-  std::string tempArr[]={"10.0.0.99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "99", "255"};
+  std::string tempArr[]={"10.0.0.99", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "255"};
   flowTable.insertWithPriority(25, tempArr);
   // flowTable.listPrinter();
   flowTable.listPrinter();
@@ -3283,8 +3285,8 @@ void Mobile::HandleReply(json_object *jsonreply){
   install = json_object_object_get(jsonreply, "install");
   toDelete = json_object_object_get(jsonreply, "delete");
 
-  std::cout<<json_object_get_string(json_object_array_get_idx(install,0))<<"\n";
-  std::cout<<json_object_get_string(json_object_array_get_idx(toDelete,0))<<"\n";
+  // std::cout<<json_object_get_string(json_object_array_get_idx(install,0))<<"\n";
+  // std::cout<<json_object_get_string(json_object_array_get_idx(toDelete,0))<<"\n";
 
   std::cout<<json_object_array_length(install)<<" is the number of flows to be installed. \n";
   std::cout<<json_object_array_length(toDelete)<<" is the number of flows to be deleted. \n";
@@ -3292,22 +3294,35 @@ void Mobile::HandleReply(json_object *jsonreply){
   int numToInstall = json_object_array_length(install);
   // int numToDelete = json_object_array_length(toDelete);
 
+  //RULES
+  //0 ip address ==
+  //1 sensor id ==
+  //2 data Ave >
+  //3 data Ave ==
+  //4 data Ave <
+  //5 smallest data >
+  //6 smallest data ==
+  //7 smallest data <
+  //8 largest data >
+  //9 largest data ==
+  //10 largest data <
+
   std::string tempArr[12];
   for (int i=0; i<numToInstall; i++){
     struct json_object *iterate;
     iterate = json_object_array_get_idx(install,i);
     std::cout<<json_object_get_string(iterate)<<" laman ng iterate\n";
-    tempArr[0]= json_object_get_string(json_object_object_get(iterate,"ipAdd"));
-    tempArr[1]=   json_object_get_string(json_object_object_get(iterate,"sensorId"));
-    tempArr[2]=    json_object_get_string(json_object_object_get(iterate,"dataAveGT"));
-    tempArr[3]=    json_object_get_string(json_object_object_get(iterate,"dataAveLT"));
-    tempArr[4]=    json_object_get_string(json_object_object_get(iterate,"dataAveET"));
-    tempArr[5]=    json_object_get_string(json_object_object_get(iterate,"smallestValGT"));
-    tempArr[6]=    json_object_get_string(json_object_object_get(iterate,"smallestValLT"));
-    tempArr[7]=    json_object_get_string(json_object_object_get(iterate,"smallestValET"));
-    tempArr[8]=    json_object_get_string(json_object_object_get(iterate,"largestValGT"));
-    tempArr[9]=    json_object_get_string(json_object_object_get(iterate,"largestValLT"));
-    tempArr[10]=    json_object_get_string(json_object_object_get(iterate,"largestValET"));
+    tempArr[0]= json_object_get_string(json_object_object_get(iterate,"ip_address"));
+    tempArr[1]=   json_object_get_string(json_object_object_get(iterate,"sensor_id"));
+    tempArr[2]=    json_object_get_string(json_object_object_get(iterate,"gt_data_ave"));
+    tempArr[3]=    json_object_get_string(json_object_object_get(iterate,"eq_data_ave"));
+    tempArr[4]=    json_object_get_string(json_object_object_get(iterate,"lt_data_ave"));
+    tempArr[5]=    json_object_get_string(json_object_object_get(iterate,"gt_smallest_val"));
+    tempArr[6]=    json_object_get_string(json_object_object_get(iterate,"eq_smallest_val"));
+    tempArr[7]=    json_object_get_string(json_object_object_get(iterate,"lt_smallest_val"));
+    tempArr[8]=    json_object_get_string(json_object_object_get(iterate,"gt_largest_val"));
+    tempArr[9]=    json_object_get_string(json_object_object_get(iterate,"eq_largest_val"));
+    tempArr[10]=    json_object_get_string(json_object_object_get(iterate,"lt_largest_val"));
     tempArr[11]=    json_object_get_string(json_object_object_get(iterate,"action"));
     
     for (int j=0; j<12;j++){
@@ -3315,7 +3330,7 @@ void Mobile::HandleReply(json_object *jsonreply){
     }
     std::cout<<"priority is "<<json_object_get_int(json_object_object_get(iterate,"priority"))<<"\n";
     //HERE IS THE PROBLEM
-    // flowTable.insertWithPriority(json_object_get_int(json_object_object_get(iterate,"priority")), tempArr);
+    flowTable.insertWithPriority(json_object_get_int(json_object_object_get(iterate,"priority")), tempArr);
     flowTable.listPrinter();
     // std::cout << tempArr;
 

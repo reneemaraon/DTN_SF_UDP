@@ -4,6 +4,7 @@ import time
 class SDDTN:
     __metaclass__ = ABCMeta
 
+    @abstractmethod
     def __init__(self, mode):
         if mode == 2:
             self.flow_tables = {}

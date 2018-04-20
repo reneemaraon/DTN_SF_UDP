@@ -1,0 +1,810 @@
+Received event type:  2
+Received json details { "event_type": 2, "mobile_id": 0, "ip_address": "10.0.0.1" }
+Json replied:  {'install': [{'gt_smallest_val': '*', 'eq_smallest_val': '*', 'sensor_id': '*', 'gt_data_ave': '*', 'lt_smallest_val': '*', 'priority': 10, 'eq_largest_val': '*', 'expiration': 1524226139.207382, 'gt_largest_val': '*', 'lt_data_ave': '4', 'eq_data_ave': '*', 'ip_address': '*', 'action': '0', 'lt_largest_val': '*'}, {'gt_smallest_val': '*', 'eq_smallest_val': '*', 'sensor_id': '*', 'gt_data_ave': '6', 'lt_smallest_val': '*', 'priority': 20, 'eq_largest_val': '*', 'expiration': 1524226139.20739, 'gt_largest_val': '*', 'lt_data_ave': '*', 'eq_data_ave': '*', 'ip_address': '*', 'action': '2', 'lt_largest_val': '*'}, {'gt_smallest_val': '*', 'eq_smallest_val': '*', 'sensor_id': '*', 'gt_data_ave': '*', 'lt_smallest_val': '*', 'priority': 1000, 'eq_largest_val': '*', 'expiration': 1524226139.207393, 'gt_largest_val': '*', 'lt_data_ave': '*', 'eq_data_ave': '*', 'ip_address': '*', 'action': '255', 'lt_largest_val': '*'}], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 7, "largest_val": 9, "smallest_val": 2, "time_received": 131, "datapoints": "0126-125-02,0127-126-08,0128-127-09,0129-128-09,0130-129-07," }
+Entering Emergency Mode
+Json replied:  {'install': [{'gt_smallest_val': '*', 'eq_smallest_val': '*', 'sensor_id': '1', 'gt_data_ave': '*', 'lt_smallest_val': '*', 'priority': 1, 'eq_largest_val': '*', 'expiration': 1524226142.522968, 'gt_largest_val': '*', 'lt_data_ave': '*', 'eq_data_ave': '*', 'ip_address': '*', 'action': '2', 'lt_largest_val': '*'}], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 2, "time_received": 136, "datapoints": "0131-130-09,0132-131-02,0133-132-02,0134-133-08,0135-134-07," }
+Exiting Emergency Mode
+Json replied:  {'install': [], 'delete': ['1']}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 141, "datapoints": "0136-135-01,0137-136-07,0138-137-02,0139-138-00,0140-139-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 8, "smallest_val": 4, "time_received": 146, "datapoints": "0141-140-08,0142-141-07,0143-142-04,0144-143-07,0145-144-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 7, "smallest_val": 0, "time_received": 151, "datapoints": "0146-145-04,0147-146-07,0148-147-07,0149-148-07,0150-149-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 156, "datapoints": "0151-150-06,0152-151-08,0153-152-04,0154-153-01,0155-154-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 161, "datapoints": "0156-155-05,0157-156-00,0158-157-07,0159-158-00,0160-159-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 1, "time_received": 166, "datapoints": "0161-160-09,0162-161-04,0163-162-06,0164-163-01,0165-164-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 171, "datapoints": "0166-165-00,0167-166-06,0168-167-07,0169-168-05,0170-169-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 6, "smallest_val": 3, "time_received": 176, "datapoints": "0171-170-05,0172-171-03,0173-172-04,0174-173-05,0175-174-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 8, "smallest_val": 4, "time_received": 181, "datapoints": "0176-175-05,0177-176-08,0178-177-04,0179-178-08,0180-179-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 1, "time_received": 186, "datapoints": "0181-180-02,0182-181-07,0183-182-01,0184-183-02,0185-184-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 9, "smallest_val": 1, "time_received": 191, "datapoints": "0186-185-01,0187-186-02,0188-187-09,0189-188-01,0190-189-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 9, "smallest_val": 0, "time_received": 196, "datapoints": "0191-190-02,0192-191-00,0193-192-03,0194-193-05,0195-194-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 0, "time_received": 201, "datapoints": "0196-195-03,0197-196-08,0198-197-00,0199-198-03,0200-199-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 2, "time_received": 206, "datapoints": "0201-200-08,0202-201-04,0203-202-06,0204-203-02,0205-204-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 3, "time_received": 211, "datapoints": "0206-205-08,0207-206-04,0208-207-03,0209-208-03,0210-209-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 8, "smallest_val": 4, "time_received": 216, "datapoints": "0211-210-04,0212-211-08,0213-212-04,0214-213-08,0215-214-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 4, "smallest_val": 0, "time_received": 221, "datapoints": "0216-215-01,0217-216-00,0218-217-02,0219-218-04,0220-219-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 5, "smallest_val": 1, "time_received": 226, "datapoints": "0221-220-02,0222-221-01,0223-222-03,0224-223-01,0225-224-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 7, "smallest_val": 3, "time_received": 231, "datapoints": "0226-225-07,0227-226-03,0228-227-03,0229-228-07,0230-229-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  1
+Received json details { "event_type": 1, "mobile_id": 0, "ip_address": "10.0.0.1" }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 368, "datapoints": "0231-230-06,0232-231-03,0233-232-05,0234-233-01,0235-234-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 3, "time_received": 370, "datapoints": "0236-235-08,0237-236-06,0238-237-03,0239-238-07,0240-239-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 2, "time_received": 372, "datapoints": "0241-240-02,0242-241-04,0243-242-08,0244-243-02,0245-244-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 0, "time_received": 374, "datapoints": "0246-245-07,0247-246-02,0248-247-00,0249-248-08,0250-249-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 376, "datapoints": "0251-250-04,0252-251-08,0253-252-03,0254-253-08,0255-254-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 1, "time_received": 378, "datapoints": "0256-255-08,0257-256-01,0258-257-09,0259-258-01,0260-259-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 0, "time_received": 380, "datapoints": "0261-260-01,0262-261-00,0263-262-07,0264-263-08,0265-264-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 1, "time_received": 382, "datapoints": "0266-265-03,0267-266-04,0268-267-01,0269-268-04,0270-269-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 2, "time_received": 384, "datapoints": "0271-270-03,0272-271-02,0273-272-03,0274-273-08,0275-274-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 386, "datapoints": "0276-275-05,0277-276-06,0278-277-09,0279-278-00,0280-279-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 8, "smallest_val": 0, "time_received": 388, "datapoints": "0281-280-06,0282-281-05,0283-282-00,0284-283-08,0285-284-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 2, "time_received": 390, "datapoints": "0286-285-03,0287-286-07,0288-287-02,0289-288-08,0290-289-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 4, "smallest_val": 1, "time_received": 392, "datapoints": "0291-290-01,0292-291-01,0293-292-02,0294-293-04,0295-294-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 2, "time_received": 394, "datapoints": "0296-295-09,0297-296-05,0298-297-02,0299-298-07,0300-299-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 396, "datapoints": "0301-300-09,0302-301-02,0303-302-03,0304-303-09,0305-304-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 398, "datapoints": "0306-305-09,0307-306-03,0308-307-03,0309-308-05,0310-309-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 8, "smallest_val": 0, "time_received": 400, "datapoints": "0311-310-08,0312-311-00,0313-312-00,0314-313-01,0315-314-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 6, "smallest_val": 4, "time_received": 402, "datapoints": "0316-315-04,0317-316-05,0318-317-05,0319-318-06,0320-319-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 1, "time_received": 404, "datapoints": "0321-320-05,0322-321-01,0323-322-09,0324-323-05,0325-324-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 9, "smallest_val": 0, "time_received": 406, "datapoints": "0326-325-07,0327-326-00,0328-327-09,0329-328-02,0330-329-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 4, "time_received": 408, "datapoints": "0331-330-09,0332-331-05,0333-332-05,0334-333-04,0335-334-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 7, "smallest_val": 1, "time_received": 410, "datapoints": "0336-335-01,0337-336-07,0338-337-01,0339-338-03,0340-339-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 0, "time_received": 412, "datapoints": "0341-340-05,0342-341-05,0343-342-00,0344-343-07,0345-344-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 414, "datapoints": "0346-345-01,0347-346-06,0348-347-04,0349-348-00,0350-349-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 416, "datapoints": "0351-350-02,0352-351-00,0353-352-05,0354-353-07,0355-354-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 7, "smallest_val": 0, "time_received": 418, "datapoints": "0356-355-00,0357-356-01,0358-357-03,0359-358-03,0360-359-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 8, "smallest_val": 1, "time_received": 420, "datapoints": "0361-360-01,0362-361-08,0363-362-01,0364-363-07,0365-364-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 1, "time_received": 422, "datapoints": "0366-365-09,0367-366-05,0368-367-03,0369-368-09,0370-369-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 4, "smallest_val": 2, "time_received": 424, "datapoints": "0371-370-04,0372-371-04,0373-372-02,0374-373-02,0375-374-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 7, "smallest_val": 0, "time_received": 426, "datapoints": "0376-375-05,0377-376-07,0378-377-00,0379-378-01,0380-379-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 7, "smallest_val": 2, "time_received": 428, "datapoints": "0381-380-07,0382-381-06,0383-382-06,0384-383-05,0385-384-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 0, "time_received": 430, "datapoints": "0386-385-08,0387-386-07,0388-387-00,0389-388-07,0390-389-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 432, "datapoints": "0391-390-03,0392-391-04,0393-392-07,0394-393-00,0395-394-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 6, "smallest_val": 4, "time_received": 434, "datapoints": "0396-395-06,0397-396-04,0398-397-04,0399-398-05,0400-399-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 436, "datapoints": "0401-400-08,0402-401-06,0403-402-03,0404-403-01,0405-404-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 3, "time_received": 438, "datapoints": "0406-405-08,0407-406-09,0408-407-06,0409-408-03,0410-409-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 2, "time_received": 440, "datapoints": "0411-410-04,0412-411-08,0413-412-09,0414-413-04,0415-414-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 0, "time_received": 442, "datapoints": "0416-415-06,0417-416-09,0418-417-08,0419-418-05,0420-419-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 8, "smallest_val": 0, "time_received": 444, "datapoints": "0421-420-02,0422-421-08,0423-422-00,0424-423-01,0425-424-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 0, "time_received": 446, "datapoints": "0426-425-00,0427-426-04,0428-427-09,0429-428-09,0430-429-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 6, "smallest_val": 2, "time_received": 448, "datapoints": "0431-430-02,0432-431-05,0433-432-04,0434-433-06,0435-434-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 6, "smallest_val": 1, "time_received": 450, "datapoints": "0436-435-02,0437-436-01,0438-437-06,0439-438-06,0440-439-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 2, "time_received": 452, "datapoints": "0441-440-04,0442-441-02,0443-442-09,0444-443-06,0445-444-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 454, "datapoints": "0446-445-07,0447-446-05,0448-447-09,0449-448-03,0450-449-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 456, "datapoints": "0451-450-05,0452-451-08,0453-452-01,0454-453-05,0455-454-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 461, "datapoints": "0456-455-00,0457-456-01,0458-457-09,0459-458-02,0460-459-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 7, "smallest_val": 3, "time_received": 466, "datapoints": "0461-460-07,0462-461-07,0463-462-05,0464-463-07,0465-464-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 548, "datapoints": "0466-465-04,0467-466-00,0468-467-04,0469-468-07,0470-469-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 6, "smallest_val": 1, "time_received": 550, "datapoints": "0471-470-06,0472-471-01,0473-472-03,0474-473-02,0475-474-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 552, "datapoints": "0476-475-03,0477-476-08,0478-477-02,0479-478-01,0480-479-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 1, "time_received": 554, "datapoints": "0481-480-02,0482-481-09,0483-482-01,0484-483-04,0485-484-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 5, "smallest_val": 1, "time_received": 556, "datapoints": "0486-485-05,0487-486-02,0488-487-03,0489-488-01,0490-489-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 0, "time_received": 558, "datapoints": "0491-490-08,0492-491-01,0493-492-07,0494-493-00,0495-494-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 8, "smallest_val": 4, "time_received": 560, "datapoints": "0496-495-08,0497-496-04,0498-497-08,0499-498-07,0500-499-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 3, "time_received": 562, "datapoints": "0501-500-04,0502-501-03,0503-502-03,0504-503-03,0505-504-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 564, "datapoints": "0506-505-03,0507-506-01,0508-507-07,0509-508-00,0510-509-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 2, "time_received": 566, "datapoints": "0511-510-09,0512-511-05,0513-512-08,0514-513-02,0515-514-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 4, "time_received": 568, "datapoints": "0516-515-04,0517-516-05,0518-517-04,0519-518-07,0520-519-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 1, "time_received": 570, "datapoints": "0521-520-01,0522-521-05,0523-522-07,0524-523-03,0525-524-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 1, "time_received": 572, "datapoints": "0526-525-05,0527-526-01,0528-527-07,0529-528-06,0530-529-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 0, "time_received": 574, "datapoints": "0531-530-00,0532-531-04,0533-532-02,0534-533-06,0535-534-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 7, "smallest_val": 0, "time_received": 576, "datapoints": "0536-535-01,0537-536-00,0538-537-04,0539-538-00,0540-539-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 4, "time_received": 578, "datapoints": "0541-540-04,0542-541-06,0543-542-05,0544-543-08,0545-544-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 8, "smallest_val": 0, "time_received": 580, "datapoints": "0546-545-00,0547-546-00,0548-547-04,0549-548-06,0550-549-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 5, "time_received": 582, "datapoints": "0551-550-06,0552-551-09,0553-552-05,0554-553-09,0555-554-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 6, "smallest_val": 0, "time_received": 584, "datapoints": "0556-555-01,0557-556-05,0558-557-05,0559-558-06,0560-559-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 0, "time_received": 586, "datapoints": "0561-560-02,0562-561-00,0563-562-08,0564-563-08,0565-564-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 588, "datapoints": "0566-565-08,0567-566-01,0568-567-02,0569-568-07,0570-569-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 2, "time_received": 590, "datapoints": "0571-570-09,0572-571-02,0573-572-03,0574-573-04,0575-574-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 4, "time_received": 592, "datapoints": "0576-575-05,0577-576-04,0578-577-06,0579-578-04,0580-579-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 4, "time_received": 594, "datapoints": "0581-580-04,0582-581-04,0583-582-05,0584-583-04,0585-584-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 596, "datapoints": "0586-585-04,0587-586-09,0588-587-05,0589-588-00,0590-589-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 7, "smallest_val": 0, "time_received": 598, "datapoints": "0591-590-01,0592-591-03,0593-592-07,0594-593-03,0595-594-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 2, "time_received": 601, "datapoints": "0596-595-07,0597-596-05,0598-597-03,0599-598-02,0600-599-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 7, "smallest_val": 1, "time_received": 606, "datapoints": "0601-600-01,0602-601-03,0603-602-01,0604-603-07,0605-604-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 6, "smallest_val": 0, "time_received": 611, "datapoints": "0606-605-03,0607-606-05,0608-607-00,0609-608-01,0610-609-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 6, "smallest_val": 0, "time_received": 616, "datapoints": "0611-610-00,0612-611-02,0613-612-06,0614-613-05,0615-614-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 2, "largest_val": 3, "smallest_val": 0, "time_received": 621, "datapoints": "0616-615-03,0617-616-03,0618-617-03,0619-618-02,0620-619-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 626, "datapoints": "0621-620-04,0622-621-05,0623-622-00,0624-623-09,0625-624-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 5, "smallest_val": 1, "time_received": 631, "datapoints": "0626-625-03,0627-626-03,0628-627-01,0629-628-05,0630-629-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 1, "time_received": 636, "datapoints": "0631-630-05,0632-631-07,0633-632-01,0634-633-01,0635-634-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 8, "smallest_val": 4, "time_received": 641, "datapoints": "0636-635-04,0637-636-08,0638-637-06,0639-638-06,0640-639-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  1
+Received json details { "event_type": 1, "mobile_id": 0, "ip_address": "10.0.0.1" }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 6, "smallest_val": 0, "time_received": 734, "datapoints": "0641-640-06,0642-641-06,0643-642-05,0644-643-00,0645-644-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 1, "largest_val": 4, "smallest_val": 0, "time_received": 736, "datapoints": "0646-645-01,0647-646-04,0648-647-00,0649-648-01,0650-649-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 8, "smallest_val": 3, "time_received": 738, "datapoints": "0651-650-08,0652-651-07,0653-652-03,0654-653-07,0655-654-06," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 0, "time_received": 740, "datapoints": "0656-655-06,0657-656-09,0658-657-05,0659-658-05,0660-659-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 2, "time_received": 742, "datapoints": "0661-660-08,0662-661-04,0663-662-02,0664-663-03,0665-664-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 7, "smallest_val": 0, "time_received": 744, "datapoints": "0666-665-07,0667-666-04,0668-667-02,0669-668-00,0670-669-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 7, "smallest_val": 4, "time_received": 746, "datapoints": "0671-670-04,0672-671-07,0673-672-06,0674-673-05,0675-674-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 0, "time_received": 748, "datapoints": "0676-675-04,0677-676-05,0678-677-00,0679-678-04,0680-679-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 0, "time_received": 750, "datapoints": "0681-680-07,0682-681-00,0683-682-09,0684-683-07,0685-684-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 9, "smallest_val": 0, "time_received": 752, "datapoints": "0686-685-05,0687-686-00,0688-687-02,0689-688-03,0690-689-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 2, "time_received": 754, "datapoints": "0691-690-06,0692-691-03,0693-692-06,0694-693-02,0695-694-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 9, "smallest_val": 0, "time_received": 756, "datapoints": "0696-695-04,0697-696-00,0698-697-02,0699-698-09,0700-699-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 6, "smallest_val": 1, "time_received": 758, "datapoints": "0701-700-04,0702-701-06,0703-702-01,0704-703-04,0705-704-02," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 9, "smallest_val": 0, "time_received": 760, "datapoints": "0706-705-05,0707-706-01,0708-707-00,0709-708-03,0710-709-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 762, "datapoints": "0711-710-08,0712-711-01,0713-712-08,0714-713-01,0715-714-05," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 0, "time_received": 764, "datapoints": "0716-715-08,0717-716-00,0718-717-06,0719-718-08,0720-719-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 0, "time_received": 766, "datapoints": "0721-720-08,0722-721-01,0723-722-04,0724-723-00,0725-724-08," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 8, "smallest_val": 1, "time_received": 768, "datapoints": "0726-725-04,0727-726-05,0728-727-08,0729-728-01,0730-729-03," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 2, "time_received": 770, "datapoints": "0731-730-02,0732-731-08,0733-732-09,0734-733-07,0735-734-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 3, "largest_val": 5, "smallest_val": 0, "time_received": 772, "datapoints": "0736-735-02,0737-736-05,0738-737-03,0739-738-05,0740-739-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 3, "time_received": 774, "datapoints": "0741-740-03,0742-741-09,0743-742-08,0744-743-04,0745-744-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 1, "time_received": 776, "datapoints": "0746-745-03,0747-746-06,0748-747-06,0749-748-07,0750-749-01," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 7, "largest_val": 9, "smallest_val": 5, "time_received": 778, "datapoints": "0751-750-05,0752-751-08,0753-752-07,0754-753-09,0755-754-09," }
+Entering Emergency Mode
+Json replied:  {'install': [{'gt_smallest_val': '*', 'eq_smallest_val': '*', 'sensor_id': '1', 'gt_data_ave': '*', 'lt_smallest_val': '*', 'priority': 1, 'eq_largest_val': '*', 'expiration': 1524226155.737228, 'gt_largest_val': '*', 'lt_data_ave': '*', 'eq_data_ave': '*', 'ip_address': '*', 'action': '2', 'lt_largest_val': '*'}], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 5, "largest_val": 9, "smallest_val": 1, "time_received": 780, "datapoints": "0756-755-01,0757-756-02,0758-757-09,0759-758-06,0760-759-07," }
+Exiting Emergency Mode
+Json replied:  {'install': [], 'delete': ['1']}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 9, "smallest_val": 1, "time_received": 782, "datapoints": "0761-760-04,0762-761-02,0763-762-08,0764-763-01,0765-764-09," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 0, "time_received": 784, "datapoints": "0766-765-09,0767-766-06,0768-767-09,0769-768-00,0770-769-07," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 6, "largest_val": 9, "smallest_val": 0, "time_received": 786, "datapoints": "0771-770-09,0772-771-08,0773-772-08,0774-773-06,0775-774-00," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 0, "time_received": 788, "datapoints": "0776-775-02,0777-776-07,0778-777-00,0779-778-07,0780-779-04," }
+Json replied:  {'install': [], 'delete': []}
+
+
+
+Received event type:  0
+Received json details { "event_type": 0, "mobile_id": 0, "ip_address": "10.0.0.1", "sensor_id": 1, "sensor_ip_address": "10.0.0.3", "data_ave": 4, "largest_val": 7, "smallest_val": 0, "time_received": 790, "datapoints": "0781-780-04,0782-781-04,0783-782-00,0784-783-07,0785-784-

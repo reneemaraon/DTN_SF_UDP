@@ -15,10 +15,9 @@ x = FireDetection(2)
 count = 1
 while True:
 	json_str = socket.recv()
-	print "Received packet in %s" % json_str.decode("utf-8")
 	data_print = json.loads(json_str.decode("utf-8"))
-	print "Received event type: "
-	print data_print['event_type']
+	print "Received event type: ",data_print['event_type']
+	print "Received json details %s" % json_str.decode("utf-8")
 
 	
 
@@ -29,8 +28,7 @@ while True:
 	# print jsonreply	
 
 	jsonreply2 = x.sim_call(data_print)
-	print "result ni sim_call()"
-	print jsonreply2
-
-	socket.send_json(jsonreply)
+	print "Json replied: ", jsonreply2
+	print "\n\n"
+	socket.send_json(jsonreply2)
 	count+=1;
