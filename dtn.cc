@@ -255,29 +255,21 @@ void DtnExample::Run(){
   Config::SetDefault("ns3::ArpCache::MaxRetries", UintegerValue(10)); // default: 3
   Config::SetDefault("ns3::ArpCache::AliveTimeout", StringValue("5000000000000ns")); // 5000 s, default: 120 s
   CreateNodes();
-  // std::cout <<"CN\n";
   CreateDevices();
-  // std::cout <<"CD\n";
   InstallInternetStack();
-  // std::cout <<"after IIS\n";
   InstallApplications();
-  // std::cout <<"after IA\n";
   PopulateArpCache();
-  // std::cout <<"YESPopu arp cache \n";
   std::cout << "Starting simulation for " << duration << " s, " <<
     "seed value " << seed << "\n";
   
   Simulator::Stop(Seconds(duration));
-  // std::cout <<"STOP\n";
   AnimationInterface anim("animDTN2.xml");
   anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
   // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
-  // std::cout <<"RUN\n";
   Simulator::Run();
   myos.close(); // close log file
   ysaout.close();
   Simulator::Destroy();
-  // std::cout <<"DEST\n";
 }
 
 // void DtnExample::Report(std::ostream &){ 
@@ -289,11 +281,6 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
   mypacket::BndlHeader bndlHeader;
   cpkt->RemoveHeader(tHeader);
   cpkt->RemoveHeader(bndlHeader);
-  // cpkt->AddHeader(bndlHeader);
-  // cpkt->AddHeader(tHeader);
-  // uint32_t seqno = bndlHeader.GetOriginSeqno();
-
-  // std::string tempArr[12];
 
 
   zmq::context_t context (1);
@@ -328,7 +315,6 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
 
     //SENSOR ID
     tmp = json_object_new_int((int)bndlHeader.GetSensorID());
-    std::cout<<"sensor id of sensor being packet in "<<(int)bndlHeader.GetSensorID()<<"\n";
     json_object_object_add(object, "sensor_id", tmp);
 
 
@@ -382,8 +368,6 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
 
 
 
-
-
     //REPLY HANDLING
 
     zmq::message_t reply;
@@ -392,36 +376,15 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
 
     app[nodeId]->HandleReply(jstring);
-    // std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
-
-    // tempArr[0]= json_object_get_string(json_object_object_get(jstring,"ipAdd"));
-    // tempArr[1]=   json_object_get_string(json_object_object_get(jstring,"rule1"));
-    // tempArr[2]=    json_object_get_string(json_object_object_get(jstring,"rule2"));
-    // tempArr[3]=    json_object_get_string(json_object_object_get(jstring,"rule3"));
-    // tempArr[4]=    json_object_get_string(json_object_object_get(jstring,"rule4"));
-    // tempArr[5]=    json_object_get_string(json_object_object_get(jstring,"rule5"));
-    // tempArr[6]=    json_object_get_string(json_object_object_get(jstring,"rule6"));
-    // tempArr[7]=    json_object_get_string(json_object_object_get(jstring,"rule7"));
-    // tempArr[8]=    json_object_get_string(json_object_object_get(jstring,"rule8"));
-    // tempArr[9]=    json_object_get_string(json_object_object_get(jstring,"rule9"));
-    // tempArr[10]=    json_object_get_string(json_object_object_get(jstring,"rule10"));
-    // tempArr[11]=    json_object_get_string(json_object_object_get(jstring,"action"));
-    
-    // app[nodeId]->flowTable.insertWithPriority(50+recvcount, tempArr);
-    // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
     
     app[nodeId]->flowTable.listPrinter();
     
 
     recvcount++;
   }
-  // std::cout<<"Teleporting bundle of sequence "<<seqno<<" to base station \n";
-  // nodes.Get(2)->GetApplication()->ReceiveTeleport(pkt);
-  // basenode->ReceiveTeleport(pkt);
 }
 
 void DtnExample::InsertToMobile(int nodeId, std::string flow[], int priority){
-  std::cout<<"HIIIIIIIIIIIIIIIIIIIII\n";  
   app[nodeId]->flowTable.insertWithPriority(priority,flow);
   app[nodeId]->flowTable.listPrinter();
 }
@@ -524,7 +487,7 @@ void DtnExample::InstallApplications(){
       app1->SensorSetup(nodes.Get(i), this);
       app1->destinationNode=2;
 
-      // std::cout << "Opening Sensor Buffer Details"<< " \n";
+      std::cout << "Opening Sensor Buffer Details"<< " \n";
       // bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
@@ -637,34 +600,10 @@ void DtnExample::InstallApplications(){
       recvSink->SetRecvCallback(MakeCallback(&Base::ReceiveHello, basenode));
 
       basenode->SendHello(source, duration, Seconds(0.1 + 0.00085*i), 1);
-      // int x = nodes.Get(2)->GetNApplications();
-      // std::cout<<"number of apps "<<x<<"\n";
 
     }
   }
-          ///////////////// ZMQ PART //////////////////////////
 
-
-  // int recvcount = 1;
-  // while (recvcount<2){
-  //   zmq::message_t request(5);
-  //   memcpy(request.data(), "Hello", 5);
-  //   std::cout <<"Sending Hello "<<recvcount<<"...\n";
-  //   socket.send(request);
-
-  //   zmq::message_t reply;
-  //   socket.recv(&reply);
-  //   // // std::cout<<reply<<"Received World \n";    
-  //   // std::string rpl = std::string(static_cast<char*>(reply.data()),reply.size());
-  //   // std::cout<<rpl<<"\n";
-  //   json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
-  //   std::cout<<json_object_get_string(json_object_object_get(jstring,"rule1"))<<"\n";
-
-
-  //   recvcount++;
-  // }
-
-  // //////////////// END OF ZMQ PART ///////////////////////////
 }
 
 void DtnExample::PopulateArpCache(){ 
@@ -758,8 +697,7 @@ DtnApp::~DtnApp(){
 }
 
 void DtnApp::ReceiveBundle(Ptr<Socket> socket){
-  // std::cout << "SA DTNAPP\n";
-  //m_node or GetNode() is yung receiver
+
   Address ownaddress;
 
   socket->GetSockName(ownaddress);
@@ -1026,7 +964,6 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
               }
 
 
-              // SendAP(bndlHeader.GetDst(), bndlHeader.GetOrigin(), bndlHeader.GetOriginSeqno(), bndlHeader.GetSrcTimestamp());
               
 
           } 
@@ -1041,7 +978,6 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
             qpkt->AddHeader(tHeader);
             if((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s){
               bool success = m_queue->Enqueue(qpkt);
-              // SendAP(bndlHeader.GetDst(), bndlHeader.GetOrigin(), bndlHeader.GetOriginSeqno(), bndlHeader.GetSrcTimestamp());
 
               if(success){
               }
@@ -1219,9 +1155,7 @@ void DtnApp::SendMore(InetSocketAddress sendTo, int32_t id, int32_t retx){
   } 
   else
     lastTxBytes[index] = 0;
-    std::cout<<"hi\n";
-    // m_queue->Dequeue();
-    //dito lang ako mag dedequeue
+
 }
 
 // void DtnApp::ScheduleTx(){
@@ -1554,7 +1488,6 @@ void DtnApp::CheckQueues(uint32_t bundletype){
       anotherp->RemoveHeader(bndlHeader);
       anotherp->AddHeader(bndlHeader);
       anotherp->AddHeader(tHeader);
-      // std::cout<<"Retransmitting from 10.0.0."<<m_node->GetId()+1<<" to "<<neighbor_address[i].GetIpv4()<<" sequence "<<bndlHeader.GetOriginSeqno()<<" size:"<<packet->GetSize()<< "bytes\n";
       NumFlows++;
       sendTos=(InetSocketAddress*)realloc(sendTos,NumFlows*sizeof(InetSocketAddress));
       sendTos[NumFlows-1] = dstremoteaddr.GetIpv4();
@@ -2625,7 +2558,6 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
             qpkt->AddHeader(bndlHeader);
             qpkt->AddHeader(tHeader);
             if((m_queue->GetNBytes() + m_antipacket_queue->GetNBytes() + qpkt->GetSize()) <= b_s){
-              // std::cout << "PUMASOK SA IF \n";
               std::stringstream forcheck;
               address.GetIpv4().Print(forcheck);
               forcheck.str();
@@ -2637,12 +2569,9 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               largest << bndlHeader.GetLargestVal();
               smallest << bndlHeader.GetSmallestVal();
               sensorid << (int)bndlHeader.GetSensorID();
-              std::cout<<"sensor id is "<<sensorid.str()<<"\n";
               std::string ichcheck[11];
               ichcheck[0]=forcheck.str();
               ichcheck[1]=sensorid.str();
-              // sprintf(ichcheck[2], "%d", bndlHeader.GetDataAverage());
-              // ichcheck[2]= std::to_string(bndlHeader.GetDataAverage()); //ave
               ichcheck[2]=ave.str(); //ave
               ichcheck[3]=ave.str(); //ave
               ichcheck[4]=ave.str(); //ave
@@ -2652,26 +2581,18 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
               ichcheck[8]=smallest.str(); //largest
               ichcheck[9]=smallest.str(); //largest
               ichcheck[10]=smallest.str(); //largest
-              // std::cout <<"ichcheck 1 "<< ichcheck[1]<<" ichcheck 5 "<< ichcheck[5]<<" ichcheck "<<ichcheck[8]<<"\n";
-              // address.GetIpv4().Serialize(ipaddress);
-             // std::cout << address.GetIpv4()<<"  "<<forcheck.str()[forcheck.str().length()-1]<<"\n";
+              std::cout<<"At time "<<Simulator::Now().GetSeconds()<<" mobile node "<<m_node->GetId()<<" received bundle of sequence no. "<<bndlHeader.GetOriginSeqno()<<".\n";
+              std::cout<<"Checking with Flowtable...\n";
               int result=CheckMatch(ichcheck);
-              std::cout << "NIRETURN: " << result << "\n";
+              std::cout << "Returned Action: " << result << "\n";
               bool success;
               if(result ==0){  //drop
                 std::cout << "ACTION: DROP\n";
-                std::cout << "bundle dropped\n";
+                std::cout << "Bundle dropped.\n";
                 std::cout<<m_queue->GetNPackets()<<"\n";
               }
               else if(result == 1){
-                // qpkt->RemoveHeader(tHeader);
-                // qpkt->RemoveHeader(bndlHeader);
-                // qpkt->AddHeader(bndlHeader);
-                // qpkt->AddHeader(tHeader);
-            
-                // bndlHeader.SetDTBFlag(1);
-                // success = m_queue->Enqueue(qpkt);
-                // success = m_packetin_queue->Enqueue(qpkt);
+
                 std::cout << "ACTION: DIRECT TO BASE\n";
                 std::cout << "Enqueueing to dtb queue. m_dtb_queue size: " << m_dtb_queue->GetNPackets() << "\n";
                 m_dtb_queue->Enqueue(qpkt);
@@ -2687,14 +2608,13 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 std::cout<<bndlHeader.GetDataAverage()<<" is the data average\n";
                 success = m_packetin_queue->Enqueue (qpkt);
                 if (success){
-                  std::cout<<"Successfully enqueued packet\n";
+                  std::cout<<"Successfully enqueued packet to packet in queue.\n";
                 }                
 
               }
               else if(result==255){
                 std::cout<<"ACTION: SPREAD\n";
 
-                std::cout<<"Received bundle of sequence number: "<<bndlHeader.GetOriginSeqno()<<" and size "<<qpkt->GetSize()<<" bytes."<<"\n";
                 // HERE IS TO COMMENT OUT IF BACK TO 1000 SI MOBILE
                 // if (m_queue->GetNPackets()==10){
                 //   Ptr<Packet> pkt = m_queue->Dequeue();
@@ -2707,9 +2627,9 @@ void Mobile::ReceiveBundle(Ptr<Socket> socket){
                 // }
                 // // END HERE
                 m_queue->Enqueue(qpkt);
-                std::cout<<m_queue->GetNPackets()<<"\n";
+                std::cout<<"Bundle successfully enqueued to m_queue.\n";                
+
               }
-              // SendAP(bndlHeader.GetDst(), bndlHeader.GetOrigin(), bndlHeader.GetOriginSeqno(), bndlHeader.GetSrcTimestamp());
 
             } 
             else{
@@ -2743,11 +2663,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
   //9 largest data ==
   //10 largest data <
   // flowTable.listPrinter();
-  // std::cout << "\nIN CHECK MATCH\n";
-  // std::cout << "IN CHECK MATCH" << ": [" << ichcheck[0] << ", " << ichcheck[1] << ", " << ichcheck[2] << ", " << ichcheck[3] << ", " << ichcheck[4] << ", " << ichcheck[5] << ", " << ichcheck[6] << ", " << ichcheck[7] << ", " << ichcheck[8] << ", " << ichcheck[9] << ", " << ichcheck[10] << "]\n";
   int matchFlag;
-  // std::stringstream ftmEntryStream;
-  // std::stringstream ichcheckStream;
   int ftmEntry;
   int toCheck;
   int irereturn;
@@ -2770,9 +2686,9 @@ int Mobile::CheckMatch(std::string ichcheck[]){
           std::stringstream ichcheckStream(ichcheck[y]);
           ichcheckStream >> toCheck;
 
-          std::cout << "ENTRY: " << ftmEntry << "\n";
-          std::cout << "ICHCHECK: " << toCheck << "\n";
-          std::cout<< "At flow index "<<x<<"\n";
+          // std::cout<< "At flow index "<<x<<"\n";
+          // std::cout << "ENTRY: " << ftmEntry << "\n";
+          // std::cout << "ICHCHECK: " << toCheck << "\n";
         }
         if(y==0){
           if(ichcheck[y]==flowTableMatchEntry[y]){
@@ -2888,7 +2804,7 @@ int Mobile::CheckMatch(std::string ichcheck[]){
     }
   }
   if(matchFlag==0){
-    std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTable.getSize() << " ACTION: something action ng wildcard" << "\n";
+    std::cout << "NO MATCH OR WILDCARD; Flow index: " << flowTable.getSize() << "\n";
     return 255;
   }
   return 000;
@@ -3311,7 +3227,6 @@ void Mobile::HandleReply(json_object *jsonreply){
   for (int i=0; i<numToInstall; i++){
     struct json_object *iterate;
     iterate = json_object_array_get_idx(install,i);
-    std::cout<<json_object_get_string(iterate)<<" laman ng iterate\n";
     tempArr[0]= json_object_get_string(json_object_object_get(iterate,"ip_address"));
     tempArr[1]=   json_object_get_string(json_object_object_get(iterate,"sensor_id"));
     tempArr[2]=    json_object_get_string(json_object_object_get(iterate,"gt_data_ave"));
@@ -3325,18 +3240,10 @@ void Mobile::HandleReply(json_object *jsonreply){
     tempArr[10]=    json_object_get_string(json_object_object_get(iterate,"lt_largest_val"));
     tempArr[11]=    json_object_get_string(json_object_object_get(iterate,"action"));
     
-    for (int j=0; j<12;j++){
-      std::cout<<tempArr[j]<<"\n";
-    }
-    std::cout<<"priority is "<<json_object_get_int(json_object_object_get(iterate,"priority"))<<"\n";
-    //HERE IS THE PROBLEM
+
     flowTable.insertWithPriority(json_object_get_int(json_object_object_get(iterate,"priority")), tempArr);
     flowTable.listPrinter();
-    // std::cout << tempArr;
 
-// [{"priority": "100","ipAdd": "10.0.0.8","sensorId": "12","dataAveGT": "*","dataAveLT": "*",
-//   "dataAveET": "*","smallestValGT": "*","smallestValLT": "4","smallestValET": "*","largestValGT"
-//   : "*","largestValLT": "*","largestValET": "*"}
   }
 
   // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
