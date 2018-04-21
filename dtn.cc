@@ -300,6 +300,9 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     tmp = json_object_new_int(0);
     json_object_object_add(object, "event_type", tmp);
 
+    tmp = json_object_new_int((int)bndlHeader.GetOriginSeqno());
+    json_object_object_add(object, "bundle_seqno", tmp);
+
 
     //MOBILE ID
     tmp = json_object_new_int(nodeId);
@@ -336,7 +339,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     json_object_object_add(object, "smallest_val", tmp);
 
     //timestamp
-    tmp = json_object_new_int(Simulator::Now().GetSeconds()-2);
+    tmp = json_object_new_int(Simulator::Now().GetSeconds());
     json_object_object_add(object, "time_received", tmp);
 
 
@@ -373,6 +376,33 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     zmq::message_t reply;
     socket.recv(&reply);
 
+    std::cout<<"Bundle Received by Controller\n";
+
+    std::cout<<"string is :"<<s<<"\n";
+    // std::ofstream datapoints;
+    // datapoints.open("datapoints.txt",std::ios_base::app);
+    // if(datapoints.is_open()){
+    //   std::cout<<"Hello\n";
+    //   datapoints<<s;
+    //   datapoints<<"HI THERE FAM\n";
+    // }
+    // datapoints.close();
+  
+    std::cout<<"y"<<bndlHeader.GetOriginSeqno()<<","<<time<<","<<delay<<std::endl;
+
+    std::string delimiter = ",";
+    std::string::size_type sz;
+    size_t pos = 0;
+    std::string token;
+    while((pos = s.find(delimiter)) != std::string::npos){
+        token = s.substr(0, pos);
+
+
+        std::cout <<"x"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<std::endl;
+        s.erase(0, pos + delimiter.length());
+    }
+
+    std::cout<<"Processing flow received...\n";
     json_object *jstring = json_tokener_parse(static_cast<char*>(reply.data()));
 
     app[nodeId]->HandleReply(jstring);
@@ -1365,9 +1395,7 @@ void DtnApp::CheckQueues(uint32_t bundletype){
                  ((Simulator::Now().GetSeconds() - neighbor_last_seen[i]) < 0.1) &&(neighbor_address[i].GetIpv4() != bndlHeader.GetOrigin())){
                   int neighbor_has_bundle = 0, bundle_sent = 0, j=0;
                   //check kung meron ba siya nung bundle
-                  if ((Simulator::Now().GetSeconds()>700)&&(m_node->GetId()==1)){
-                   std::cout<<"HEllo\n";
-                  }
+
                   while((neighbor_has_bundle == 0) &&(neighbor_hello_bundles[i][j] != 0) &&(j < 1000)){
                     if((unsigned)neighbor_hello_bundles[i][j] == bndlHeader.GetOriginSeqno())
                       neighbor_has_bundle = 1;
