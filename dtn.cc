@@ -560,9 +560,9 @@ void DtnExample::InstallApplications(){
 
       app[i]->SendHello(source, duration, Seconds(0.1 + 0.00085*i), 1);
       // TriggerInsertFlow();
-      std::cout <<"TRIGGERRRRR\n";
+      // std::cout <<"TRIGGERRRRR\n";
       // Simulator::Schedule(Seconds(1.0), &Mobile::TriggerInsertFlow, this);
-      std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
+      // std::cout << "At time " << Simulator::Now().GetSeconds() << " scheduled insert of flow\n";
       app[i]->ScheduleTx();
       app[i]->Alive(1);
 
@@ -3195,6 +3195,9 @@ void Mobile::CheckQueues(uint32_t bundletype){
 void Mobile::HandleReply(json_object *jsonreply){
 
 
+  std::cout<<"Received json from zmq:\n";
+  printf("%s\n", json_object_to_json_string(jsonreply));
+
   struct json_object *install;
   struct json_object *toDelete;
 
@@ -3224,6 +3227,7 @@ void Mobile::HandleReply(json_object *jsonreply){
   //10 largest data <
 
   std::string tempArr[12];
+  // INSTALLING FLOWS
   for (int i=0; i<numToInstall; i++){
     struct json_object *iterate;
     iterate = json_object_array_get_idx(install,i);
@@ -3246,8 +3250,7 @@ void Mobile::HandleReply(json_object *jsonreply){
 
   }
 
-  // std::cout<<"received at magical land flow for bundle of sequence "<<seqno<<"\n";
-  
+  // DELETING FLOWS (IN PROGRESS)  
 
 }
 
@@ -3287,8 +3290,9 @@ void Mobile::Alive(int first){
 
 
       //writing 
+      std::cout<<"Sending JSON to zmq: \n";
       printf("%s\n", json_object_to_json_string(object));
-      printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
+      // printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
 
 
       zmq::message_t request(strlen(json_object_to_json_string(object)));
@@ -3319,7 +3323,7 @@ void Mobile::Alive(int first){
   //pagtawag ng boot
   else if (first ==1){
     std::cout<<"SCHEDULING BOOT 1 MIN FROM NOW.\n";
-    Simulator::Schedule(Seconds(60.0),&Mobile::Alive, this, 0);
+    Simulator::Schedule(Seconds(1.0),&Mobile::Alive, this, 0);
   }
   // alive every five minutes
   else{
@@ -3355,8 +3359,9 @@ void Mobile::Alive(int first){
 
 
       //writing 
+      std::cout<<"Sending JSON to zmq: \n";
       printf("%s\n", json_object_to_json_string(object));
-      printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
+      // printf("size: %u \n", (unsigned)strlen(json_object_to_json_string(object)));
 
 
       zmq::message_t request(strlen(json_object_to_json_string(object)));
