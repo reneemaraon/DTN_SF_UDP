@@ -20,7 +20,7 @@ class FireDetection(SDDTN):
             'sensor_id': '*',
             'gt_data_ave': '*',
             'eq_data_ave': '*',
-            'lt_data_ave': '4',
+            'lt_data_ave': '7',
             'gt_smallest_val': '*',
             'eq_smallest_val': '*',
             'lt_smallest_val': '*',
@@ -35,7 +35,7 @@ class FireDetection(SDDTN):
             'priority': 20,
             'ip_address': '*',
             'sensor_id': '*',
-            'gt_data_ave': '6',
+            'gt_data_ave': '10',
             'eq_data_ave': '*',
             'lt_data_ave': '*',
             'gt_smallest_val': '*',
@@ -73,7 +73,7 @@ class FireDetection(SDDTN):
     
     def packet_in(self, request):
         if self.emergency_mode == 0:
-            if (request['data_ave'] > 6):
+            if (request['data_ave'] > 10):
                 flow = {
                     'priority': 1,
                     'ip_address': '*',
@@ -97,7 +97,7 @@ class FireDetection(SDDTN):
                 self.emergency_mode =1
 
         elif self.emergency_mode ==1:
-            if (request['data_ave'] < 6 and request['sensor_id'] == self.emergency_sensor):
+            if (request['data_ave'] < 7 and request['sensor_id'] == self.emergency_sensor):
                 print "Exiting Emergency Mode"
                 self.emergency_mode=0
                 self.delete_flow_from_all(1)

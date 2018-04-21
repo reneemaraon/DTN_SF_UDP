@@ -377,7 +377,8 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     socket.recv(&reply);
 
     std::cout<<"Bundle Received by Controller\n";
-
+    float time = Simulator::Now().GetSeconds();
+    float delay = Simulator::Now().GetSeconds() - bndlHeader.GetSrcTimestamp().GetSeconds() + 1000.0*(bndlHeader.GetNretx());
     std::cout<<"string is :"<<s<<"\n";
     // std::ofstream datapoints;
     // datapoints.open("datapoints.txt",std::ios_base::app);

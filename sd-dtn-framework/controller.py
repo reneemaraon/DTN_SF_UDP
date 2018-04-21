@@ -19,7 +19,8 @@ while True:
 	print "Received event type: ",data_print['event_type']
 	print "Received json details %s" % json_str.decode("utf-8")
 
-	
+	if (data_print['event_type']==0):
+		print data_print['datapoints']	
 
 	# DITO MO IPROCESS ANG NARECEIVE NA JSON
 
