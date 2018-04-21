@@ -97,7 +97,7 @@ class FireDetection(SDDTN):
                 self.emergency_mode =1
 
         elif self.emergency_mode ==1:
-            if (request['data_ave'] < 7 and request['sensor_id'] == self.emergency_sensor):
+            if (request['data_ave'] < 10 and request['sensor_id'] == self.emergency_sensor):
                 print "Exiting Emergency Mode"
                 self.emergency_mode=0
                 self.delete_flow_from_all(1)

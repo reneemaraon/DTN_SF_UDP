@@ -164,6 +164,7 @@ class Sensor: public DtnApp{
     void StoreInBuffer(std::string tempor);
     void CreateBundle();
 
+    float baseValue;
     int bufferCount;
     int entryLength;
     int bufferLength;
@@ -1732,6 +1733,7 @@ void Sensor::SensorSetup(Ptr<Node> node, DtnExample *dtnEx){
   dtnExample = dtnEx;
   dataSum = 0;
   largestData = 0;
+  baseValue = 7;
   smallestData = 2000000;
   m_node = node;
   m_antipacket_queue = CreateObject<DropTailQueue>();
@@ -1866,15 +1868,12 @@ void Sensor::ReceiveHello(Ptr<Socket> socket){
 
 void Sensor::GenerateData(uint32_t first){
   if(first==0){
-    // if(bufferCount<bufferLength){
     const char alphanum[] = "0123456789";
     
     std::stringstream holder;
     holder <<Simulator::Now().GetSeconds();
     std::string tempo=std::string(dataTimeSize - holder.str().length(), '0') + holder.str();
 
-    // std::cout << "YSAAAAAAAAAAAA" <<" "<<Simulator::Now().GetSeconds()<<" "<<tempo<<"\n";
-    // std::cout<<"Generated Data for node "<<m_node->GetId()<<" at time :"<<Simulator::Now()<<" with data ";
     std::stringstream holder2;
     holder2 << nextID;
     std::string tempor=tempo+"-";
@@ -1888,19 +1887,23 @@ void Sensor::GenerateData(uint32_t first){
     }
     int numOfDigits = entryLength-dataIDSize-dataTimeSize-2;
     float currentSum =0;
-    for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
-      int randnum = rand() % 10;
 
-      //fixing entry to be less than 10 always
-      if (i < (entryLength-dataIDSize-dataTimeSize-3)){
-        tempor+= alphanum[0];
-      }
+    int currtime = Simulator::Now().GetSeconds();
 
-      else{
-        tempor += alphanum[randnum];
-        currentSum +=((int)alphanum[randnum]-48)*(pow(10,(numOfDigits-i-1)));
-      }
+    if (((currtime > 200)&&(currtime<400))&&(baseValue<20)){
+      baseValue+=0.2;
     }
+    else if ((currtime>400)&&(baseValue>8)){
+      baseValue-=0.3;
+    }    
+    
+    int temp = baseValue;
+    for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
+      int randnum = temp/(pow(10,(numOfDigits-i-1)));
+      temp = ((int)temp)%(int)(pow(10,(numOfDigits-i-1)));
+      tempor += alphanum[randnum];
+    }
+    currentSum+=baseValue;
     // std::cout<<"\n"<<currentSum<<"\n";
     if(currentSum<smallestData){
       smallestData = currentSum;
