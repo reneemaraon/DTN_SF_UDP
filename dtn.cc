@@ -1928,7 +1928,7 @@ void Sensor::CreateBundle(){
   sprintf(dststring,"10.0.0.%d",(destinationNode+1));
   bndlHeader.SetOrigin(srcstring);
   bndlHeader.SetDst(dststring);
-  bndlHeader.SetOriginSeqno(bundleCount);
+  bndlHeader.SetOriginSeqno(1000*m_node->GetId() + (bundleCount%1000));
   bndlHeader.SetHopCount(0);
   bndlHeader.SetSpray(4);
   bndlHeader.SetNretx(0);
@@ -3211,7 +3211,7 @@ void Mobile::HandleReply(json_object *jsonreply){
   std::cout<<json_object_array_length(toDelete)<<" is the number of flows to be deleted. \n";
 
   int numToInstall = json_object_array_length(install);
-  // int numToDelete = json_object_array_length(toDelete);
+  int numToDelete = json_object_array_length(toDelete);
 
   //RULES
   //0 ip address ==
@@ -3246,11 +3246,19 @@ void Mobile::HandleReply(json_object *jsonreply){
     
 
     flowTable.insertWithPriority(json_object_get_int(json_object_object_get(iterate,"priority")), tempArr);
-    flowTable.listPrinter();
 
   }
 
   // DELETING FLOWS (IN PROGRESS)  
+
+  for (int i=0; i<numToDelete; i++){
+    std::string prio;
+    prio = json_object_get_string(json_object_array_get_idx(toDelete,i));
+    std::cout<<atoi(prio.c_str())<<" is the priority to delete\n";
+    int flow_index = flowTable.getIndex(atoi(prio.c_str()));
+    flowTable.remove(flow_index);
+
+  }
 
 }
 

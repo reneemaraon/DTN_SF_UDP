@@ -60,7 +60,7 @@ public:
 	int getSize();
 	bool isEmpty();
 	bool contains(std::string data[]);
-
+	int getIndex(int prio);
 	void listPrinter();
 	void insertWithPriority(int priority, std::string data[]);
 };
@@ -280,6 +280,22 @@ bool FlowTable::isEmpty(){
 	else{
 		return 0;
 	}
+}
+
+
+int FlowTable::getIndex(int prioritytoFind){
+	strArray* printer;
+	printer = start;
+	int counter = 0;
+	while(printer){
+		int prio=printer->getPriority();
+		if (prio == prioritytoFind){
+			return counter;
+		}
+		counter++;
+		printer = printer->getNext();
+	}
+	return -2;
 }
 
 bool FlowTable::contains(std::string data[]){
