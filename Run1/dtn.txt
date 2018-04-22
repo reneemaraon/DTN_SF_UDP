@@ -8,16 +8,16 @@ INSTALLINTERNETSTACK
 INSTALLAPP
 MOBILE: 
 DTNAPP
-node 0 getnode 0x1a7d590 dst-> 0x1ac3ff0 10.0.0.1 source-> 0x1ac4410
+node 0 getnode 0x1324590 dst-> 0x136aff0 10.0.0.1 source-> 0x136b410
 SCHEDULING BOOT 1 MIN FROM NOW.
 SENSOR: 
 DTNAPP
 Opening Sensor Buffer Details 
 seconds interval1
-node 1 getnode 0x1a7d440 dst-> 0x1ac5b60 10.0.0.2 source-> 0x1ac5f80
+node 1 getnode 0x1324440 dst-> 0x136cb60 10.0.0.2 source-> 0x136cf80
 BASE: 
 DTNAPP
-node 2 getnode 0x1a81800 dst-> 0x1ac7720 10.0.0.3 source-> 0x1ac7b70
+node 2 getnode 0x1328800 dst-> 0x136e720 10.0.0.3 source-> 0x136eb70
 POPULATEARPCACHE
 Starting simulation for 869 s, seed value 12345671
 MOBILE START APP
@@ -36,7 +36,7 @@ BOOT
 Sending JSON to zmq: 
 { "event_type": 2, "mobile_id": 0, "ip_address": "10.0.0.1" }
 Received json from zmq:
-{ "install": [ { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "*", "gt_data_ave": "*", "lt_smallest_val": "*", "priority": 10, "eq_largest_val": "*", "expiration": 1524302939.187476, "gt_largest_val": "*", "lt_data_ave": "7", "eq_data_ave": "*", "ip_address": "*", "action": "0", "lt_largest_val": "*" }, { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "*", "gt_data_ave": "10", "lt_smallest_val": "*", "priority": 20, "eq_largest_val": "*", "expiration": 1524302939.187484, "gt_largest_val": "*", "lt_data_ave": "*", "eq_data_ave": "*", "ip_address": "*", "action": "2", "lt_largest_val": "*" }, { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "*", "gt_data_ave": "*", "lt_smallest_val": "*", "priority": 1000, "eq_largest_val": "*", "expiration": 1524302939.187488, "gt_largest_val": "*", "lt_data_ave": "*", "eq_data_ave": "*", "ip_address": "*", "action": "255", "lt_largest_val": "*" } ], "delete": [ ] }
+{ "install": [ { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "*", "gt_data_ave": "*", "lt_smallest_val": "*", "priority": 10, "eq_largest_val": "*", "expiration": 1524416485.769076, "gt_largest_val": "*", "lt_data_ave": "7", "eq_data_ave": "*", "ip_address": "*", "action": "0", "lt_largest_val": "*" }, { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "*", "gt_data_ave": "10", "lt_smallest_val": "*", "priority": 20, "eq_largest_val": "*", "expiration": 1524416485.769098, "gt_largest_val": "*", "lt_data_ave": "*", "eq_data_ave": "*", "ip_address": "*", "action": "2", "lt_largest_val": "*" }, { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "*", "gt_data_ave": "*", "lt_smallest_val": "*", "priority": 1000, "eq_largest_val": "*", "expiration": 1524416485.769101, "gt_largest_val": "*", "lt_data_ave": "*", "eq_data_ave": "*", "ip_address": "*", "action": "255", "lt_largest_val": "*" } ], "delete": [ ] }
 3 is the number of flows to be installed. 
 0 is the number of flows to be deleted. 
 
@@ -1057,7 +1057,7 @@ x223,0224,228.21
 x224,0225,228.21
 Processing flow received...
 Received json from zmq:
-{ "install": [ { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "1", "gt_data_ave": "*", "lt_smallest_val": "*", "priority": 1, "eq_largest_val": "*", "expiration": 1524302948.606502, "gt_largest_val": "*", "lt_data_ave": "*", "eq_data_ave": "*", "ip_address": "*", "action": "2", "lt_largest_val": "*" } ], "delete": [ ] }
+{ "install": [ { "gt_smallest_val": "*", "eq_smallest_val": "*", "sensor_id": "1", "gt_data_ave": "*", "lt_smallest_val": "*", "priority": 1, "eq_largest_val": "*", "expiration": 1524416505.964658, "gt_largest_val": "*", "lt_data_ave": "*", "eq_data_ave": "*", "ip_address": "*", "action": "2", "lt_largest_val": "*" } ], "delete": [ ] }
 1 is the number of flows to be installed. 
 0 is the number of flows to be deleted. 
 
