@@ -462,7 +462,7 @@ void DtnExample::CreateDevices(){
   wifiPhy.Set("TxPowerEnd", DoubleValue(9.1)); // default: 16.0206
   wifiPhy.Set("EnergyDetectionThreshold", DoubleValue(-74.5) ); // default: -96
   wifiPhy.Set("CcaMode1Threshold", DoubleValue(-77.5) ); // default: -99
-  wifiPhy.Set("RxNoiseFigure", DoubleValue(7) ); // default: 7
+  wifiPhy.Set("RxNoiseFigure", DoubleValue(20) ); // default: 7
   wifiPhy.Set("TxGain", DoubleValue(1.0) ); // default: 1.0
   wifiPhy.Set("RxGain", DoubleValue(1.0) ); // deafult: 1.0
   wifiMac.SetType("ns3::AdhocWifiMac");
@@ -1890,7 +1890,7 @@ void Sensor::GenerateData(uint32_t first){
 
     int currtime = Simulator::Now().GetSeconds();
 
-    if (((currtime > 200)&&(currtime<400))&&(baseValue<20)){
+    if (((currtime > 150)&&(currtime<400))&&(baseValue<20)){
       baseValue+=0.2;
     }
     else if ((currtime>400)&&(baseValue>8)){
