@@ -39,7 +39,6 @@ for line in bndlfile:
 		line=line.strip("\n").split(",")
 		line=[float(x) for x in line]
 		if line[3]==1:
-			print "yes"
 			line[0]=line[0]-1000
 		bndl.append(line)
 

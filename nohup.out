@@ -10,3 +10,11 @@ Waf: Entering directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
 Waf: Leaving directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
 'build' finished successfully (9.175s)
 awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (7.995s)
+awk: line 1: syntax error at or near }
+Waf: Entering directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
+Waf: Leaving directory `/home/dtn14/ns-allinone-3.22/ns-3.22/build'
+'build' finished successfully (0.463s)
+awk: line 1: syntax error at or near }
