@@ -265,8 +265,8 @@ void DtnExample::Run(){
   
   Simulator::Stop(Seconds(duration));
   AnimationInterface anim("animDTN2.xml");
-  anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
-  // anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  // anim.SetBackgroundImage ("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
+  anim.SetBackgroundImage ("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/bround.jpg", -10.5,-42,2.11,2.11,1);
   Simulator::Run();
   myos.close(); // close log file
   ysaout.close();
@@ -390,7 +390,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
     // }
     // datapoints.close();
   
-    std::cout<<"y"<<bndlHeader.GetOriginSeqno()<<","<<time<<","<<delay<<std::endl;
+    std::cout<<"y"<<bndlHeader.GetOriginSeqno()<<","<<time<<","<<delay<<","<< bndlHeader.GetSensorID()<<","<<mobileIpAddress<<std::endl;
 
     std::string delimiter = ",";
     std::string::size_type sz;
@@ -400,7 +400,7 @@ void DtnExample::PacketIn(int locx, int locy, Ptr<Packet> pkt, int nodeId){
         token = s.substr(0, pos);
 
 
-        std::cout <<"x"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<std::endl;
+        std::cout <<"x"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<","<< bndlHeader.GetSensorID()<<","<<mobileIpAddress<<std::endl;
         s.erase(0, pos + delimiter.length());
     }
 
@@ -520,8 +520,8 @@ void DtnExample::InstallApplications(){
       app1->destinationNode=2;
 
       std::cout << "Opening Sensor Buffer Details"<< " \n";
-      // bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
-      bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      bufferInput.open("/home/dtn14/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
+      // bufferInput.open("/home/dtn14/Documents/workspace/ns-allinone-3.22/ns-3.22/examples/DTN_SF_UDP/sensorBufferDetails");
       if(bufferInput.is_open()){
         while(bufferInput >> node_num >> numOfEntries >> entrySize >> secondsIntervalinput){
           if(node_num==i){
@@ -981,7 +981,7 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
               // }
               // datapoints.close();
             
-              std::cout<<"y"<<bndlHeader.GetOriginSeqno()<<","<<time<<","<<delay<<std::endl;
+              std::cout<<"y"<<bndlHeader.GetOriginSeqno()<<","<<time<<","<<delay<<","<< bndlHeader.GetSensorID()<<","<<address.GetIpv4()<<std::endl;
 
               std::string delimiter = ",";
               std::string::size_type sz;
@@ -991,7 +991,7 @@ void DtnApp::ReceiveBundle(Ptr<Socket> socket){
                   token = s.substr(0, pos);
 
 
-                  std::cout <<"x"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<std::endl;
+                  std::cout <<"x"<< token.substr(5,3)<<","<<token.substr(0,4) <<","<< time<<","<< bndlHeader.GetSensorID()<<","<<address.GetIpv4()<<std::endl;
                   s.erase(0, pos + delimiter.length());
               }
 
@@ -1953,21 +1953,31 @@ void Sensor::CreateBundle(){
   // Ptr<Packet> packet = Create<Packet>((uint8_t*) msgx.str().c_str(), packetSize);
   Ptr<Packet> packet = Create<Packet>((uint8_t*) bndlData.str().c_str(), bndlSize);
   mypacket::BndlHeader bndlHeader;
-  uint8_t cnt =(uint8_t)m_node->GetId();
+  // uint8_t cnt =(uint8_t)m_node->GetId();
   char srcstring[1024]="";
+
+  std::ostringstream ss;
+  ss << m_node->GetId();
+  ss.str();
+  std::string yes=ss.str();
+
+  const uint8_t* p = reinterpret_cast<const uint8_t*>(yes.c_str());
+
   sprintf(srcstring,"10.0.0.%d",(m_node->GetId() + 1));
   char dststring[1024]="";
   sprintf(dststring,"10.0.0.%d",(destinationNode+1));
   bndlHeader.SetOrigin(srcstring);
   bndlHeader.SetDst(dststring);
   bndlHeader.SetOriginSeqno(1000*m_node->GetId() + (bundleCount%1000));
+  // bndlHeader.SetOriginSeqno(bundleCount);
   bndlHeader.SetHopCount(0);
   bndlHeader.SetSpray(4);
   bndlHeader.SetNretx(0);
   bndlHeader.SetBundleSize(bndlSize);
   bndlHeader.SetSrcTimestamp(Simulator::Now());
   bndlHeader.SetHopTimestamp(Simulator::Now());
-  bndlHeader.SetSensorID(cnt);
+  // bndlHeader.SetSensorID(nct);
+  bndlHeader.SetSensorID(*p);
   bndlHeader.SetDataAverage((float)dataAve);
   bndlHeader.SetLargestVal(largestData);
   bndlHeader.SetSmallestVal(smallestData);
