@@ -1885,26 +1885,55 @@ void Sensor::GenerateData(uint32_t first){
     else{
       nextID++;
     }
+
     int numOfDigits = entryLength-dataIDSize-dataTimeSize-2;
     float currentSum =0;
 
     int currtime = Simulator::Now().GetSeconds();
-
-    if (((currtime > 150)&&(currtime<400))&&(baseValue<20)){
-      baseValue+=0.2;
-    }
-    else if ((currtime>400)&&(baseValue>8)){
-      baseValue-=0.3;
-    }    
+    int data;
+    // if (((currtime > 150)&&(currtime<400))&&(baseValue<20)){
+    //   baseValue+=0.2;
+    // }
+    // else if ((currtime>400)&&(baseValue>8)){
+    //   baseValue-=0.3;
+    // }    
     
-    int temp = baseValue;
+    // currentSum+=baseValue;
+    // // std::cout<<"\n"<<currentSum<<"\n";
+
+
+
+    if (0<=currtime and currtime<=300){
+    	data=7;
+    }
+    else if (300<currtime and currtime<=360){
+    	data=(currtime/20)-8;
+    }
+    else if (360<currtime and currtime<=400){
+    	data=((pow((currtime-320),2))/400)+5.8;
+    }
+    else if (400<currtime and currtime<=430){
+    	data=((pow((currtime-320),2))/400)+5.8;
+
+    }
+    else if (430<currtime and currtime<=600){
+    	data=((pow((currtime-602),2))/740)+7;
+    }
+    else{
+    	data=7;
+    }
+    std::cout<<"YSA DATA IS " << data <<"\n";
+
+	// tempor+=std::string(numOfDigits - str(data).length(), '0') + str(data);
+    int temp = data;
     for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
       int randnum = temp/(pow(10,(numOfDigits-i-1)));
       temp = ((int)temp)%(int)(pow(10,(numOfDigits-i-1)));
       tempor += alphanum[randnum];
     }
-    currentSum+=baseValue;
-    // std::cout<<"\n"<<currentSum<<"\n";
+
+	currentSum+=data;
+
     if(currentSum<smallestData){
       smallestData = currentSum;
     }
@@ -1912,7 +1941,7 @@ void Sensor::GenerateData(uint32_t first){
       largestData = currentSum;
     }
     dataSum+=currentSum;
-    // std::cout << "TEMPOR IS  "<<tempor <<"\n";
+    std::cout << "TEMPOR IS  "<<tempor <<"\n";
     StoreInBuffer(tempor);
 
     Simulator::Schedule(Seconds(secondsInterval), &Sensor::GenerateData, this, 0);
