@@ -563,7 +563,7 @@ void DtnExample::InstallApplications(){
       recvSink->SetRecvCallback(MakeCallback(&Sensor::ReceiveHello, app1));
     }
     // else if(i==nodeNum-2){
-    else if(i==0){
+    else if(i==0 or i==3 or i==4){
       std::cout<<"MOBILE: "<<"\n";
       // Ptr<Mobile> app;
       app[i] = CreateObject<Mobile>();  
@@ -1913,7 +1913,7 @@ void Sensor::GenerateData(uint32_t first){
     	data=((pow((currtime-320),2))/400)+5.8;
     }
     else if (400<currtime and currtime<=430){
-    	data=((pow((currtime-320),2))/400)+5.8;
+    	data=((pow((currtime-410.6),2))/10.64)+11.75;
 
     }
     else if (430<currtime and currtime<=600){
@@ -1922,7 +1922,7 @@ void Sensor::GenerateData(uint32_t first){
     else{
     	data=7;
     }
-    std::cout<<"YSA DATA IS " << data <<"\n";
+    // std::cout<<"YSA DATA IS " << data <<"\n";
 
 	// tempor+=std::string(numOfDigits - str(data).length(), '0') + str(data);
     int temp = data;
@@ -1941,7 +1941,7 @@ void Sensor::GenerateData(uint32_t first){
       largestData = currentSum;
     }
     dataSum+=currentSum;
-    std::cout << "TEMPOR IS  "<<tempor <<"\n";
+    // std::cout << "TEMPOR IS  "<<tempor <<"\n";
     StoreInBuffer(tempor);
 
     Simulator::Schedule(Seconds(secondsInterval), &Sensor::GenerateData, this, 0);
