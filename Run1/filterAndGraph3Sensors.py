@@ -57,7 +57,7 @@ bndlfile.close()
 # graphcoor = open("graphcoor.txt","w")
 plots = open("plots.txt","w")
 
-legend="LEGEND"
+legend="Test I: Sensor Number Test:Sensor 1,Test I: Sensor Number Test:Sensor 2,Test I: Sensor Number Test:Sensor 3"
 
 # Data Sequence Number x Delay
 out11=""
@@ -111,25 +111,26 @@ for coor in bndl:
 	if coor[3]==4:
 		out44=out44 + "(" + str(coor[1]) + "," + str(coor[0]) + ")"
 
-plots.write("\documentclass{article}\n\usepackage[paperwidth=8.5in,paperheight=2.5in,left=0.4in, right=0.4in,top=0in,bottom=0in]{geometry}\n\\thispagestyle{empty}\n\usepackage[utf8]{inputenc}\n\usepackage{textcomp}\n\usepackage{subcaption}\n\usepackage{pgfplots}\n\pgfplotsset{compat=1.15}\n\n\definecolor{L4}{RGB}{189,189,189}\n\definecolor{L3}{RGB}{150,150,150}\n\definecolor{L2}{RGB}{99,99,99}\n\definecolor{L1}{RGB}{0,0,0}\n\n\\begin{document}\n\n\n\\begin{figure}\n\\begin{center}\n%\caption{A figure with two subfigures}\n\\ref{legendName}\\\n\end{center}\n\\begin{subfigure}{0.25\linewidth}\n\\begin{tikzpicture}[xscale=0.56, yscale=0.56]\n\\begin{axis}[\n    title={Data Sequence Number x Delay},\n    xlabel={Data Sequence Number},\n    ylabel={Delay},\n    mark=*,\n    legend to name=legendName,\n]\n\legend{" + legend + "}\n")
+plots.write("\documentclass{article}\n\usepackage[paperwidth=8.5in,paperheight=9in,left=0.4in, right=0.4in,top=0in,bottom=0in]{geometry}\n\\thispagestyle{empty}\n\usepackage[utf8]{inputenc}\n\usepackage{textcomp}\n\usepackage{subcaption}\n\usepackage{pgfplots}\n\pgfplotsset{compat=1.15}\n\n\definecolor{L4}{RGB}{189,189,189}\n\definecolor{L3}{RGB}{150,150,150}\n\definecolor{L2}{RGB}{99,99,99}\n\definecolor{L1}{RGB}{0,0,0}\n\n\n\\begin{document}\n\n\\begin{figure}\n\\begin{center}\n\\ref{legendName}\\\n\end{center}\n\\begin{subfigure}{1\\textwidth}\n\\begin{tikzpicture}\n\\begin{axis}[\n    scale only axis,\n    height=1.45in,\n    width=7in,\n    % title={Data Sequence Number x Delay},\n    xlabel={Data Sequence Number},\n    ylabel={Delay},\n    mark=*,\n    xmin=0,\n    ymin=0,\n    legend to name=legendName,\n    legend style={legend columns=-1},\n]\n")
+plots.write("\legend{" + legend + "}\n")
 plots.write("\\addplot [L1, only marks, mark=o]\ncoordinates{\n" + out11 + "};\n")
 plots.write("\\addplot [L2, only marks, mark=square]\ncoordinates{\n" + out13 + "};\n")
 plots.write("\\addplot [L3, only marks, mark=diamond]\ncoordinates{\n" + out14 + "};\n")
 
-plots.write("\end{axis}\n\end{tikzpicture}\n\end{subfigure}%\n\hfill%\n\\begin{subfigure}{0.25\linewidth}\n\\begin{tikzpicture}[xscale=0.56, yscale=0.56]\n\\begin{axis}[\n    title={Bundle Sequence Number x Delay},\n    xlabel={Bundle Sequence Number},\n    ylabel={Delay},\n    mark=*,\n]\n")
+plots.write("\end{axis}\n\end{tikzpicture}\n\caption{Data Sequence Number x Delay}\n\end{subfigure}\\\n\n\\begin{subfigure}{1\\textwidth}\n\\begin{tikzpicture}\n\\begin{axis}[\n    scale only axis,\n    height=1.45in,\n    width=7in,\n    % title={Bundle Sequence Number x Delay},\n    xlabel={Bundle Sequence Number},\n    ylabel={Delay},\n    mark=*,\n    xmin=0,\n    ymin=0,\n]\n")
 plots.write("\\addplot [L1, only marks, mark=o]\ncoordinates{\n" + out21 + "};\n")
 plots.write("\\addplot [L2, only marks, mark=square]\ncoordinates{\n" + out23 + "};\n")
 plots.write("\\addplot [L3, only marks, mark=diamond]\ncoordinates{\n" + out24 + "};\n")
 
-plots.write("\end{axis}\n\end{tikzpicture}\n\end{subfigure}%\n\hfill%\n\\begin{subfigure}{0.25\linewidth}\n\\begin{tikzpicture}[xscale=0.56, yscale=0.56]\n\\begin{axis}[\n    title={Time Received at Base x Data Sequence Number},\n    xlabel={Time Received at Base},\n    ylabel={Data Sequence Number},\n    mark=*,\n]\n")
+plots.write("\end{axis}\n\end{tikzpicture}\n\caption{Bundle Sequence Number x Delay}\n\end{subfigure}\\\n\n\\begin{subfigure}{1\\textwidth}\n\\begin{tikzpicture}\n\\begin{axis}[\n    scale only axis,\n    height=1.45in,\n    width=7in,\n    % title={Time Received at Base x Data Sequence Number},\n    xlabel={Time Received at Base},\n    ylabel={Data Sequence Number},\n    mark=*,\n    xmin=0,\n    ymin=0,\n]\n")
 plots.write("\\addplot [L1, only marks, mark=o]\ncoordinates{\n" + out31 + "};\n")
 plots.write("\\addplot [L2, only marks, mark=square]\ncoordinates{\n" + out33 + "};\n")
 plots.write("\\addplot [L3, only marks, mark=diamond]\ncoordinates{\n" + out34 + "};\n")
 
-plots.write("\end{axis}\n\end{tikzpicture}\n\end{subfigure}%\n\hfill%\n\\begin{subfigure}{0.25\linewidth}\n\\begin{tikzpicture}[xscale=0.56, yscale=0.56]\n\\begin{axis}[\n    title={Time Received at Base x Bundle Sequence Number},\n    xlabel={Time Received at Base},\n    ylabel={Bundle Sequence Number},\n    mark=*,\n]\n")
+plots.write("\end{axis}\n\end{tikzpicture}\n\caption{Time Received at Base x Data Sequence Number}\n\end{subfigure}\\\n\n\\begin{subfigure}{1\\textwidth}\n\\begin{tikzpicture}\n\\begin{axis}[\n    scale only axis,\n    height=1.45in,\n    width=7in,\n    % title={Time Received at Base x Bundle Sequence Number},\n    xlabel={Time Received at Base},\n    ylabel={Bundle Sequence Number},\n    mark=*,\n    xmin=0,\n    ymin=0,\n]\n")
 plots.write("\\addplot [L1, only marks, mark=o]\ncoordinates{\n" + out41 + "};\n")
 plots.write("\\addplot [L2, only marks, mark=square]\ncoordinates{\n" + out43 + "};\n")
 plots.write("\\addplot [L3, only marks, mark=diamond]\ncoordinates{\n" + out44 + "};\n")
 
-plots.write("\end{axis}\n\end{tikzpicture}\n\end{subfigure}\n\end{figure}\n\n\n\end{document}\n")
+plots.write("\end{axis}\n\end{tikzpicture}\n\caption{Time Received at Base x Bundle Sequence Number}\n\end{subfigure}\n\n% \\begin{center}\n% \caption{FIGURE CAPTION}\n% \end{center}\n\end{figure}\n\n\n\end{document}\n")
 plots.close()
