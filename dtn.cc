@@ -563,7 +563,7 @@ void DtnExample::InstallApplications(){
       recvSink->SetRecvCallback(MakeCallback(&Sensor::ReceiveHello, app1));
     }
     // else if(i==nodeNum-2){
-    else if(i==0 or i==3 or i==4){
+    else if(i==0){
       std::cout<<"MOBILE: "<<"\n";
       // Ptr<Mobile> app;
       app[i] = CreateObject<Mobile>();  
@@ -1891,48 +1891,75 @@ void Sensor::GenerateData(uint32_t first){
 
     int currtime = Simulator::Now().GetSeconds();
     int data;
-    // if (((currtime > 150)&&(currtime<400))&&(baseValue<20)){
-    //   baseValue+=0.2;
-    // }
-    // else if ((currtime>400)&&(baseValue>8)){
-    //   baseValue-=0.3;
-    // }    
-    
-    // currentSum+=baseValue;
-    // // std::cout<<"\n"<<currentSum<<"\n";
 
 
 
-    if (0<=currtime and currtime<=300){
-    	data=7;
-    }
-    else if (300<currtime and currtime<=360){
-    	data=(currtime/20)-8;
-    }
-    else if (360<currtime and currtime<=400){
-    	data=((pow((currtime-320),2))/400)+5.8;
-    }
-    else if (400<currtime and currtime<=430){
-    	data=((pow((currtime-410.6),2))/10.64)+11.75;
+    if(m_node->GetId()==1){
+      //FOR TEST II ONLY
+      if (0<=currtime and currtime<=150){
+      	data=7;
+      }
+      else if (150<currtime and currtime<=180){
+      	data=(currtime/10)-8;
+      }
+      else if (180<currtime and currtime<=200){
+      	data=((pow((currtime-158.7),2))/108)+5.8;
+      }
+      else if (200<currtime and currtime<=215){
+      	data=((pow((currtime-205.3),2))/2.9)+11.75;
+      }
+      else if (215<currtime and currtime<=300){
+      	data=((pow((currtime-300),2))/194.4)+7;
+      }
+      else{
+      	data=7;
+      }
+      //FOR TEST II ONLY
 
-    }
-    else if (430<currtime and currtime<=600){
-    	data=((pow((currtime-602),2))/740)+7;
+      // //FOR ALL OTHER TESTS
+      // if (0<=currtime and currtime<=300){
+      // 	data=7;
+      // }
+      // else if (300<currtime and currtime<=360){
+      // 	data=(currtime/20)-8;
+      // }
+      // else if (360<currtime and currtime<=400){
+      // 	data=((pow((currtime-320),2))/400)+5.8;
+      // }
+      // else if (400<currtime and currtime<=430){
+      // 	data=((pow((currtime-410.6),2))/10.64)+11.75;
+      // }
+      // else if (430<currtime and currtime<=600){
+      // 	data=((pow((currtime-602),2))/740)+7;
+      // }
+      // else{
+      // 	data=7;
+      // }
+      // //FOR ALL OTHER TESTS
+      int temp = data;
+      for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
+        int randnum = temp/(pow(10,(numOfDigits-i-1)));
+        temp = ((int)temp)%(int)(pow(10,(numOfDigits-i-1)));
+        tempor += alphanum[randnum];
+      }
+      currentSum+=data;
+      
     }
     else{
-    	data=7;
-    }
-    // std::cout<<"YSA DATA IS " << data <<"\n";
-
-	// tempor+=std::string(numOfDigits - str(data).length(), '0') + str(data);
-    int temp = data;
-    for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
-      int randnum = temp/(pow(10,(numOfDigits-i-1)));
-      temp = ((int)temp)%(int)(pow(10,(numOfDigits-i-1)));
+      for(int i=0; i<(entryLength-dataIDSize-dataTimeSize-2); i++){
+      int randnum = rand() % 10;
       tempor += alphanum[randnum];
+      // std::cout<<alphanum[randnum]<<"=="<<(int)alphanum[randnum]-48<<" "<<"\n";
+      currentSum +=((int)alphanum[randnum]-48)*(pow(10,(numOfDigits-i-1)));
+      }
     }
 
-	currentSum+=data;
+
+
+    std::cout<<"YSA DATA IS " << data <<"\n";
+
+  // tempor+=std::string(numOfDigits - str(data).length(), '0') + str(data);
+
 
     if(currentSum<smallestData){
       smallestData = currentSum;

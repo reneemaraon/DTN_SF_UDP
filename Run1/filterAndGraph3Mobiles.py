@@ -27,11 +27,15 @@ seqfile = open("seq.csv","r")
 bndlfile = open("bndl.csv","r")
 seq=[]
 bndl=[]
+roundNo=0
 
 for line in seqfile:
 	if line != "seqno,timeGenerated,timeReceived,sensorID,mobileID\n":
 		line=line.strip("\n").split(",")
 		line=[float(x) for x in line]
+		line[0]=line[0]+(1000*roundNo)
+		if line[0]==999:
+			roundNo=roundNo+1
 		seq.append(line)
 
 for line in bndlfile:
